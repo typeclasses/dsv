@@ -81,6 +81,9 @@ test-suite hedgehog
       -fno-warn-unused-imports
       -fno-warn-missing-signatures
 
+  other-modules:
+      Paths_pipes_dsv
+
   build-depends:
       pipes-dsv
     , base ^>= 4.12.0.0
