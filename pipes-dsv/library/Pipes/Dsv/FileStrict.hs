@@ -1,9 +1,10 @@
-module Pipes.Dsv.FileStrict (readDsvFileWithoutHeader) where
+module Pipes.Dsv.FileStrict (readDsvFileWithoutHeader, readDsvFileUsingHeader) where
 
 import Pipes.Dsv.Atto
 import Pipes.Dsv.ByteString
 import Pipes.Dsv.Cassava
 import Pipes.Dsv.Delimiter
+import Pipes.Dsv.Header
 import Pipes.Dsv.Vector
 
 -- base
@@ -23,3 +24,7 @@ readDsvFileWithoutHeader d fp =
         (xs, t) <- P.toListM' $
             P.withFile fp ReadMode (handleAttoProducer (dsvRowAtto d))
         return (t, xs)
+
+readDsvFileUsingHeader :: Delimiter -> FilePath -> IO (AttoTermination, [Vector (Labeled ByteString ByteString)])
+readDsvFileUsingHeader d fp =
+    fmap (fmap zipNames) (readDsvFileWithoutHeader d fp)

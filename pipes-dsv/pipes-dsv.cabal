@@ -55,6 +55,7 @@ library
       , Pipes.Dsv.Delimiter.TH
       , Pipes.Dsv.Delimiter.Type
       , Pipes.Dsv.FileStrict
+      , Pipes.Dsv.Header
       , Pipes.Dsv.Vector
 
     build-depends:

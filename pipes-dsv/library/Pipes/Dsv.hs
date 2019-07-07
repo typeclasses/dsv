@@ -3,6 +3,10 @@ module Pipes.Dsv
   -- * Reading CSV files strictly
   -- $readingFilesStrictly
     readCsvFileStrictWithoutHeader
+  , readCsvFileStrictUsingHeader
+
+  -- * Labeled valued
+  , Labeled (..), zipNames, zipNames'
 
   -- * Delimiters
 
@@ -11,7 +15,7 @@ module Pipes.Dsv
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
   -- ** Reading DSV files strictly
-  , readDsvFileWithoutHeader
+  , readDsvFileWithoutHeader, readDsvFileUsingHeader
 
   -- * Attoparsec
   , attoPipe, AttoError (..), AttoTermination (..)
@@ -22,6 +26,7 @@ import Pipes.Dsv.Atto
 import Pipes.Dsv.CsvFileStrict
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileStrict
+import Pipes.Dsv.Header
 
 {- $readingFilesStrictly
 
