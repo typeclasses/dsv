@@ -36,6 +36,9 @@ library
     exposed-modules:
         Pipes.Dsv
 
+    autogen-modules:
+        Paths_pipes_dsv
+
     other-modules:
         Paths_pipes_dsv
       , Pipes.Dsv.Atto
