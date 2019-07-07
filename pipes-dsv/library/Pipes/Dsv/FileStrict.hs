@@ -1,4 +1,8 @@
-module Pipes.Dsv.FileStrict (readDsvFileStrictWithoutHeader, readDsvFileStrictUsingHeader, readDsvFileStrictIgnoringHeader) where
+module Pipes.Dsv.FileStrict
+  ( readDsvFileStrictUsingHeader
+  , readDsvFileStrictWithoutHeader
+  , readDsvFileStrictIgnoringHeader
+  ) where
 
 import Pipes.Dsv.Atto
 import Pipes.Dsv.ByteString

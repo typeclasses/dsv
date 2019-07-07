@@ -10,7 +10,7 @@ import Language.Haskell.TH.Syntax (Q, Exp, lift)
 
 -- | A Template Haskell expression of type 'Delimiter'. Rejects code points above @0xff@.
 --
--- ==== Example
+-- === Example
 --
 -- 'comma' is defined as:
 --

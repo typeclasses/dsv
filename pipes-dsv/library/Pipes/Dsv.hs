@@ -2,8 +2,8 @@ module Pipes.Dsv
   (
   -- * Reading CSV files strictly
   -- $readingFilesStrictly
-    readCsvFileStrictWithoutHeader
-  , readCsvFileStrictUsingHeader
+    readCsvFileStrictUsingHeader
+  , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
 
   -- * Labeled valued

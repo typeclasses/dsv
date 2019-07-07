@@ -13,7 +13,10 @@ description:
 tested-with: GHC==8.6.5
 
 extra-source-files: changelog.md
-data-files: test/tweets.csv
+data-files:
+    test/tweets.csv
+  , test/doc-example-with-header.csv
+  , test/doc-example-without-header.csv
 
 copyright: 2019 Typeclass Consulting, LLC
 license: MIT

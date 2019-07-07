@@ -38,7 +38,7 @@ main =
     ok <- tests
     when (not ok) exitFailure
 
-prop_readCsvFileStrictWithoutHeader =
+prop_readCsvFileStrictWithoutHeader_tweets =
     (getDataFileName "test/tweets.csv" >>= readCsvFileStrictWithoutHeader)
     ~>
     ( AttoComplete
@@ -46,7 +46,17 @@ prop_readCsvFileStrictWithoutHeader =
           [tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5]
     )
 
-prop_readCsvFileStrictUsingHeader =
+prop_readCsvFileStrictWithoutHeader_doc =
+    (getDataFileName "test/doc-example-without-header.csv" >>= readCsvFileStrictWithoutHeader)
+    ~>
+    ( AttoComplete
+    , map (Vector.fromList . map encodeUtf8)
+        [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
+        , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
+        ]
+    )
+
+prop_readCsvFileStrictUsingHeader_tweets =
     (getDataFileName "test/tweets.csv" >>= readCsvFileStrictUsingHeader)
     ~>
     ( AttoComplete
@@ -54,12 +64,41 @@ prop_readCsvFileStrictUsingHeader =
           [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
     )
 
-prop_readCsvFileStrictIgnoringHeader =
+prop_readCsvFileStrictUsingHeader_doc =
+    (getDataFileName "test/doc-example-with-header.csv" >>= readCsvFileStrictUsingHeader)
+    ~>
+    ( AttoComplete
+    , map (Vector.fromList . map (bimap encodeUtf8 encodeUtf8))
+        [ [ Labeled "Date" "2019-03-24"
+          , Labeled "Vendor" "Acme Co"
+          , Labeled "Price" "$599.89"
+          , Labeled "Notes" "Dehydrated boulders"
+          ]
+        , [ Labeled "Date" "2019-04-18"
+          , Labeled "Vendor" "Acme Co"
+          , Labeled "Price" "$24.95"
+          , Labeled "Notes" "Earthquake pills"
+          ]
+        ]
+
+    )
+
+prop_readCsvFileStrictIgnoringHeader_tweets =
     (getDataFileName "test/tweets.csv" >>= readCsvFileStrictIgnoringHeader)
     ~>
     ( AttoComplete
     , map (Vector.fromList . map encodeUtf8)
           [tweet1, tweet2, tweet3, tweet4, tweet5]
+    )
+
+prop_readCsvFileStrictIgnoringHeader_doc =
+    (getDataFileName "test/doc-example-with-header.csv" >>= readCsvFileStrictIgnoringHeader)
+    ~>
+    ( AttoComplete
+    , map (Vector.fromList . map encodeUtf8)
+        [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
+        , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
+        ]
     )
 
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
