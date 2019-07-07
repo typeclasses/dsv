@@ -1,24 +1,22 @@
 module Pipes.Dsv
   (
   -- * Reading CSV files strictly
-  -- $readingFilesStrictly
+  -- $readingCsvFilesStrictly
     readCsvFileStrictUsingHeader
   , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
 
-  -- * Labeled valued
-  , Labeled (..), zipNames, zipNames'
-
-  -- * Delimiters
-
-  -- ** The Delimiter type
-  -- $delimiters
-  , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
-
-  -- ** Reading DSV files strictly
+  -- * Reading DSV files strictly
+  -- $readingDsvFilesStrictly
   , readDsvFileStrictUsingHeader
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
+
+  -- * Labeled values
+  , Labeled (..), zipNames, zipNames'
+
+  -- * Delimiters
+  , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
   -- * Attoparsec
   , attoPipe, AttoError (..), AttoTermination (..)
@@ -31,7 +29,7 @@ import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileStrict
 import Pipes.Dsv.Header
 
-{- $readingFilesStrictly
+{- $readingCsvFilesStrictly
 
 We present these functions first because they require the least amount of effort to use. Each function in this section:
 
@@ -43,7 +41,7 @@ If you need to use a different delimiter, if your input source is something othe
 
 -}
 
-{- $delimiters
+{- $readingDsvFilesStrictly
 
 \"CSV\" stands for "comma-separated values". But sometimes you may encounter CSV-like files in which the values are separated by some other character; e.g. it may have tabs instead of commas. We refer to such files more generally, then, as DSV files ("delimiter-separated values"). Functions that have a 'Delimiter' parameter, such as 'readDsvStrictFileWithoutHeader', let you specify what kind of DSV file you want to read.
 
