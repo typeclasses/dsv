@@ -1,6 +1,7 @@
 module Pipes.Dsv.CsvFileStrict
   ( readCsvFileStrictWithoutHeader
   , readCsvFileStrictUsingHeader
+  , readCsvFileStrictIgnoringHeader
   ) where
 
 import Pipes.Dsv.Atto
@@ -11,9 +12,10 @@ import Pipes.Dsv.Header
 import Pipes.Dsv.Vector
 
 readCsvFileStrictWithoutHeader :: FilePath -> IO (AttoTermination, [Vector ByteString])
-readCsvFileStrictWithoutHeader fp = readDsvFileWithoutHeader comma fp
+readCsvFileStrictWithoutHeader fp = readDsvFileStrictWithoutHeader comma fp
 
 readCsvFileStrictUsingHeader :: FilePath -> IO (AttoTermination, [Vector (Labeled ByteString ByteString)])
-readCsvFileStrictUsingHeader fp = readDsvFileUsingHeader comma fp
+readCsvFileStrictUsingHeader fp = readDsvFileStrictUsingHeader comma fp
 
--- todo: readCsvFileStrictIgnoringHeader
+readCsvFileStrictIgnoringHeader :: FilePath -> IO (AttoTermination, [Vector ByteString])
+readCsvFileStrictIgnoringHeader fp = readDsvFileStrictIgnoringHeader comma fp

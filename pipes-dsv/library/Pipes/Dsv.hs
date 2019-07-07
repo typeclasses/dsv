@@ -4,6 +4,7 @@ module Pipes.Dsv
   -- $readingFilesStrictly
     readCsvFileStrictWithoutHeader
   , readCsvFileStrictUsingHeader
+  , readCsvFileStrictIgnoringHeader
 
   -- * Labeled valued
   , Labeled (..), zipNames, zipNames'
@@ -15,7 +16,7 @@ module Pipes.Dsv
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
   -- ** Reading DSV files strictly
-  , readDsvFileWithoutHeader, readDsvFileUsingHeader
+  , readDsvFileStrictWithoutHeader, readDsvFileStrictUsingHeader
 
   -- * Attoparsec
   , attoPipe, AttoError (..), AttoTermination (..)
@@ -42,6 +43,6 @@ If you need to use a different delimiter, if your input source is something othe
 
 {- $delimiters
 
-"CSV" stands for "comma-separated values". But sometimes you may encounter CSV-like files in which the values are separated by some other character; e.g. it may have tabs instead of commas. We refer to such files more generally, then, as DSV files ("delimiter-separated values"). Functions that have a 'Delimiter' parameter, such as 'readDsvFileWithoutHeader', let you specify what kind of DSV file you want to read.
+"CSV" stands for "comma-separated values". But sometimes you may encounter CSV-like files in which the values are separated by some other character; e.g. it may have tabs instead of commas. We refer to such files more generally, then, as DSV files ("delimiter-separated values"). Functions that have a 'Delimiter' parameter, such as 'readDsvStrictFileWithoutHeader', let you specify what kind of DSV file you want to read.
 
 -}

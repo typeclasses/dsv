@@ -1,4 +1,4 @@
-module Pipes.Dsv.FileStrict (readDsvFileWithoutHeader, readDsvFileUsingHeader) where
+module Pipes.Dsv.FileStrict (readDsvFileStrictWithoutHeader, readDsvFileStrictUsingHeader, readDsvFileStrictIgnoringHeader) where
 
 import Pipes.Dsv.Atto
 import Pipes.Dsv.ByteString
@@ -17,14 +17,18 @@ import qualified Pipes.Prelude as P
 import qualified Pipes.Safe.Prelude as P
 import Pipes.Safe (runSafeT)
 
-readDsvFileWithoutHeader :: Delimiter -> FilePath -> IO (AttoTermination, [Vector ByteString])
-readDsvFileWithoutHeader d fp =
+readDsvFileStrictWithoutHeader :: Delimiter -> FilePath -> IO (AttoTermination, [Vector ByteString])
+readDsvFileStrictWithoutHeader d fp =
     runSafeT $
       do
         (xs, t) <- P.toListM' $
             P.withFile fp ReadMode (handleAttoProducer (dsvRowAtto d))
         return (t, xs)
 
-readDsvFileUsingHeader :: Delimiter -> FilePath -> IO (AttoTermination, [Vector (Labeled ByteString ByteString)])
-readDsvFileUsingHeader d fp =
-    fmap (fmap zipNames) (readDsvFileWithoutHeader d fp)
+readDsvFileStrictUsingHeader :: Delimiter -> FilePath -> IO (AttoTermination, [Vector (Labeled ByteString ByteString)])
+readDsvFileStrictUsingHeader d fp =
+    fmap (fmap zipNames) (readDsvFileStrictWithoutHeader d fp)
+
+readDsvFileStrictIgnoringHeader :: Delimiter -> FilePath -> IO (AttoTermination, [Vector ByteString])
+readDsvFileStrictIgnoringHeader d fp =
+    fmap (fmap (drop 1)) (readDsvFileStrictWithoutHeader d fp)

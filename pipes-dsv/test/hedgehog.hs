@@ -54,6 +54,14 @@ prop_readCsvFileStrictUsingHeader =
           [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
     )
 
+prop_readCsvFileStrictIgnoringHeader =
+    (getDataFileName "test/tweets.csv" >>= readCsvFileStrictIgnoringHeader)
+    ~>
+    ( AttoComplete
+    , map (Vector.fromList . map encodeUtf8)
+          [tweet1, tweet2, tweet3, tweet4, tweet5]
+    )
+
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
 
 tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled :: [Labeled Text Text]
