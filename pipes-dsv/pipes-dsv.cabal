@@ -57,6 +57,8 @@ library
       , Pipes.Dsv.Delimiter.TH
       , Pipes.Dsv.Delimiter.Type
       , Pipes.Dsv.FileFold
+      , Pipes.Dsv.FileFold.Csv
+      , Pipes.Dsv.FileFold.Dsv
       , Pipes.Dsv.FileStrict
       , Pipes.Dsv.FileStrict.Csv
       , Pipes.Dsv.FileStrict.Dsv

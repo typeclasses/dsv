@@ -129,7 +129,7 @@ sumPricesWithoutHeader :: L.Fold (Vector ByteString) (Dense "USD")
 sumPricesWithoutHeader = L.premap (fromMaybe 0 . ((Vector.!? 2) >=> readDollars)) L.sum
 
 prop_foldPrice_doc =
-    (getDataFileName "test/doc-example-without-header.csv" >>= \fp -> foldDsvFileWithoutHeader comma fp sumPricesWithoutHeader)
+    (getDataFileName "test/doc-example-without-header.csv" >>= \fp -> foldCsvFileWithoutHeader fp sumPricesWithoutHeader)
     ~>
     (AttoComplete, dense' 624.84)
 
