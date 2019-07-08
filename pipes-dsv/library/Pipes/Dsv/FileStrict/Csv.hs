@@ -11,6 +11,9 @@ import Pipes.Dsv.FileStrict.Dsv
 import Pipes.Dsv.Header
 import Pipes.Dsv.Vector
 
+-- base
+import Control.Monad.IO.Class (MonadIO (liftIO))
+
 {- | Often, the first line of a CSV file is a row that gives the name of each column in the file. If present, this row is called the /header/.
 
 === Example
@@ -34,7 +37,7 @@ Result:
 
 -}
 
-readCsvFileStrictUsingHeader :: FilePath -> IO (AttoTermination, [Vector (Labeled ByteString ByteString)])
+readCsvFileStrictUsingHeader :: MonadIO m => FilePath -> m (AttoTermination, [Vector (Labeled ByteString ByteString)])
 readCsvFileStrictUsingHeader fp = readDsvFileStrictUsingHeader comma fp
 
 {- | Not every CSV file has a header row. Use this function to read a CSV file that does /not/ have a header.
@@ -52,7 +55,7 @@ Result:
 >   ["2019-04-18", "Acme Co", "$24.95",  "Earthquake pills"] ]
 
 -}
-readCsvFileStrictWithoutHeader :: FilePath -> IO (AttoTermination, [Vector ByteString])
+readCsvFileStrictWithoutHeader :: MonadIO m => FilePath -> m (AttoTermination, [Vector ByteString])
 readCsvFileStrictWithoutHeader fp = readDsvFileStrictWithoutHeader comma fp
 
 {- | Sometimes a CSV file has a header but you don't care about it. In that case, you can use this function to /ignore/ the header line and read only the rows containing data.
@@ -72,5 +75,5 @@ Result:
 
 -}
 
-readCsvFileStrictIgnoringHeader :: FilePath -> IO (AttoTermination, [Vector ByteString])
+readCsvFileStrictIgnoringHeader :: MonadIO m => FilePath -> m (AttoTermination, [Vector ByteString])
 readCsvFileStrictIgnoringHeader fp = readDsvFileStrictIgnoringHeader comma fp
