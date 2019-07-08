@@ -57,6 +57,7 @@ library
       , Pipes.Dsv.Delimiter
       , Pipes.Dsv.Delimiter.TH
       , Pipes.Dsv.Delimiter.Type
+      , Pipes.Dsv.FileFold
       , Pipes.Dsv.FileStrict
       , Pipes.Dsv.Header
       , Pipes.Dsv.Vector
@@ -66,6 +67,7 @@ library
       , base ^>= 4.12.0.0
       , bytestring ^>= 0.10.8.2
       , cassava ^>= 0.5.1.0
+      , foldl ^>= 1.4.5
       , mtl ^>= 2.2.2
       , pipes ^>= 4.3.10
       , pipes-bytestring ^>= 2.1.6
@@ -90,6 +92,9 @@ test-suite hedgehog
   build-depends:
       pipes-dsv
     , base ^>= 4.12.0.0
+    , bytestring ^>= 0.10.8.2
+    , foldl ^>= 1.4.5
     , hedgehog ^>= 1.0
+    , safe-money ^>= 0.9
     , text ^>= 1.2.3.1
     , vector ^>= 0.12.0.3

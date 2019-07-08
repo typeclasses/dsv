@@ -1,3 +1,4 @@
 { "resolver": "nightly-2019-07-04"
 , "packages": ["pipes-dsv"]
+, "extra-deps": ["safe-money-0.9"]
 }

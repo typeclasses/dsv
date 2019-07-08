@@ -1,4 +1,6 @@
-{-# LANGUAGE OverloadedStrings, TemplateHaskell #-}
+{-# LANGUAGE DataKinds, OverloadedStrings, TemplateHaskell #-}
+
+-- If a test's name ends in "_doc", it is roughly equivalent to an example in the documentation. Please be sure to keep these tests consistent with the documentation when either changes.
 
 import Pipes.Dsv
 import Paths_pipes_dsv
@@ -7,7 +9,13 @@ import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
+import Control.Monad ((>=>))
+
 import Data.Bifunctor
+
+import Data.ByteString (ByteString)
+
+import Data.Maybe (fromMaybe)
 
 import Control.Monad (when)
 import Control.Monad.IO.Class
@@ -16,9 +24,16 @@ import System.IO (hSetEncoding, stdout, stderr, utf8)
 import System.Exit (exitFailure)
 
 import Data.Text (Text)
-import Data.Text.Encoding (encodeUtf8)
+import qualified Data.Text.Encoding as Text
+import qualified Data.Text as Text
+import qualified Data.Text.Read as Text
 
 import qualified Data.Vector as Vector
+import Data.Vector (Vector)
+
+import Money (Dense, dense, dense')
+
+import qualified Control.Foldl as L
 
 tests :: IO Bool
 tests =
@@ -42,7 +57,7 @@ prop_readCsvFileStrictWithoutHeader_tweets =
     (getDataFileName "test/tweets.csv" >>= readCsvFileStrictWithoutHeader)
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map encodeUtf8)
+    , map (Vector.fromList . map Text.encodeUtf8)
           [tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5]
     )
 
@@ -50,7 +65,7 @@ prop_readCsvFileStrictWithoutHeader_doc =
     (getDataFileName "test/doc-example-without-header.csv" >>= readCsvFileStrictWithoutHeader)
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map encodeUtf8)
+    , map (Vector.fromList . map Text.encodeUtf8)
         [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
         , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
         ]
@@ -60,7 +75,7 @@ prop_readCsvFileStrictUsingHeader_tweets =
     (getDataFileName "test/tweets.csv" >>= readCsvFileStrictUsingHeader)
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map (bimap encodeUtf8 encodeUtf8))
+    , map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
           [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
     )
 
@@ -68,7 +83,7 @@ prop_readCsvFileStrictUsingHeader_doc =
     (getDataFileName "test/doc-example-with-header.csv" >>= readCsvFileStrictUsingHeader)
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map (bimap encodeUtf8 encodeUtf8))
+    , map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
         [ [ Labeled "Date" "2019-03-24"
           , Labeled "Vendor" "Acme Co"
           , Labeled "Price" "$599.89"
@@ -87,7 +102,7 @@ prop_readCsvFileStrictIgnoringHeader_tweets =
     (getDataFileName "test/tweets.csv" >>= readCsvFileStrictIgnoringHeader)
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map encodeUtf8)
+    , map (Vector.fromList . map Text.encodeUtf8)
           [tweet1, tweet2, tweet3, tweet4, tweet5]
     )
 
@@ -95,11 +110,28 @@ prop_readCsvFileStrictIgnoringHeader_doc =
     (getDataFileName "test/doc-example-with-header.csv" >>= readCsvFileStrictIgnoringHeader)
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map encodeUtf8)
+    , map (Vector.fromList . map Text.encodeUtf8)
         [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
         , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
         ]
     )
+
+readDollars :: ByteString -> Maybe (Dense "USD")
+readDollars = (either (const Nothing) Just . Text.decodeUtf8') >=> Text.stripPrefix "$" >=> readRational >=> dense
+
+readRational :: Text -> Maybe Rational
+readRational t =
+    case Text.rational t of
+        Right (x, r) | Text.null r -> Just x
+        _ -> Nothing
+
+sumPricesWithoutHeader :: L.Fold (Vector ByteString) (Dense "USD")
+sumPricesWithoutHeader = L.premap (fromMaybe 0 . ((Vector.!? 2) >=> readDollars)) L.sum
+
+prop_foldPrice_doc =
+    (getDataFileName "test/doc-example-without-header.csv" >>= \fp -> foldDsvFileWithoutHeader comma fp sumPricesWithoutHeader)
+    ~>
+    (AttoComplete, dense' 624.84)
 
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
 

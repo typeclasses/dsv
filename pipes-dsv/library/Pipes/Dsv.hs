@@ -12,6 +12,12 @@ module Pipes.Dsv
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
 
+  -- * Folding CSV files
+
+  -- * Folding DSV files
+  , foldDsvFileWithoutHeader
+  , foldDsvFileWithoutHeaderM
+
   -- * Labeled values
   , Labeled (..), zipNames, zipNames'
 
@@ -26,6 +32,7 @@ module Pipes.Dsv
 import Pipes.Dsv.Atto
 import Pipes.Dsv.CsvFileStrict
 import Pipes.Dsv.Delimiter
+import Pipes.Dsv.FileFold
 import Pipes.Dsv.FileStrict
 import Pipes.Dsv.Header
 
