@@ -53,12 +53,13 @@ library
       , Pipes.Dsv.Cassava.Atto
       , Pipes.Dsv.Cassava.Opts
       , Pipes.Dsv.Cassava.Pipes
-      , Pipes.Dsv.CsvFileStrict
       , Pipes.Dsv.Delimiter
       , Pipes.Dsv.Delimiter.TH
       , Pipes.Dsv.Delimiter.Type
       , Pipes.Dsv.FileFold
       , Pipes.Dsv.FileStrict
+      , Pipes.Dsv.FileStrict.Csv
+      , Pipes.Dsv.FileStrict.Dsv
       , Pipes.Dsv.Header
       , Pipes.Dsv.Vector
 

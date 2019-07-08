@@ -30,7 +30,6 @@ module Pipes.Dsv
   ) where
 
 import Pipes.Dsv.Atto
-import Pipes.Dsv.CsvFileStrict
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileFold
 import Pipes.Dsv.FileStrict

@@ -1,4 +1,4 @@
-module Pipes.Dsv.CsvFileStrict
+module Pipes.Dsv.FileStrict.Csv
   ( readCsvFileStrictUsingHeader
   , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
@@ -7,7 +7,7 @@ module Pipes.Dsv.CsvFileStrict
 import Pipes.Dsv.Atto
 import Pipes.Dsv.ByteString
 import Pipes.Dsv.Delimiter
-import Pipes.Dsv.FileStrict
+import Pipes.Dsv.FileStrict.Dsv
 import Pipes.Dsv.Header
 import Pipes.Dsv.Vector
 
