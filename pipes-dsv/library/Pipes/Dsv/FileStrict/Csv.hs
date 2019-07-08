@@ -9,10 +9,8 @@ import Pipes.Dsv.ByteString
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileStrict.Dsv
 import Pipes.Dsv.Header
+import Pipes.Dsv.IO
 import Pipes.Dsv.Vector
-
--- base
-import Control.Monad.IO.Class (MonadIO)
 
 {- | Often, the first line of a CSV file is a row that gives the name of each column in the file. If present, this row is called the /header/.
 

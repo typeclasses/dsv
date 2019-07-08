@@ -9,25 +9,18 @@ import Pipes.Dsv.ByteString
 import Pipes.Dsv.Cassava
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.Header
+import Pipes.Dsv.IO
 import Pipes.Dsv.Vector
-
--- base
-import Control.Monad.IO.Class (MonadIO (liftIO))
-import System.IO (IOMode (ReadMode))
 
 -- pipes
 import qualified Pipes.Prelude as P
-
--- pipes-safe
-import qualified Pipes.Safe.Prelude as P
-import Pipes.Safe (runSafeT)
 
 readDsvFileStrictWithoutHeader :: MonadIO m => Delimiter -> FilePath -> m (AttoTermination, [Vector ByteString])
 readDsvFileStrictWithoutHeader d fp =
     liftIO $ runSafeT $
       do
         (xs, t) <- P.toListM' $
-            P.withFile fp ReadMode (handleAttoProducer (dsvRowAtto d))
+            withFile fp ReadMode (handleAttoProducer (dsvRowAtto d))
         return (t, xs)
 
 readDsvFileStrictUsingHeader :: MonadIO m => Delimiter -> FilePath -> m (AttoTermination, [Vector (Labeled ByteString ByteString)])

@@ -1,7 +1,6 @@
 module Pipes.Dsv.Atto.Error (AttoError (..)) where
 
--- base
-import Control.Exception (Exception)
+import Pipes.Dsv.IO
 
 data AttoError =
   AttoError

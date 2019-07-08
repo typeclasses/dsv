@@ -7,11 +7,8 @@ import Pipes.Dsv.Atto
 import Pipes.Dsv.ByteString
 import Pipes.Dsv.Cassava
 import Pipes.Dsv.Delimiter
+import Pipes.Dsv.IO
 import Pipes.Dsv.Vector
-
--- base
-import Control.Monad.IO.Class
-import System.IO (IOMode (ReadMode))
 
 -- foldl
 import qualified Control.Foldl as Foldl
@@ -23,7 +20,6 @@ import qualified Pipes.Prelude as P
 
 -- pipes-safe
 import qualified Pipes.Safe.Prelude as P
-import Pipes.Safe (runSafeT, MonadCatch, MonadMask)
 
 foldDsvFileWithoutHeader
     :: MonadIO m

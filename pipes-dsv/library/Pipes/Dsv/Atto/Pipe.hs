@@ -3,12 +3,10 @@ module Pipes.Dsv.Atto.Pipe (attoPipe, handleAttoProducer) where
 import Pipes.Dsv.Atto.Error
 import Pipes.Dsv.Atto.Termination
 import Pipes.Dsv.ByteString
+import Pipes.Dsv.IO
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto
-
--- base
-import System.IO (Handle)
 
 -- pipes
 import Pipes

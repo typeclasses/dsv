@@ -63,6 +63,7 @@ library
       , Pipes.Dsv.FileStrict.Csv
       , Pipes.Dsv.FileStrict.Dsv
       , Pipes.Dsv.Header
+      , Pipes.Dsv.IO
       , Pipes.Dsv.Vector
 
     build-depends:

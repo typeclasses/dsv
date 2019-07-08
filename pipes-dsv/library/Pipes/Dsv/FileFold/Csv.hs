@@ -7,16 +7,11 @@ import Pipes.Dsv.Atto
 import Pipes.Dsv.ByteString
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileFold.Dsv
+import Pipes.Dsv.IO
 import Pipes.Dsv.Vector
-
--- base
-import Control.Monad.IO.Class
 
 -- foldl
 import Control.Foldl (Fold, FoldM)
-
--- pipes-safe
-import Pipes.Safe (MonadCatch, MonadMask)
 
 foldCsvFileWithoutHeader
     :: MonadIO m
