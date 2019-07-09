@@ -33,6 +33,14 @@ module Pipes.Dsv
   -- * Attoparsec
   , attoPipe, AttoError (..), AttoTermination (..)
 
+  -- * Miscellania
+  -- $miscellania
+  , byteStringTextUtf8Maybe
+  , byteStringRationalMaybe
+  , textRationalMaybe
+  , byteStringDollarsMaybe
+  , textDollarsMaybe
+
   ) where
 
 import Pipes.Dsv.Atto
@@ -40,6 +48,7 @@ import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileFold
 import Pipes.Dsv.FileStrict
 import Pipes.Dsv.Header
+import Pipes.Dsv.Misc
 
 {- $readingCsvFilesStrictly
 
@@ -56,5 +65,11 @@ If you need to use a different delimiter, if your input source is something othe
 {- $readingDsvFilesStrictly
 
 \"CSV\" stands for "comma-separated values". But sometimes you may encounter CSV-like files in which the values are separated by some other character; e.g. it may have tabs instead of commas. We refer to such files more generally, then, as DSV files ("delimiter-separated values"). Functions that have a 'Delimiter' parameter, such as 'readDsvFileStrictWithoutHeader', let you specify what kind of DSV file you want to read.
+
+-}
+
+{- $miscellania
+
+These functions are not directly relevant to this library's primary purpose of consuming DSV files, but we include them because you might find some of them useful for reading particular kinds of values.
 
 -}

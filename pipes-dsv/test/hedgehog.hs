@@ -18,6 +18,7 @@ import Data.Foldable (toList, traverse_)
 import Data.Maybe (fromMaybe)
 import Data.Monoid (Sum (..))
 
+import Control.Applicative (liftA2)
 import Control.Monad (when)
 import Control.Monad.IO.Class
 
@@ -33,6 +34,7 @@ import qualified Data.Vector as Vector
 import Data.Vector (Vector, (!?))
 
 import qualified Control.Foldl as L
+import Control.Foldl (Fold (Fold))
 
 import Data.Sequence (Seq)
 import qualified Data.Sequence as Seq
@@ -148,22 +150,10 @@ prop_readCsvFileStrictIgnoringHeader_doc =
         ]
     )
 
-readDollars :: ByteString -> Maybe Rational
-readDollars =
-    (either (const Nothing) Just . Text.decodeUtf8')
-    >=> Text.stripPrefix "$"
-    >=> readRational
-
-readRational :: Text -> Maybe Rational
-readRational t =
-    case Text.rational t of
-        Right (x, r) | Text.null r -> Just x
-        _ -> Nothing
-
 sumPricesWithoutHeader :: L.Fold (Vector ByteString) Rational
 sumPricesWithoutHeader =
     L.premap
-        (fromMaybe 0 . ((!? 2) >=> readDollars))
+        (fromMaybe 0 . ((!? 2) >=> byteStringDollarsMaybe))
         L.sum
 
 -- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeader'.
