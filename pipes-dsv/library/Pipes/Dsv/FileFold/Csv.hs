@@ -7,11 +7,9 @@ import Pipes.Dsv.Atto
 import Pipes.Dsv.ByteString
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileFold.Dsv
+import Pipes.Dsv.Fold
 import Pipes.Dsv.IO
 import Pipes.Dsv.Vector
-
--- foldl
-import Control.Foldl (Fold, FoldM)
 
 -- todo: include example from the test
 foldCsvFileWithoutHeader
@@ -20,8 +18,8 @@ foldCsvFileWithoutHeader
     -> Fold (Vector ByteString) a  -- ^ What to do with each row
     -> m (AttoTermination, a)
 
-foldCsvFileWithoutHeader fp fld = foldDsvFileWithoutHeader comma fp fld
-
+foldCsvFileWithoutHeader fp fld =
+    foldDsvFileWithoutHeader comma fp fld
 
 {- |
 
@@ -59,4 +57,5 @@ foldCsvFileWithoutHeaderM
     -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
     -> m (AttoTermination, a)
 
-foldCsvFileWithoutHeaderM fp fld = foldDsvFileWithoutHeaderM comma fp fld
+foldCsvFileWithoutHeaderM fp fld =
+    foldDsvFileWithoutHeaderM comma fp fld
