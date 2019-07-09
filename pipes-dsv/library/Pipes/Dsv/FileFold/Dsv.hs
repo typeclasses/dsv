@@ -1,8 +1,7 @@
 module Pipes.Dsv.FileFold.Dsv
-  ( foldDsvFileWithoutHeader
-  , foldDsvFileWithoutHeaderM
-  , foldDsvFileIgnoringHeader
-  , foldDsvFileIgnoringHeaderM
+  ( foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
+  , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
+  , foldDsvFileUsingHeader, foldDsvFileUsingHeaderM
   ) where
 
 import Pipes.Dsv.Atto
@@ -10,6 +9,7 @@ import Pipes.Dsv.ByteString
 import Pipes.Dsv.Cassava
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.Fold
+import Pipes.Dsv.Header
 import Pipes.Dsv.IO
 import Pipes.Dsv.Vector
 
@@ -60,3 +60,27 @@ foldDsvFileIgnoringHeaderM
 
 foldDsvFileIgnoringHeaderM d fp fld =
     foldDsvFileWithoutHeaderM d fp (foldDropM 1 fld)
+
+foldDsvFileUsingHeader
+    :: MonadIO m
+    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath                       -- ^ The path of a CSV file to read
+    -> Fold (Vector (Labeled ByteString ByteString)) a
+                                      -- ^ What to do with each row
+    -> m (AttoTermination, a)
+
+foldDsvFileUsingHeader d fp fld =
+    liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
+        foldProducer fld (handleDsvRowProducer d h >-> zipNamesPipe)
+
+foldDsvFileUsingHeaderM
+    :: (MonadCatch m, MonadMask m, MonadIO m)
+    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath                       -- ^ The path of a CSV file to read
+    -> FoldM m (Vector (Labeled ByteString ByteString)) a
+                                      -- ^ What to do with each row
+    -> m (AttoTermination, a)
+
+foldDsvFileUsingHeaderM d fp fld =
+    runSafeT $ P.withFile fp ReadMode $ \h -> lift $
+        foldProducerM fld (handleDsvRowProducer d h >-> zipNamesPipe)
