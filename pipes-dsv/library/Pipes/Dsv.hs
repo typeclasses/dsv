@@ -19,6 +19,8 @@ module Pipes.Dsv
   -- * Folding DSV files
   , foldDsvFileWithoutHeader
   , foldDsvFileWithoutHeaderM
+  , foldDsvFileIgnoringHeader
+  , foldDsvFileIgnoringHeaderM
 
   -- * Labeled values
   , Labeled (..), zipNames, zipNames'

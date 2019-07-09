@@ -1,6 +1,6 @@
 {-# LANGUAGE DataKinds, OverloadedStrings, TemplateHaskell #-}
 
--- If a test's name ends in "_doc", it is roughly equivalent to an example in the documentation. Please be sure to keep these tests consistent with the documentation when either changes.
+-- Some tests are roughly equivalent to examples given in the library documentation. If this is the case, it is noted in a comment next to the test. Please be sure to keep these tests consistent with the documentation when either changes.
 
 import Pipes.Dsv
 import Paths_pipes_dsv
@@ -11,11 +11,12 @@ import qualified Hedgehog.Range as Range
 
 import Control.Monad ((>=>))
 
+import Data.IORef
 import Data.Bifunctor
-
 import Data.ByteString (ByteString)
-
+import Data.Foldable (toList, traverse_)
 import Data.Maybe (fromMaybe)
+import Data.Monoid (Sum (..))
 
 import Control.Monad (when)
 import Control.Monad.IO.Class
@@ -29,11 +30,12 @@ import qualified Data.Text as Text
 import qualified Data.Text.Read as Text
 
 import qualified Data.Vector as Vector
-import Data.Vector (Vector)
-
-import Money (Dense, dense, dense')
+import Data.Vector (Vector, (!?))
 
 import qualified Control.Foldl as L
+
+import Data.Sequence (Seq)
+import qualified Data.Sequence as Seq
 
 tests :: IO Bool
 tests =
@@ -54,15 +56,25 @@ main =
     when (not ok) exitFailure
 
 prop_readCsvFileStrictWithoutHeader_tweets =
-    (getDataFileName "test/tweets.csv" >>= readCsvFileStrictWithoutHeader)
+    (
+      do
+        fp <- getDataFileName "test/tweets.csv"
+        readCsvFileStrictWithoutHeader fp
+    )
     ~>
     ( AttoComplete
     , map (Vector.fromList . map Text.encodeUtf8)
           [tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5]
     )
 
+-- Corresponds to the example in the documentation for 'readCsvFileStrictWithoutHeader'.
 prop_readCsvFileStrictWithoutHeader_doc =
-    (getDataFileName "test/doc-example-without-header.csv" >>= readCsvFileStrictWithoutHeader)
+    (
+      do
+        fp <- getDataFileName "test/doc-example-without-header.csv"
+        readCsvFileStrictWithoutHeader fp
+        ------------------------------
+    )
     ~>
     ( AttoComplete
     , map (Vector.fromList . map Text.encodeUtf8)
@@ -72,15 +84,25 @@ prop_readCsvFileStrictWithoutHeader_doc =
     )
 
 prop_readCsvFileStrictUsingHeader_tweets =
-    (getDataFileName "test/tweets.csv" >>= readCsvFileStrictUsingHeader)
+    (
+      do
+        fp <- getDataFileName "test/tweets.csv"
+        readCsvFileStrictUsingHeader fp
+    )
     ~>
     ( AttoComplete
     , map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
           [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
     )
 
+-- Corresponds to the example in the documentation for 'readCsvFileStrictUsingHeader'.
 prop_readCsvFileStrictUsingHeader_doc =
-    (getDataFileName "test/doc-example-with-header.csv" >>= readCsvFileStrictUsingHeader)
+    (
+      do
+        fp <- getDataFileName "test/doc-example-with-header.csv"
+        readCsvFileStrictUsingHeader fp
+        ----------------------------
+    )
     ~>
     ( AttoComplete
     , map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
@@ -99,15 +121,25 @@ prop_readCsvFileStrictUsingHeader_doc =
     )
 
 prop_readCsvFileStrictIgnoringHeader_tweets =
-    (getDataFileName "test/tweets.csv" >>= readCsvFileStrictIgnoringHeader)
+    (
+      do
+        fp <- getDataFileName "test/tweets.csv"
+        readCsvFileStrictIgnoringHeader fp
+    )
     ~>
     ( AttoComplete
     , map (Vector.fromList . map Text.encodeUtf8)
           [tweet1, tweet2, tweet3, tweet4, tweet5]
     )
 
+-- Corresponds to the example in the documentation for 'readCsvFileStrictIgnoringHeader'.
 prop_readCsvFileStrictIgnoringHeader_doc =
-    (getDataFileName "test/doc-example-with-header.csv" >>= readCsvFileStrictIgnoringHeader)
+    (
+      do
+        fp <- getDataFileName "test/doc-example-with-header.csv"
+        readCsvFileStrictIgnoringHeader fp
+        -------------------------------
+    )
     ~>
     ( AttoComplete
     , map (Vector.fromList . map Text.encodeUtf8)
@@ -116,8 +148,11 @@ prop_readCsvFileStrictIgnoringHeader_doc =
         ]
     )
 
-readDollars :: ByteString -> Maybe (Dense "USD")
-readDollars = (either (const Nothing) Just . Text.decodeUtf8') >=> Text.stripPrefix "$" >=> readRational >=> dense
+readDollars :: ByteString -> Maybe Rational
+readDollars =
+    (either (const Nothing) Just . Text.decodeUtf8')
+    >=> Text.stripPrefix "$"
+    >=> readRational
 
 readRational :: Text -> Maybe Rational
 readRational t =
@@ -125,13 +160,40 @@ readRational t =
         Right (x, r) | Text.null r -> Just x
         _ -> Nothing
 
-sumPricesWithoutHeader :: L.Fold (Vector ByteString) (Dense "USD")
-sumPricesWithoutHeader = L.premap (fromMaybe 0 . ((Vector.!? 2) >=> readDollars)) L.sum
+sumPricesWithoutHeader :: L.Fold (Vector ByteString) Rational
+sumPricesWithoutHeader =
+    L.premap
+        (fromMaybe 0 . ((!? 2) >=> readDollars))
+        L.sum
 
+-- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeader'.
 prop_foldPrice_doc =
-    (getDataFileName "test/doc-example-without-header.csv" >>= \fp -> foldCsvFileWithoutHeader fp sumPricesWithoutHeader)
+    (
+      do
+        fp <- getDataFileName "test/doc-example-without-header.csv"
+        foldCsvFileWithoutHeader fp sumPricesWithoutHeader
+        ------------------------
+    )
     ~>
-    (AttoComplete, dense' 624.84)
+    (AttoComplete, 624.84)
+
+-- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeaderM'.
+prop_foldPriceM_doc =
+    (
+      do
+        r <- newIORef Seq.empty
+        let write x = modifyIORef r (<> Seq.singleton x)
+        fp <- getDataFileName "test/doc-example-without-header.csv"
+        (t, n) <-
+            foldCsvFileWithoutHeaderM fp $
+            -------------------------
+                L.mapM_ (traverse_ write . (!? 3)) *>
+                L.generalize L.length
+        rs <- readIORef r
+        return (t, toList rs, n)
+    )
+    ~>
+    (AttoComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
 
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
 
