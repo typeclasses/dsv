@@ -34,7 +34,12 @@ attoPipe p =
     proceed (Atto.Fail _remainingInput ctxs msg) =
         return (AttoError ctxs msg)
 
-handleAttoProducer :: MonadIO m => Atto.Parser a -> Handle -> Producer a m AttoTermination
+handleAttoProducer
+    :: MonadIO m
+    => Atto.Parser a
+    -> Handle         -- ^ File handle to read parser input from
+    -> Producer a m AttoTermination
+
 handleAttoProducer p h = readBytes >-> parseRows
   where
     readBytes =

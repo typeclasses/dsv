@@ -28,7 +28,7 @@ foldDsvFileWithoutHeader
 
 foldDsvFileWithoutHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
-        foldProducer fld (handleAttoProducer (dsvRowAtto d) h)
+        foldProducer fld (handleDsvRowProducer d h)
 
 foldDsvFileWithoutHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
@@ -39,7 +39,7 @@ foldDsvFileWithoutHeaderM
 
 foldDsvFileWithoutHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $
-        foldProducerM fld (handleAttoProducer (dsvRowAtto d) h)
+        foldProducerM fld (handleDsvRowProducer d h)
 
 foldDsvFileIgnoringHeader
     :: MonadIO m

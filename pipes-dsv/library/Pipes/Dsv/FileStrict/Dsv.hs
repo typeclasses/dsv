@@ -25,7 +25,8 @@ readDsvFileStrictWithoutHeader d fp =
     liftIO $ runSafeT $
       do
         (xs, t) <- P.toListM' $
-            withFile fp ReadMode (handleAttoProducer (dsvRowAtto d))
+            withFile fp ReadMode $ \h ->
+                handleDsvRowProducer d h
         return (t, xs)
 
 readDsvFileStrictUsingHeader

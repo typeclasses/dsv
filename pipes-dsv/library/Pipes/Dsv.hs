@@ -27,6 +27,9 @@ module Pipes.Dsv
   -- * Pipes
   , csvRowPipe, dsvRowPipe
 
+  -- * Producers
+  , handleCsvRowProducer, handleDsvRowProducer
+
   -- * Labeled values
   , Labeled (..), zipNames, zipNames'
 
@@ -34,7 +37,7 @@ module Pipes.Dsv
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
   -- * Attoparsec
-  , attoPipe, AttoError (..), AttoTermination (..)
+  , attoPipe, handleAttoProducer, AttoError (..), AttoTermination (..)
 
   -- * Miscellania
   -- $miscellania
