@@ -31,7 +31,7 @@ module Pipes.Dsv
   , handleCsvRowProducer, handleDsvRowProducer
 
   -- * Labeled values
-  , Labeled (..), zipNames, zipNames'
+  , Labeled (..), zipNames, zipNames', zipNamesPipe
 
   -- * Delimiters
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
