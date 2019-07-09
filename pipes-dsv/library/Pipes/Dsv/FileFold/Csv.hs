@@ -24,7 +24,7 @@ CSV file:
 
 Fold:
 
-> L.premap (fromMaybe 0 . ((!? 2) >=> byteStringDollarsMaybe)) L.sum
+> L.premap (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe)) L.sum
 
 Result:
 
@@ -53,11 +53,10 @@ CSV file:
 Fold:
 
 > import Data.Foldable (traverse_)
-> import Data.Vector ((!?))
 > import qualified Data.ByteString.Char8 as BS
 > import qualified Control.Foldl as L
 
-> L.mapM_ (traverse_ BS.putStrLn . (!? 3)) *>
+> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *>
 > L.generalize L.length
 
 Output printed to the terminal:
@@ -92,7 +91,7 @@ CSV file:
 
 Fold:
 
-> L.premap (fromMaybe 0 . ((!? 2) >=> byteStringDollarsMaybe)) L.sum
+> L.premap (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe)) L.sum
 
 Result:
 
@@ -122,11 +121,10 @@ CSV file:
 Fold:
 
 > import Data.Foldable (traverse_)
-> import Data.Vector ((!?))
 > import qualified Data.ByteString.Char8 as BS
 > import qualified Control.Foldl as L
 
-> L.mapM_ (traverse_ BS.putStrLn . (!? 3)) *>
+> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *>
 > L.generalize L.length
 
 Output printed to the terminal:

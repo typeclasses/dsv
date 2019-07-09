@@ -35,9 +35,10 @@ module Pipes.Dsv
 
   -- * Miscellania
   -- $miscellania
+  , nthColumn
   , byteStringTextUtf8Maybe
-  , byteStringRationalMaybe
-  , textRationalMaybe
+  , byteStringDecimalRationalMaybe
+  , textDecimalRationalMaybe
   , byteStringDollarsMaybe
   , textDollarsMaybe
 

@@ -31,7 +31,7 @@ import qualified Data.Text as Text
 import qualified Data.Text.Read as Text
 
 import qualified Data.Vector as Vector
-import Data.Vector (Vector, (!?))
+import Data.Vector (Vector)
 
 import qualified Control.Foldl as L
 import Control.Foldl (Fold (Fold))
@@ -153,8 +153,15 @@ prop_readCsvFileStrictIgnoringHeader_doc =
 sumPricesWithoutHeader :: L.Fold (Vector ByteString) Rational
 sumPricesWithoutHeader =
     L.premap
-        (fromMaybe 0 . ((!? 2) >=> byteStringDollarsMaybe))
+        (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe))
         L.sum
+
+writeNamesAndCountWithoutHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector ByteString) Int
+writeNamesAndCountWithoutHeader r =
+    L.mapM_ (traverse_ write . nthColumn 4) *>
+    L.generalize L.length
+  where
+    write x = modifyIORef r (<> Seq.singleton x)
 
 -- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeader'.
 prop_foldPrice_withoutHeader_doc =
@@ -172,13 +179,9 @@ prop_foldPriceM_withoutHeader_doc =
     (
       do
         r <- newIORef Seq.empty
-        let write x = modifyIORef r (<> Seq.singleton x)
         fp <- getDataFileName "test/doc-example-without-header.csv"
-        (t, n) <-
-            foldCsvFileWithoutHeaderM fp $
-            -------------------------
-                L.mapM_ (traverse_ write . (!? 3)) *>
-                L.generalize L.length
+        (t, n) <- foldCsvFileWithoutHeaderM fp (writeNamesAndCountWithoutHeader r)
+                  -------------------------
         rs <- readIORef r
         return (t, toList rs, n)
     )
@@ -201,13 +204,9 @@ prop_foldPriceM_ignoringHeader_doc =
     (
       do
         r <- newIORef Seq.empty
-        let write x = modifyIORef r (<> Seq.singleton x)
         fp <- getDataFileName "test/doc-example-with-header.csv"
-        (t, n) <-
-            foldCsvFileIgnoringHeaderM fp $
-            --------------------------
-                L.mapM_ (traverse_ write . (!? 3)) *>
-                L.generalize L.length
+        (t, n) <- foldCsvFileIgnoringHeaderM fp (writeNamesAndCountWithoutHeader r)
+                  --------------------------
         rs <- readIORef r
         return (t, toList rs, n)
     )
