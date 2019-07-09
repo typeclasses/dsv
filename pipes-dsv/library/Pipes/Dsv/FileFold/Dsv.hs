@@ -21,7 +21,7 @@ import qualified Pipes.Safe.Prelude as P
 
 foldDsvFileWithoutHeader
     :: MonadIO m
-    => Delimiter
+    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath                       -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) a     -- ^ What to do with each row
     -> m (AttoTermination, a)
@@ -32,7 +32,7 @@ foldDsvFileWithoutHeader d fp fld =
 
 foldDsvFileWithoutHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => Delimiter
+    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath                       -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
     -> m (AttoTermination, a)
@@ -43,7 +43,7 @@ foldDsvFileWithoutHeaderM d fp fld =
 
 foldDsvFileIgnoringHeader
     :: MonadIO m
-    => Delimiter
+    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath                       -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) a     -- ^ What to do with each row
     -> m (AttoTermination, a)
@@ -53,7 +53,7 @@ foldDsvFileIgnoringHeader d fp fld =
 
 foldDsvFileIgnoringHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => Delimiter
+    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath                       -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
     -> m (AttoTermination, a)

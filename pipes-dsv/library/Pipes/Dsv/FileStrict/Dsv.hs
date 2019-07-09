@@ -17,7 +17,7 @@ import qualified Pipes.Prelude as P
 
 readDsvFileStrictWithoutHeader
     :: MonadIO m
-    => Delimiter
+    => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
     -> m (AttoTermination, [Vector ByteString])
 
@@ -30,7 +30,7 @@ readDsvFileStrictWithoutHeader d fp =
 
 readDsvFileStrictUsingHeader
     :: MonadIO m
-    => Delimiter
+    => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
     -> m (AttoTermination, [Vector (Labeled ByteString ByteString)])
 
@@ -39,7 +39,7 @@ readDsvFileStrictUsingHeader d fp =
 
 readDsvFileStrictIgnoringHeader
     :: MonadIO m
-    => Delimiter
+    => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
 
     -> m (AttoTermination, [Vector ByteString])

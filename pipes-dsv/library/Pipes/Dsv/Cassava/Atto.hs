@@ -11,5 +11,8 @@ import Data.Attoparsec.ByteString.Char8 (endOfLine)
 -- cassava
 import qualified Data.Csv.Parser as Cassava
 
-dsvRowAtto :: Delimiter -> AttoParser (Vector ByteString)
+dsvRowAtto
+    :: Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> AttoParser (Vector ByteString)
+
 dsvRowAtto d = Cassava.record (delimiterWord8 d) <* endOfLine
