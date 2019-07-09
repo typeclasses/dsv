@@ -43,9 +43,11 @@ module Pipes.Dsv
   -- * Attoparsec
   , attoPipe, handleAttoProducer, AttoError (..), AttoTermination (..)
 
+  -- * Locating a column in a row
+  , nthColumn, columnName
+
   -- * Miscellania
   -- $miscellania
-  , nthColumn
   , byteStringTextUtf8Maybe
   , byteStringDecimalRationalMaybe
   , textDecimalRationalMaybe

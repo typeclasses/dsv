@@ -3,7 +3,7 @@
 -- | Miscellania
 
 module Pipes.Dsv.Misc
-  ( nthColumn
+  ( nthColumn, columnName
   , byteStringTextUtf8Maybe
   , byteStringDecimalRationalMaybe
   , textDecimalRationalMaybe
@@ -12,6 +12,7 @@ module Pipes.Dsv.Misc
   ) where
 
 import Pipes.Dsv.ByteString
+import Pipes.Dsv.Header
 import Pipes.Dsv.Vector
 
 -- base
@@ -25,6 +26,7 @@ import qualified Data.Text.Read as Text
 
 -- vector
 import Data.Vector ((!?))
+import qualified Data.Vector as Vector
 
 {- |
 
@@ -40,6 +42,12 @@ import Data.Vector ((!?))
 
 nthColumn :: Integer -> Vector a -> Maybe a
 nthColumn n xs = xs !? (fromIntegral n - 1)
+
+columnName :: Eq name => name -> Vector (Labeled name value) -> Maybe value
+columnName n xs =
+  do
+    Labeled _ v <- Vector.find (\(Labeled n' _) -> n == n') xs
+    return v
 
 rightMaybe :: Either a b -> Maybe b
 rightMaybe =

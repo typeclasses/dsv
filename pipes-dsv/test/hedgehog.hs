@@ -156,9 +156,22 @@ sumPricesWithoutHeader =
         (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe))
         L.sum
 
+sumPricesUsingHeader :: L.Fold (Vector (Labeled ByteString ByteString)) Rational
+sumPricesUsingHeader =
+    L.premap
+        (fromMaybe 0 . (columnName "Price" >=> byteStringDollarsMaybe))
+        L.sum
+
 writeNamesAndCountWithoutHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector ByteString) Int
 writeNamesAndCountWithoutHeader r =
     L.mapM_ (traverse_ write . nthColumn 4) *>
+    L.generalize L.length
+  where
+    write x = modifyIORef r (<> Seq.singleton x)
+
+writeNamesAndCountUsingHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (Labeled ByteString ByteString)) Int
+writeNamesAndCountUsingHeader r =
+    L.mapM_ (traverse_ write . columnName "Notes") *>
     L.generalize L.length
   where
     write x = modifyIORef r (<> Seq.singleton x)
@@ -207,6 +220,31 @@ prop_foldPriceM_ignoringHeader_doc =
         fp <- getDataFileName "test/doc-example-with-header.csv"
         (t, n) <- foldCsvFileIgnoringHeaderM fp (writeNamesAndCountWithoutHeader r)
                   --------------------------
+        rs <- readIORef r
+        return (t, toList rs, n)
+    )
+    ~>
+    (AttoComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
+
+-- Corresponds to the example in the documentation for 'foldCsvFileUsingHeader'.
+prop_foldPrice_usingHeader_doc =
+    (
+      do
+        fp <- getDataFileName "test/doc-example-with-header.csv"
+        foldCsvFileUsingHeader fp sumPricesUsingHeader
+        ----------------------
+    )
+    ~>
+    (AttoComplete, 624.84)
+
+-- Corresponds to the example in the documentation for 'foldCsvFileUsingHeaderM'.
+prop_foldPriceM_usingHeader_doc =
+    (
+      do
+        r <- newIORef Seq.empty
+        fp <- getDataFileName "test/doc-example-with-header.csv"
+        (t, n) <- foldCsvFileUsingHeaderM fp (writeNamesAndCountUsingHeader r)
+                  -----------------------
         rs <- readIORef r
         return (t, toList rs, n)
     )

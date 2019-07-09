@@ -147,7 +147,26 @@ foldCsvFileIgnoringHeaderM
 foldCsvFileIgnoringHeaderM fp fld =
     foldDsvFileIgnoringHeaderM comma fp fld
 
--- todo: example
+{- |
+
+=== Example
+
+CSV file:
+
+> Date,Vendor,Price,Notes
+> 2019-03-24,Acme Co,$599.89,Dehydrated boulders
+> 2019-04-18,Acme Co,$24.95,Earthquake pills
+
+Fold:
+
+> L.premap (fromMaybe 0 . (columnName "Price" >=> byteStringDollarsMaybe)) L.sum
+
+Result:
+
+> (AttoComplete, 624.84)
+
+-}
+
 foldCsvFileUsingHeader
     :: MonadIO m
     => FilePath                       -- ^ The path of a CSV file to read
@@ -158,7 +177,36 @@ foldCsvFileUsingHeader
 foldCsvFileUsingHeader fp fld =
     foldDsvFileUsingHeader comma fp fld
 
--- todo: example
+{- |
+
+=== Example
+
+CSV file:
+
+> Date,Vendor,Price,Notes
+> 2019-03-24,Acme Co,$599.89,Dehydrated boulders
+> 2019-04-18,Acme Co,$24.95,Earthquake pills
+
+Fold:
+
+> import Data.Foldable (traverse_)
+> import qualified Data.ByteString.Char8 as BS
+> import qualified Control.Foldl as L
+
+> L.mapM_ (traverse_ BS.putStrLn . columnName "Notes") *>
+> L.generalize L.length
+
+Output printed to the terminal:
+
+> Dehydrated boulders
+> Earthquake pills
+
+Result:
+
+> (AttoComplete, 2)
+
+-}
+
 foldCsvFileUsingHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
     => FilePath                       -- ^ The path of a CSV file to read
