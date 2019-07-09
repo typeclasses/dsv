@@ -24,6 +24,9 @@ module Pipes.Dsv
   , foldDsvFileIgnoringHeader
   , foldDsvFileIgnoringHeaderM
 
+  -- * Pipes
+  , csvRowPipe, dsvRowPipe
+
   -- * Labeled values
   , Labeled (..), zipNames, zipNames'
 
@@ -45,6 +48,7 @@ module Pipes.Dsv
   ) where
 
 import Pipes.Dsv.Atto
+import Pipes.Dsv.Cassava
 import Pipes.Dsv.Delimiter
 import Pipes.Dsv.FileFold
 import Pipes.Dsv.FileStrict
