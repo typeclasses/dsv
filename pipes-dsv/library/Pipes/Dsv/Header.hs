@@ -1,4 +1,7 @@
-module Pipes.Dsv.Header (Labeled (..), zipNames, zipNames') where
+module Pipes.Dsv.Header
+  ( Labeled (..)
+  , zipNames, zipNames'
+  ) where
 
 import Pipes.Dsv.Vector
 

@@ -1,4 +1,6 @@
-module Pipes.Dsv.Vector (Vector, vectorZipWith) where
+module Pipes.Dsv.Vector
+  ( Vector, vectorZipWith
+  ) where
 
 import Data.Vector (Vector)
 import qualified Data.Vector as Vector

@@ -1,4 +1,9 @@
-module Pipes.Dsv.Atto (attoPipe, handleAttoProducer, AttoError (..), AttoParser, AttoTermination (..)) where
+module Pipes.Dsv.Atto
+  ( attoPipe, handleAttoProducer
+  , AttoError (..)
+  , AttoParser
+  , AttoTermination (..)
+  ) where
 
 import Pipes.Dsv.Atto.Error
 import Pipes.Dsv.Atto.Pipe

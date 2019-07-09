@@ -1,6 +1,11 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Pipes.Dsv.Delimiter (Delimiter (..), charDelimiter, comma, tab, delimiterWord8) where
+module Pipes.Dsv.Delimiter
+  ( Delimiter (..)
+  , charDelimiter
+  , delimiterWord8
+  , comma, tab
+  ) where
 
 import Pipes.Dsv.Delimiter.Type
 import Pipes.Dsv.Delimiter.TH
