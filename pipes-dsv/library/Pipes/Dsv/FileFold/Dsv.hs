@@ -21,8 +21,9 @@ import qualified Pipes.Safe.Prelude as P
 
 foldDsvFileWithoutHeader
     :: MonadIO m
-    => Delimiter -> FilePath
-    -> Fold (Vector ByteString) a
+    => Delimiter
+    -> FilePath                       -- ^ The path of a CSV file to read
+    -> Fold (Vector ByteString) a     -- ^ What to do with each row
     -> m (AttoTermination, a)
 
 foldDsvFileWithoutHeader d fp fld =
@@ -31,8 +32,9 @@ foldDsvFileWithoutHeader d fp fld =
 
 foldDsvFileWithoutHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => Delimiter -> FilePath
-    -> FoldM m (Vector ByteString) a
+    => Delimiter
+    -> FilePath                       -- ^ The path of a CSV file to read
+    -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
     -> m (AttoTermination, a)
 
 foldDsvFileWithoutHeaderM d fp fld =
@@ -41,8 +43,9 @@ foldDsvFileWithoutHeaderM d fp fld =
 
 foldDsvFileIgnoringHeader
     :: MonadIO m
-    => Delimiter -> FilePath
-    -> Fold (Vector ByteString) a
+    => Delimiter
+    -> FilePath                       -- ^ The path of a CSV file to read
+    -> Fold (Vector ByteString) a     -- ^ What to do with each row
     -> m (AttoTermination, a)
 
 foldDsvFileIgnoringHeader d fp fld =
@@ -50,8 +53,9 @@ foldDsvFileIgnoringHeader d fp fld =
 
 foldDsvFileIgnoringHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => Delimiter -> FilePath
-    -> FoldM m (Vector ByteString) a
+    => Delimiter
+    -> FilePath                       -- ^ The path of a CSV file to read
+    -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
     -> m (AttoTermination, a)
 
 foldDsvFileIgnoringHeaderM d fp fld =

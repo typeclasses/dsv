@@ -15,6 +15,8 @@ module Pipes.Dsv
   -- * Folding CSV files
   , foldCsvFileWithoutHeader
   , foldCsvFileWithoutHeaderM
+  , foldCsvFileIgnoringHeader
+  , foldCsvFileIgnoringHeaderM
 
   -- * Folding DSV files
   , foldDsvFileWithoutHeader

@@ -1,6 +1,8 @@
 module Pipes.Dsv.FileFold.Csv
   ( foldCsvFileWithoutHeader
   , foldCsvFileWithoutHeaderM
+  , foldCsvFileIgnoringHeader
+  , foldCsvFileIgnoringHeaderM
   ) where
 
 import Pipes.Dsv.Atto
@@ -59,3 +61,23 @@ foldCsvFileWithoutHeaderM
 
 foldCsvFileWithoutHeaderM fp fld =
     foldDsvFileWithoutHeaderM comma fp fld
+
+-- todo: example
+foldCsvFileIgnoringHeader
+    :: MonadIO m
+    => FilePath                       -- ^ The path of a CSV file to read
+    -> Fold (Vector ByteString) a     -- ^ What to do with each row
+    -> m (AttoTermination, a)
+
+foldCsvFileIgnoringHeader fp fld =
+    foldDsvFileIgnoringHeader comma fp fld
+
+-- todo: example
+foldCsvFileIgnoringHeaderM
+    :: (MonadCatch m, MonadMask m, MonadIO m)
+    => FilePath                       -- ^ The path of a CSV file to read
+    -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
+    -> m (AttoTermination, a)
+
+foldCsvFileIgnoringHeaderM fp fld =
+    foldDsvFileIgnoringHeaderM comma fp fld

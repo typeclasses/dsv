@@ -5,6 +5,8 @@ module Pipes.Dsv.FileFold
   , foldCsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader
   , foldDsvFileIgnoringHeaderM
+  , foldCsvFileIgnoringHeader
+  , foldCsvFileIgnoringHeaderM
   ) where
 
 import Pipes.Dsv.FileFold.Csv

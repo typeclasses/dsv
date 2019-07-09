@@ -167,7 +167,7 @@ sumPricesWithoutHeader =
         L.sum
 
 -- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeader'.
-prop_foldPrice_doc =
+prop_foldPrice_withoutHeader_doc =
     (
       do
         fp <- getDataFileName "test/doc-example-without-header.csv"
@@ -178,7 +178,7 @@ prop_foldPrice_doc =
     (AttoComplete, 624.84)
 
 -- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeaderM'.
-prop_foldPriceM_doc =
+prop_foldPriceM_withoutHeader_doc =
     (
       do
         r <- newIORef Seq.empty
@@ -187,6 +187,35 @@ prop_foldPriceM_doc =
         (t, n) <-
             foldCsvFileWithoutHeaderM fp $
             -------------------------
+                L.mapM_ (traverse_ write . (!? 3)) *>
+                L.generalize L.length
+        rs <- readIORef r
+        return (t, toList rs, n)
+    )
+    ~>
+    (AttoComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
+
+-- Corresponds to the example in the documentation for 'foldCsvFileIgnoringHeader'.
+prop_foldPrice_ignoringHeader_doc =
+    (
+      do
+        fp <- getDataFileName "test/doc-example-with-header.csv"
+        foldCsvFileIgnoringHeader fp sumPricesWithoutHeader
+        -------------------------
+    )
+    ~>
+    (AttoComplete, 624.84)
+
+-- Corresponds to the example in the documentation for 'foldCsvFileIgnoringHeaderM'.
+prop_foldPriceM_ignoringHeader_doc =
+    (
+      do
+        r <- newIORef Seq.empty
+        let write x = modifyIORef r (<> Seq.singleton x)
+        fp <- getDataFileName "test/doc-example-with-header.csv"
+        (t, n) <-
+            foldCsvFileIgnoringHeaderM fp $
+            --------------------------
                 L.mapM_ (traverse_ write . (!? 3)) *>
                 L.generalize L.length
         rs <- readIORef r
