@@ -1,6 +1,6 @@
 cabal-version: 2.4
 
-name: pipes-dsv
+name: dsv
 version: 0.0.0.1
 category: Text, CSV, Pipes
 synopsis: Streaming DSV (delimiter-separated values) parser
@@ -22,8 +22,8 @@ copyright: 2019 Typeclass Consulting, LLC
 license: MIT
 license-file: license.txt
 
-homepage:    https://github.com/typeclasses/pipes-dsv
-bug-reports: https://github.com/typeclasses/pipes-dsv/issues
+homepage:    https://github.com/typeclasses/dsv
+bug-reports: https://github.com/typeclasses/dsv/issues
 
 author:     Chris Martin
 maintainer: Chris Martin, Julie Moronuki
@@ -40,10 +40,10 @@ library
         Pipes.Dsv
 
     autogen-modules:
-        Paths_pipes_dsv
+        Paths_dsv
 
     other-modules:
-        Paths_pipes_dsv
+        Paths_dsv
       , Pipes.Dsv.Atto
       , Pipes.Dsv.Atto.Error
       , Pipes.Dsv.Atto.Pipe
@@ -94,10 +94,10 @@ test-suite hedgehog
       -fno-warn-missing-signatures
 
   other-modules:
-      Paths_pipes_dsv
+      Paths_dsv
 
   build-depends:
-      pipes-dsv
+      dsv
     , base ^>= 4.12.0.0
     , bytestring ^>= 0.10.8.2
     , containers ^>= 0.6.0.1
