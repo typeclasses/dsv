@@ -60,7 +60,7 @@ main =
 prop_readCsvFileStrictWithoutHeader_tweets =
     (
       do
-        fp <- getDataFileName "test/tweets.csv"
+        fp <- getDataFileName "test-data/tweets.csv"
         readCsvFileStrictWithoutHeader fp
     )
     ~>
@@ -73,7 +73,7 @@ prop_readCsvFileStrictWithoutHeader_tweets =
 prop_readCsvFileStrictWithoutHeader_doc =
     (
       do
-        fp <- getDataFileName "test/doc-example-without-header.csv"
+        fp <- getDataFileName "test-data/doc-example-without-header.csv"
         readCsvFileStrictWithoutHeader fp
         ------------------------------
     )
@@ -88,7 +88,7 @@ prop_readCsvFileStrictWithoutHeader_doc =
 prop_readCsvFileStrictUsingHeader_tweets =
     (
       do
-        fp <- getDataFileName "test/tweets.csv"
+        fp <- getDataFileName "test-data/tweets.csv"
         readCsvFileStrictUsingHeader fp
     )
     ~>
@@ -101,7 +101,7 @@ prop_readCsvFileStrictUsingHeader_tweets =
 prop_readCsvFileStrictUsingHeader_doc =
     (
       do
-        fp <- getDataFileName "test/doc-example-with-header.csv"
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
         readCsvFileStrictUsingHeader fp
         ----------------------------
     )
@@ -125,7 +125,7 @@ prop_readCsvFileStrictUsingHeader_doc =
 prop_readCsvFileStrictIgnoringHeader_tweets =
     (
       do
-        fp <- getDataFileName "test/tweets.csv"
+        fp <- getDataFileName "test-data/tweets.csv"
         readCsvFileStrictIgnoringHeader fp
     )
     ~>
@@ -138,7 +138,7 @@ prop_readCsvFileStrictIgnoringHeader_tweets =
 prop_readCsvFileStrictIgnoringHeader_doc =
     (
       do
-        fp <- getDataFileName "test/doc-example-with-header.csv"
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
         readCsvFileStrictIgnoringHeader fp
         -------------------------------
     )
@@ -180,7 +180,7 @@ writeNamesAndCountUsingHeader r =
 prop_foldPrice_withoutHeader_doc =
     (
       do
-        fp <- getDataFileName "test/doc-example-without-header.csv"
+        fp <- getDataFileName "test-data/doc-example-without-header.csv"
         foldCsvFileWithoutHeader fp sumPricesWithoutHeader
         ------------------------
     )
@@ -192,7 +192,7 @@ prop_foldPriceM_withoutHeader_doc =
     (
       do
         r <- newIORef Seq.empty
-        fp <- getDataFileName "test/doc-example-without-header.csv"
+        fp <- getDataFileName "test-data/doc-example-without-header.csv"
         (t, n) <- foldCsvFileWithoutHeaderM fp (writeNamesAndCountWithoutHeader r)
                   -------------------------
         rs <- readIORef r
@@ -205,7 +205,7 @@ prop_foldPriceM_withoutHeader_doc =
 prop_foldPrice_ignoringHeader_doc =
     (
       do
-        fp <- getDataFileName "test/doc-example-with-header.csv"
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
         foldCsvFileIgnoringHeader fp sumPricesWithoutHeader
         -------------------------
     )
@@ -217,7 +217,7 @@ prop_foldPriceM_ignoringHeader_doc =
     (
       do
         r <- newIORef Seq.empty
-        fp <- getDataFileName "test/doc-example-with-header.csv"
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
         (t, n) <- foldCsvFileIgnoringHeaderM fp (writeNamesAndCountWithoutHeader r)
                   --------------------------
         rs <- readIORef r
@@ -230,7 +230,7 @@ prop_foldPriceM_ignoringHeader_doc =
 prop_foldPrice_usingHeader_doc =
     (
       do
-        fp <- getDataFileName "test/doc-example-with-header.csv"
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
         foldCsvFileUsingHeader fp sumPricesUsingHeader
         ----------------------
     )
@@ -242,7 +242,7 @@ prop_foldPriceM_usingHeader_doc =
     (
       do
         r <- newIORef Seq.empty
-        fp <- getDataFileName "test/doc-example-with-header.csv"
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
         (t, n) <- foldCsvFileUsingHeaderM fp (writeNamesAndCountUsingHeader r)
                   -----------------------
         rs <- readIORef r
