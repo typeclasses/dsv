@@ -34,9 +34,11 @@ Result:
 
 foldCsvFileWithoutHeader
     :: MonadIO m
-    => FilePath                    -- ^ The path of a CSV file to read
-    -> Fold (Vector ByteString) a  -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => FilePath
+        -- ^ The path of a CSV file to read
+    -> Fold (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldCsvFileWithoutHeader fp fld =
     foldDsvFileWithoutHeader comma fp fld
@@ -72,9 +74,11 @@ Result:
 
 foldCsvFileWithoutHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => FilePath                       -- ^ The path of a CSV file to read
-    -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => FilePath
+        -- ^ The path of a CSV file to read
+    -> FoldM m (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldCsvFileWithoutHeaderM fp fld =
     foldDsvFileWithoutHeaderM comma fp fld
@@ -101,9 +105,11 @@ Result:
 
 foldCsvFileIgnoringHeader
     :: MonadIO m
-    => FilePath                       -- ^ The path of a CSV file to read
-    -> Fold (Vector ByteString) a     -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => FilePath
+        -- ^ The path of a CSV file to read
+    -> Fold (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldCsvFileIgnoringHeader fp fld =
     foldDsvFileIgnoringHeader comma fp fld
@@ -140,9 +146,11 @@ Result:
 
 foldCsvFileIgnoringHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => FilePath                       -- ^ The path of a CSV file to read
-    -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => FilePath
+        -- ^ The path of a CSV file to read
+    -> FoldM m (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldCsvFileIgnoringHeaderM fp fld =
     foldDsvFileIgnoringHeaderM comma fp fld
@@ -169,10 +177,11 @@ Result:
 
 foldCsvFileUsingHeader
     :: MonadIO m
-    => FilePath                       -- ^ The path of a CSV file to read
-    -> Fold (Vector (Labeled ByteString ByteString)) a
-                                      -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => FilePath
+        -- ^ The path of a CSV file to read
+    -> Fold (Vector (Labeled ByteString ByteString)) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldCsvFileUsingHeader fp fld =
     foldDsvFileUsingHeader comma fp fld
@@ -209,10 +218,11 @@ Result:
 
 foldCsvFileUsingHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => FilePath                       -- ^ The path of a CSV file to read
-    -> FoldM m (Vector (Labeled ByteString ByteString)) a
-                                      -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => FilePath
+        -- ^ The path of a CSV file to read
+    -> FoldM m (Vector (Labeled ByteString ByteString)) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldCsvFileUsingHeaderM fp fld =
     foldDsvFileUsingHeaderM comma fp fld

@@ -13,6 +13,7 @@ module Pipes.Dsv
   , readDsvFileStrictIgnoringHeader
 
   -- * Folding CSV files
+  -- $foldingCsvFiles
   , foldCsvFileUsingHeader
   , foldCsvFileUsingHeaderM
   , foldCsvFileWithoutHeader
@@ -64,6 +65,8 @@ import Pipes.Dsv.FileStrict
 import Pipes.Dsv.Header
 import Pipes.Dsv.Misc
 
+import qualified Control.Foldl as L
+
 {- $readingCsvFilesStrictly
 
 We present these functions first because they require the least amount of effort to use. Each function in this section:
@@ -79,6 +82,19 @@ If you need to use a different delimiter, if your input source is something othe
 {- $readingDsvFilesStrictly
 
 \"CSV\" stands for "comma-separated values". But sometimes you may encounter CSV-like files in which the values are separated by some other character; e.g. it may have tabs instead of commas. We refer to such files more generally, then, as DSV files ("delimiter-separated values"). Functions that have a 'Delimiter' parameter, such as 'readDsvFileStrictWithoutHeader', let you specify what kind of DSV file you want to read.
+
+-}
+
+{- $foldingCsvFiles
+
+The functions in this section are all parameterized on:
+
+  1. A 'FilePath', which specifies what CSV file to read;
+  2. Either a 'L.Fold' or a 'L.FoldM', which specifies what action to take upon each row from the CSV file.
+
+Use one of the functions with a 'L.Fold' parameter if you only need to collect information from the rows and aggregate it into some @result@ value. Use a function with a 'L.FoldM' parameter if your fold also needs to perform some kind of /effect/ as the rows are read from the file.
+
+See the "Control.Foldl" module for much more on what folds are and how to construct them.
 
 -}
 

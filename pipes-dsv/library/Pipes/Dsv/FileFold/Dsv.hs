@@ -21,10 +21,13 @@ import qualified Pipes.Safe.Prelude as P
 
 foldDsvFileWithoutHeader
     :: MonadIO m
-    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
-    -> FilePath                       -- ^ The path of a CSV file to read
-    -> Fold (Vector ByteString) a     -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath
+        -- ^ The path of a CSV file to read
+    -> Fold (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldDsvFileWithoutHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
@@ -32,10 +35,13 @@ foldDsvFileWithoutHeader d fp fld =
 
 foldDsvFileWithoutHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
-    -> FilePath                       -- ^ The path of a CSV file to read
-    -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath
+        -- ^ The path of a CSV file to read
+    -> FoldM m (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldDsvFileWithoutHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $
@@ -43,31 +49,39 @@ foldDsvFileWithoutHeaderM d fp fld =
 
 foldDsvFileIgnoringHeader
     :: MonadIO m
-    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
-    -> FilePath                       -- ^ The path of a CSV file to read
-    -> Fold (Vector ByteString) a     -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath
+        -- ^ The path of a CSV file to read
+    -> Fold (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldDsvFileIgnoringHeader d fp fld =
     foldDsvFileWithoutHeader d fp (foldDrop 1 fld)
 
 foldDsvFileIgnoringHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
-    -> FilePath                       -- ^ The path of a CSV file to read
-    -> FoldM m (Vector ByteString) a  -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath
+        -- ^ The path of a CSV file to read
+    -> FoldM m (Vector ByteString) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldDsvFileIgnoringHeaderM d fp fld =
     foldDsvFileWithoutHeaderM d fp (foldDropM 1 fld)
 
 foldDsvFileUsingHeader
     :: MonadIO m
-    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
-    -> FilePath                       -- ^ The path of a CSV file to read
-    -> Fold (Vector (Labeled ByteString ByteString)) a
-                                      -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath
+        -- ^ The path of a CSV file to read
+    -> Fold (Vector (Labeled ByteString ByteString)) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldDsvFileUsingHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
@@ -75,11 +89,13 @@ foldDsvFileUsingHeader d fp fld =
 
 foldDsvFileUsingHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
-    => Delimiter                      -- ^ What character separates input values, e.g. 'comma' or 'tab'
-    -> FilePath                       -- ^ The path of a CSV file to read
-    -> FoldM m (Vector (Labeled ByteString ByteString)) a
-                                      -- ^ What to do with each row
-    -> m (AttoTermination, a)
+    => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> FilePath
+        -- ^ The path of a CSV file to read
+    -> FoldM m (Vector (Labeled ByteString ByteString)) result
+        -- ^ What to do with each row
+    -> m (AttoTermination, result)
 
 foldDsvFileUsingHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $
