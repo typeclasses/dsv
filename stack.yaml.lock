@@ -3,14 +3,7 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages:
-- completed:
-    hackage: safe-money-0.9@sha256:b34d829063582ff4eaa9deb75b940731a188cddc0529e9c654d4ff43a1a7b978,2475
-    pantry-tree:
-      size: 429
-      sha256: b9e9682921f80670b6d1c96fd705846f59e31c096b8e6121300816df522718eb
-  original:
-    hackage: safe-money-0.9
+packages: []
 snapshots:
 - completed:
     size: 515634
