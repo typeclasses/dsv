@@ -3,12 +3,10 @@ cabal-version: 2.4
 name: dsv
 version: 0.0.0.1
 category: Text, CSV, Pipes
-synopsis: Streaming DSV (delimiter-separated values) parser
+synopsis: DSV (delimiter-separated values)
 
 description:
-    Integrates the @cassava@ and @pipes@ packages to create a
-    convenient way to consume DSV (delimiter-separated values)
-    data in constant memory.
+    Utilities for working with DSV (delimiter-separated values) files.
 
 tested-with: GHC==8.6.5
 
