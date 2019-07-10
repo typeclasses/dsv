@@ -1,10 +1,10 @@
-module Pipes.Dsv.Cassava
+module Dsv.Cassava
   ( CassavaOpts, delimCassavaOpts
   , dsvRowAtto
   , dsvRowPipe, csvRowPipe
   , handleCsvRowProducer, handleDsvRowProducer
   ) where
 
-import Pipes.Dsv.Cassava.Atto
-import Pipes.Dsv.Cassava.Opts
-import Pipes.Dsv.Cassava.Pipes
+import Dsv.Cassava.Atto
+import Dsv.Cassava.Opts
+import Dsv.Cassava.Pipes

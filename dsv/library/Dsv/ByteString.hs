@@ -1,4 +1,4 @@
-module Pipes.Dsv.ByteString
+module Dsv.ByteString
   ( ByteString
   ) where
 

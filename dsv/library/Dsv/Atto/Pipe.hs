@@ -1,9 +1,9 @@
-module Pipes.Dsv.Atto.Pipe (attoPipe, handleAttoProducer) where
+module Dsv.Atto.Pipe (attoPipe, handleAttoProducer) where
 
-import Pipes.Dsv.Atto.Error
-import Pipes.Dsv.Atto.Termination
-import Pipes.Dsv.ByteString
-import Pipes.Dsv.IO
+import Dsv.Atto.Error
+import Dsv.Atto.Termination
+import Dsv.ByteString
+import Dsv.IO
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto

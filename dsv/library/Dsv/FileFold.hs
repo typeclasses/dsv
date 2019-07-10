@@ -1,4 +1,4 @@
-module Pipes.Dsv.FileFold
+module Dsv.FileFold
   ( foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
   , foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
@@ -7,5 +7,5 @@ module Pipes.Dsv.FileFold
   , foldCsvFileUsingHeader, foldCsvFileUsingHeaderM
   ) where
 
-import Pipes.Dsv.FileFold.Csv
-import Pipes.Dsv.FileFold.Dsv
+import Dsv.FileFold.Csv
+import Dsv.FileFold.Dsv

@@ -1,4 +1,4 @@
-module Pipes.Dsv.Vector
+module Dsv.Vector
   ( Vector, vectorZipWith
   ) where
 

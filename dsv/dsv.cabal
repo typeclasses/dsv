@@ -37,36 +37,36 @@ library
         -fdefer-typed-holes
 
     exposed-modules:
-        Pipes.Dsv
+        Dsv
 
     autogen-modules:
         Paths_dsv
 
     other-modules:
         Paths_dsv
-      , Pipes.Dsv.Atto
-      , Pipes.Dsv.Atto.Error
-      , Pipes.Dsv.Atto.Pipe
-      , Pipes.Dsv.Atto.Termination
-      , Pipes.Dsv.ByteString
-      , Pipes.Dsv.Cassava
-      , Pipes.Dsv.Cassava.Atto
-      , Pipes.Dsv.Cassava.Opts
-      , Pipes.Dsv.Cassava.Pipes
-      , Pipes.Dsv.Delimiter
-      , Pipes.Dsv.Delimiter.TH
-      , Pipes.Dsv.Delimiter.Type
-      , Pipes.Dsv.FileFold
-      , Pipes.Dsv.FileFold.Csv
-      , Pipes.Dsv.FileFold.Dsv
-      , Pipes.Dsv.FileStrict
-      , Pipes.Dsv.FileStrict.Csv
-      , Pipes.Dsv.FileStrict.Dsv
-      , Pipes.Dsv.Fold
-      , Pipes.Dsv.Header
-      , Pipes.Dsv.IO
-      , Pipes.Dsv.Misc
-      , Pipes.Dsv.Vector
+      , Dsv.Atto
+      , Dsv.Atto.Error
+      , Dsv.Atto.Pipe
+      , Dsv.Atto.Termination
+      , Dsv.ByteString
+      , Dsv.Cassava
+      , Dsv.Cassava.Atto
+      , Dsv.Cassava.Opts
+      , Dsv.Cassava.Pipes
+      , Dsv.Delimiter
+      , Dsv.Delimiter.TH
+      , Dsv.Delimiter.Type
+      , Dsv.FileFold
+      , Dsv.FileFold.Csv
+      , Dsv.FileFold.Dsv
+      , Dsv.FileStrict
+      , Dsv.FileStrict.Csv
+      , Dsv.FileStrict.Dsv
+      , Dsv.Fold
+      , Dsv.Header
+      , Dsv.IO
+      , Dsv.Misc
+      , Dsv.Vector
 
     build-depends:
         attoparsec ^>= 0.13.2.2

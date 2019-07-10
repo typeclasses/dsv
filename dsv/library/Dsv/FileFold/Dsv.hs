@@ -1,17 +1,17 @@
-module Pipes.Dsv.FileFold.Dsv
+module Dsv.FileFold.Dsv
   ( foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
   , foldDsvFileUsingHeader, foldDsvFileUsingHeaderM
   ) where
 
-import Pipes.Dsv.Atto
-import Pipes.Dsv.ByteString
-import Pipes.Dsv.Cassava
-import Pipes.Dsv.Delimiter
-import Pipes.Dsv.Fold
-import Pipes.Dsv.Header
-import Pipes.Dsv.IO
-import Pipes.Dsv.Vector
+import Dsv.Atto
+import Dsv.ByteString
+import Dsv.Cassava
+import Dsv.Delimiter
+import Dsv.Fold
+import Dsv.Header
+import Dsv.IO
+import Dsv.Vector
 
 -- pipes
 import Pipes

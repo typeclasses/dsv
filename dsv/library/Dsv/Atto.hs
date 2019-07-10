@@ -1,13 +1,13 @@
-module Pipes.Dsv.Atto
+module Dsv.Atto
   ( attoPipe, handleAttoProducer
   , AttoError (..)
   , AttoParser
   , AttoTermination (..)
   ) where
 
-import Pipes.Dsv.Atto.Error
-import Pipes.Dsv.Atto.Pipe
-import Pipes.Dsv.Atto.Termination
+import Dsv.Atto.Error
+import Dsv.Atto.Pipe
+import Dsv.Atto.Termination
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto

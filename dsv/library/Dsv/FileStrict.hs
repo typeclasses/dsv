@@ -1,4 +1,4 @@
-module Pipes.Dsv.FileStrict
+module Dsv.FileStrict
   ( readDsvFileStrictUsingHeader
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
@@ -7,5 +7,5 @@ module Pipes.Dsv.FileStrict
   , readCsvFileStrictIgnoringHeader
   ) where
 
-import Pipes.Dsv.FileStrict.Csv
-import Pipes.Dsv.FileStrict.Dsv
+import Dsv.FileStrict.Csv
+import Dsv.FileStrict.Dsv

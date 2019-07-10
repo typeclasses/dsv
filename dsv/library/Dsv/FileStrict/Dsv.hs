@@ -1,16 +1,16 @@
-module Pipes.Dsv.FileStrict.Dsv
+module Dsv.FileStrict.Dsv
   ( readDsvFileStrictUsingHeader
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
   ) where
 
-import Pipes.Dsv.Atto
-import Pipes.Dsv.ByteString
-import Pipes.Dsv.Cassava
-import Pipes.Dsv.Delimiter
-import Pipes.Dsv.Header
-import Pipes.Dsv.IO
-import Pipes.Dsv.Vector
+import Dsv.Atto
+import Dsv.ByteString
+import Dsv.Cassava
+import Dsv.Delimiter
+import Dsv.Header
+import Dsv.IO
+import Dsv.Vector
 
 -- pipes
 import qualified Pipes.Prelude as P

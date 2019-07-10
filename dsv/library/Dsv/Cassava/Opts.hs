@@ -1,6 +1,6 @@
-module Pipes.Dsv.Cassava.Opts (CassavaOpts, delimCassavaOpts) where
+module Dsv.Cassava.Opts (CassavaOpts, delimCassavaOpts) where
 
-import Pipes.Dsv.Delimiter
+import Dsv.Delimiter
 
 -- cassava
 import qualified Data.Csv.Parser as Cassava

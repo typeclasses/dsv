@@ -1,6 +1,6 @@
-module Pipes.Dsv.Atto.Error (AttoError (..)) where
+module Dsv.Atto.Error (AttoError (..)) where
 
-import Pipes.Dsv.IO
+import Dsv.IO
 
 data AttoError =
   AttoError

@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveLift #-}
 
-module Pipes.Dsv.Delimiter.Type (Delimiter (..)) where
+module Dsv.Delimiter.Type (Delimiter (..)) where
 
 import Data.Word (Word8)
 

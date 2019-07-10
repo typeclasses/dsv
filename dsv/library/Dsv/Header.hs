@@ -1,10 +1,10 @@
-module Pipes.Dsv.Header
+module Dsv.Header
   ( Labeled (..)
   , zipNames, zipNames'
   , zipNamesPipe
   ) where
 
-import Pipes.Dsv.Vector
+import Dsv.Vector
 
 -- base
 import Data.Bifunctor

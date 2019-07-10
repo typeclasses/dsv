@@ -1,6 +1,6 @@
-module Pipes.Dsv.Delimiter.TH (charDelimiter) where
+module Dsv.Delimiter.TH (charDelimiter) where
 
-import Pipes.Dsv.Delimiter.Type (Delimiter (..))
+import Dsv.Delimiter.Type (Delimiter (..))
 
 import Data.Word (Word8)
 

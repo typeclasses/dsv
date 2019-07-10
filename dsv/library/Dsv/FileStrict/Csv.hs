@@ -1,16 +1,16 @@
-module Pipes.Dsv.FileStrict.Csv
+module Dsv.FileStrict.Csv
   ( readCsvFileStrictUsingHeader
   , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
   ) where
 
-import Pipes.Dsv.Atto
-import Pipes.Dsv.ByteString
-import Pipes.Dsv.Delimiter
-import Pipes.Dsv.FileStrict.Dsv
-import Pipes.Dsv.Header
-import Pipes.Dsv.IO
-import Pipes.Dsv.Vector
+import Dsv.Atto
+import Dsv.ByteString
+import Dsv.Delimiter
+import Dsv.FileStrict.Dsv
+import Dsv.Header
+import Dsv.IO
+import Dsv.Vector
 
 {- | Often, the first line of a CSV file is a row that gives the name of each column in the file. If present, this row is called the /header/.
 

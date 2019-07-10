@@ -2,7 +2,7 @@
 
 -- | Miscellania
 
-module Pipes.Dsv.Misc
+module Dsv.Misc
   ( nthColumn, columnName
   , byteStringTextUtf8Maybe
   , byteStringDecimalRationalMaybe
@@ -11,9 +11,9 @@ module Pipes.Dsv.Misc
   , textDollarsMaybe
   ) where
 
-import Pipes.Dsv.ByteString
-import Pipes.Dsv.Header
-import Pipes.Dsv.Vector
+import Dsv.ByteString
+import Dsv.Header
+import Dsv.Vector
 
 -- base
 import Control.Monad ((>=>))

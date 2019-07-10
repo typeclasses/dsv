@@ -1,9 +1,9 @@
-module Pipes.Dsv.Cassava.Atto (dsvRowAtto) where
+module Dsv.Cassava.Atto (dsvRowAtto) where
 
-import Pipes.Dsv.Atto
-import Pipes.Dsv.ByteString
-import Pipes.Dsv.Delimiter
-import Pipes.Dsv.Vector
+import Dsv.Atto
+import Dsv.ByteString
+import Dsv.Delimiter
+import Dsv.Vector
 
 -- attoparsec
 import Data.Attoparsec.ByteString.Char8 (endOfLine)

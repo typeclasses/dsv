@@ -1,14 +1,14 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Pipes.Dsv.Delimiter
+module Dsv.Delimiter
   ( Delimiter (..)
   , charDelimiter
   , delimiterWord8
   , comma, tab
   ) where
 
-import Pipes.Dsv.Delimiter.Type
-import Pipes.Dsv.Delimiter.TH
+import Dsv.Delimiter.Type
+import Dsv.Delimiter.TH
 
 import Data.Word (Word8)
 

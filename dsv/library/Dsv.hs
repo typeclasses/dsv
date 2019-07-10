@@ -1,4 +1,4 @@
-module Pipes.Dsv
+module Dsv
   (
   -- * Reading CSV files strictly
   -- $readingCsvFilesStrictly
@@ -57,13 +57,13 @@ module Pipes.Dsv
 
   ) where
 
-import Pipes.Dsv.Atto
-import Pipes.Dsv.Cassava
-import Pipes.Dsv.Delimiter
-import Pipes.Dsv.FileFold
-import Pipes.Dsv.FileStrict
-import Pipes.Dsv.Header
-import Pipes.Dsv.Misc
+import Dsv.Atto
+import Dsv.Cassava
+import Dsv.Delimiter
+import Dsv.FileFold
+import Dsv.FileStrict
+import Dsv.Header
+import Dsv.Misc
 
 import qualified Control.Foldl as L
 

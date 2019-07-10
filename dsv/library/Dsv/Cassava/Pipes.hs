@@ -1,14 +1,14 @@
-module Pipes.Dsv.Cassava.Pipes
+module Dsv.Cassava.Pipes
   ( dsvRowPipe, csvRowPipe
   , handleCsvRowProducer, handleDsvRowProducer
   ) where
 
-import Pipes.Dsv.Atto
-import Pipes.Dsv.ByteString
-import Pipes.Dsv.Cassava.Atto
-import Pipes.Dsv.Delimiter
-import Pipes.Dsv.IO
-import Pipes.Dsv.Vector
+import Dsv.Atto
+import Dsv.ByteString
+import Dsv.Cassava.Atto
+import Dsv.Delimiter
+import Dsv.IO
+import Dsv.Vector
 
 -- pipes
 import Pipes

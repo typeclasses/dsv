@@ -1,4 +1,4 @@
-module Pipes.Dsv.Fold
+module Dsv.Fold
   ( Fold, FoldM
   , foldDrop, foldDropM
   , foldProducer, foldProducerM

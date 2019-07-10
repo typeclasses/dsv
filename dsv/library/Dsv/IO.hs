@@ -1,4 +1,4 @@
-module Pipes.Dsv.IO
+module Dsv.IO
   ( MonadIO (liftIO), MonadCatch, MonadMask
   , IOMode (ReadMode)
   , SafeT, runSafeT
