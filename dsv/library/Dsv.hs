@@ -31,10 +31,10 @@ module Dsv
   , foldDsvFileIgnoringHeader
   , foldDsvFileIgnoringHeaderM
 
-  -- * Pipes
+  -- * Pipes that parse
   , csvRowPipe, dsvRowPipe
 
-  -- * Producers
+  -- * Producers from file handles
   , handleCsvRowProducer, handleDsvRowProducer
 
   -- * Labeled values
