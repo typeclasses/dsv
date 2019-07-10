@@ -16,20 +16,14 @@ module Dsv
 
   -- * Folding CSV files
   -- $foldingCsvFiles
-  , foldCsvFileUsingHeader
-  , foldCsvFileUsingHeaderM
-  , foldCsvFileWithoutHeader
-  , foldCsvFileWithoutHeaderM
-  , foldCsvFileIgnoringHeader
-  , foldCsvFileIgnoringHeaderM
+  , foldCsvFileUsingHeader, foldCsvFileUsingHeaderM
+  , foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
+  , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
 
   -- * Folding DSV files
-  , foldDsvFileUsingHeader
-  , foldDsvFileUsingHeaderM
-  , foldDsvFileWithoutHeader
-  , foldDsvFileWithoutHeaderM
-  , foldDsvFileIgnoringHeader
-  , foldDsvFileIgnoringHeaderM
+  , foldDsvFileUsingHeader, foldDsvFileUsingHeaderM
+  , foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
+  , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
 
   -- * Pipes that parse
   , csvRowPipe, dsvRowPipe
