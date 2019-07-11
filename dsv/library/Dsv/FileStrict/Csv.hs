@@ -8,7 +8,6 @@ import Dsv.Atto
 import Dsv.ByteString
 import Dsv.Delimiter
 import Dsv.FileStrict.Dsv
-import Dsv.Header
 import Dsv.IO
 import Dsv.Vector
 
@@ -25,21 +24,21 @@ CSV file:
 Result:
 
 > ( AttoComplete,
->   [ [ Labeled "Date"   "2019-03-24",
->       Labeled "Vendor" "Acme Co",
->       Labeled "Price"  "$599.89",
->       Labeled "Notes"  "Dehydrated boulders" ],
->     [ Labeled "Date"   "2019-04-18",
->       Labeled "Vendor" "Acme Co",
->       Labeled "Price"  "$24.95",
->       Labeled "Notes"  "Earthquake pills" ] ] )
+>   [ [ ("Date",   "2019-03-24"),
+>       ("Vendor", "Acme Co"),
+>       ("Price",  "$599.89"),
+>       ("Notes",  "Dehydrated boulders") ],
+>     [ ("Date",   "2019-04-18"),
+>       ("Vendor", "Acme Co"),
+>       ("Price",  "$24.95"),
+>       ("Notes",  "Earthquake pills") ] ] )
 
 -}
 
 readCsvFileStrictUsingHeader
     :: MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
-    -> m (AttoTermination, [Vector (Labeled ByteString ByteString)])
+    -> m (AttoTermination, [Vector (ByteString, ByteString)])
 
 readCsvFileStrictUsingHeader fp = readDsvFileStrictUsingHeader comma fp
 

@@ -9,7 +9,6 @@ import Dsv.ByteString
 import Dsv.Delimiter
 import Dsv.FileFold.Dsv
 import Dsv.Fold
-import Dsv.Header
 import Dsv.IO
 import Dsv.Vector
 
@@ -179,7 +178,7 @@ foldCsvFileUsingHeader
     :: MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
-    -> Fold (Vector (Labeled ByteString ByteString)) result
+    -> Fold (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 
@@ -220,7 +219,7 @@ foldCsvFileUsingHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
     => FilePath
         -- ^ The path of a CSV file to read
-    -> FoldM m (Vector (Labeled ByteString ByteString)) result
+    -> FoldM m (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 

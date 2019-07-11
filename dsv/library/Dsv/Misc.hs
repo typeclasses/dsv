@@ -12,7 +12,6 @@ module Dsv.Misc
   ) where
 
 import Dsv.ByteString
-import Dsv.Header
 import Dsv.Vector
 
 -- base
@@ -43,10 +42,10 @@ import qualified Data.Vector as Vector
 nthColumn :: Integer -> Vector a -> Maybe a
 nthColumn n xs = xs !? (fromIntegral n - 1)
 
-columnName :: Eq name => name -> Vector (Labeled name value) -> Maybe value
+columnName :: Eq name => name -> Vector (name, value) -> Maybe value
 columnName n xs =
   do
-    Labeled _ v <- Vector.find (\(Labeled n' _) -> n == n') xs
+    (_, v) <- Vector.find (\(n', _) -> n == n') xs
     return v
 
 rightMaybe :: Either a b -> Maybe b

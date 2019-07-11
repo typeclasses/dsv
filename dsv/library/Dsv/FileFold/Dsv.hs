@@ -79,7 +79,7 @@ foldDsvFileUsingHeader
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
         -- ^ The path of a CSV file to read
-    -> Fold (Vector (Labeled ByteString ByteString)) result
+    -> Fold (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 
@@ -93,7 +93,7 @@ foldDsvFileUsingHeaderM
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
         -- ^ The path of a CSV file to read
-    -> FoldM m (Vector (Labeled ByteString ByteString)) result
+    -> FoldM m (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 

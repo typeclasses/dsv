@@ -31,8 +31,8 @@ module Dsv
   -- * Producers from file handles
   , handleCsvRowProducer, handleDsvRowProducer
 
-  -- * Labeled values
-  , Labeled (..), zipNames, zipNames', zipNamesPipe
+  -- * Combining a header with a row
+  , zipNames, zipNames', zipNamesPipe
 
   -- * Delimiters
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
@@ -54,12 +54,14 @@ module Dsv
   ) where
 
 import Dsv.Atto
+import Dsv.ByteString
 import Dsv.Cassava
 import Dsv.Delimiter
 import Dsv.FileFold
 import Dsv.FileStrict
 import Dsv.Header
 import Dsv.Misc
+import Dsv.Vector
 
 import qualified Control.Foldl as L
 

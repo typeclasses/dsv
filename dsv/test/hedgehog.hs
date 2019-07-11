@@ -108,15 +108,15 @@ prop_readCsvFileStrictUsingHeader_doc =
     ~>
     ( AttoComplete
     , map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
-        [ [ Labeled "Date" "2019-03-24"
-          , Labeled "Vendor" "Acme Co"
-          , Labeled "Price" "$599.89"
-          , Labeled "Notes" "Dehydrated boulders"
+        [ [ ("Date", "2019-03-24")
+          , ("Vendor", "Acme Co")
+          , ("Price", "$599.89")
+          , ("Notes", "Dehydrated boulders")
           ]
-        , [ Labeled "Date" "2019-04-18"
-          , Labeled "Vendor" "Acme Co"
-          , Labeled "Price" "$24.95"
-          , Labeled "Notes" "Earthquake pills"
+        , [ ("Date", "2019-04-18")
+          , ("Vendor", "Acme Co")
+          , ("Price", "$24.95")
+          , ("Notes", "Earthquake pills")
           ]
         ]
 
@@ -156,7 +156,7 @@ sumPricesWithoutHeader =
         (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe))
         L.sum
 
-sumPricesUsingHeader :: L.Fold (Vector (Labeled ByteString ByteString)) Rational
+sumPricesUsingHeader :: L.Fold (Vector (ByteString, ByteString)) Rational
 sumPricesUsingHeader =
     L.premap
         (fromMaybe 0 . (columnName "Price" >=> byteStringDollarsMaybe))
@@ -169,7 +169,7 @@ writeNamesAndCountWithoutHeader r =
   where
     write x = modifyIORef r (<> Seq.singleton x)
 
-writeNamesAndCountUsingHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (Labeled ByteString ByteString)) Int
+writeNamesAndCountUsingHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (ByteString, ByteString)) Int
 writeNamesAndCountUsingHeader r =
     L.mapM_ (traverse_ write . columnName "Notes") *>
     L.generalize L.length
@@ -253,7 +253,9 @@ prop_foldPriceM_usingHeader_doc =
 
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
 
-tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled :: [Labeled Text Text]
+tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled :: [(Text, Text)]
+
+labeled = (,)
 
 tweetsHeader =
     [ "tweet_id"
@@ -282,16 +284,16 @@ tweet1 =
     ]
 
 tweet1_labeled =
-    [ Labeled "tweet_id" "1145722305135423488"
-    , Labeled "in_reply_to_status_id" ""
-    , Labeled "in_reply_to_user_id" ""
-    , Labeled "timestamp" "2019-07-01 15:54:18 +0000"
-    , Labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
-    , Labeled "text" "stack overflow should just permaban you if you say the word \"efficient\" to somebody whose code still doesn't give correct results"
-    , Labeled "retweeted_status_id" ""
-    , Labeled "retweeted_status_user_id" ""
-    , Labeled "retweeted_status_timestamp" ""
-    , Labeled "expanded_urls" ""
+    [ labeled "tweet_id" "1145722305135423488"
+    , labeled "in_reply_to_status_id" ""
+    , labeled "in_reply_to_user_id" ""
+    , labeled "timestamp" "2019-07-01 15:54:18 +0000"
+    , labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
+    , labeled "text" "stack overflow should just permaban you if you say the word \"efficient\" to somebody whose code still doesn't give correct results"
+    , labeled "retweeted_status_id" ""
+    , labeled "retweeted_status_user_id" ""
+    , labeled "retweeted_status_timestamp" ""
+    , labeled "expanded_urls" ""
     ]
 
 tweet2 =
@@ -308,16 +310,16 @@ tweet2 =
     ]
 
 tweet2_labeled =
-    [ Labeled "tweet_id" "1144834283204415488"
-    , Labeled "in_reply_to_status_id" ""
-    , Labeled "in_reply_to_user_id" ""
-    , Labeled "timestamp" "2019-06-29 05:05:37 +0000"
-    , Labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
-    , Labeled "text" "INI files are extremely underrated IMO"
-    , Labeled "retweeted_status_id" ""
-    , Labeled "retweeted_status_user_id" ""
-    , Labeled "retweeted_status_timestamp" ""
-    , Labeled "expanded_urls" ""
+    [ labeled "tweet_id" "1144834283204415488"
+    , labeled "in_reply_to_status_id" ""
+    , labeled "in_reply_to_user_id" ""
+    , labeled "timestamp" "2019-06-29 05:05:37 +0000"
+    , labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
+    , labeled "text" "INI files are extremely underrated IMO"
+    , labeled "retweeted_status_id" ""
+    , labeled "retweeted_status_user_id" ""
+    , labeled "retweeted_status_timestamp" ""
+    , labeled "expanded_urls" ""
     ]
 
 tweet3 =
@@ -334,16 +336,16 @@ tweet3 =
     ]
 
 tweet3_labeled =
-    [ Labeled "tweet_id" "1144470003963420672"
-    , Labeled "in_reply_to_status_id" ""
-    , Labeled "in_reply_to_user_id" ""
-    , Labeled "timestamp" "2019-06-28 04:58:06 +0000"
-    , Labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
-    , Labeled "text" "I'll listen to any song that has a trumpet solo in the middle"
-    , Labeled "retweeted_status_id" ""
-    , Labeled "retweeted_status_user_id" ""
-    , Labeled "retweeted_status_timestamp" ""
-    , Labeled "expanded_urls" ""
+    [ labeled "tweet_id" "1144470003963420672"
+    , labeled "in_reply_to_status_id" ""
+    , labeled "in_reply_to_user_id" ""
+    , labeled "timestamp" "2019-06-28 04:58:06 +0000"
+    , labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
+    , labeled "text" "I'll listen to any song that has a trumpet solo in the middle"
+    , labeled "retweeted_status_id" ""
+    , labeled "retweeted_status_user_id" ""
+    , labeled "retweeted_status_timestamp" ""
+    , labeled "expanded_urls" ""
     ]
 
 tweet4 =
@@ -360,16 +362,16 @@ tweet4 =
     ]
 
 tweet4_labeled =
-    [ Labeled "tweet_id" "1143630783963389954"
-    , Labeled "in_reply_to_status_id" ""
-    , Labeled "in_reply_to_user_id" ""
-    , Labeled "timestamp" "2019-06-25 21:23:21 +0000"
-    , Labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
-    , Labeled "text" "just accidentally typed \"the Python Report\" instead of \"the Python documentation\""
-    , Labeled "retweeted_status_id" ""
-    , Labeled "retweeted_status_user_id" ""
-    , Labeled "retweeted_status_timestamp" ""
-    , Labeled "expanded_urls" ""
+    [ labeled "tweet_id" "1143630783963389954"
+    , labeled "in_reply_to_status_id" ""
+    , labeled "in_reply_to_user_id" ""
+    , labeled "timestamp" "2019-06-25 21:23:21 +0000"
+    , labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
+    , labeled "text" "just accidentally typed \"the Python Report\" instead of \"the Python documentation\""
+    , labeled "retweeted_status_id" ""
+    , labeled "retweeted_status_user_id" ""
+    , labeled "retweeted_status_timestamp" ""
+    , labeled "expanded_urls" ""
     ]
 
 tweet5 =
@@ -386,14 +388,14 @@ tweet5 =
     ]
 
 tweet5_labeled =
-    [ Labeled "tweet_id" "1143602240722210823"
-    , Labeled "in_reply_to_status_id" ""
-    , Labeled "in_reply_to_user_id" ""
-    , Labeled "timestamp" "2019-06-25 19:29:55 +0000"
-    , Labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
-    , Labeled "text" "I doubt a take about why a programming language is the best one has ever elicited action... point out a single cool feature or use that can catch someone's interest"
-    , Labeled "retweeted_status_id" ""
-    , Labeled "retweeted_status_user_id" ""
-    , Labeled "retweeted_status_timestamp" ""
-    , Labeled "expanded_urls" ""
+    [ labeled "tweet_id" "1143602240722210823"
+    , labeled "in_reply_to_status_id" ""
+    , labeled "in_reply_to_user_id" ""
+    , labeled "timestamp" "2019-06-25 19:29:55 +0000"
+    , labeled "source" "<a href=\"https://about.twitter.com/products/tweetdeck\" rel=\"nofollow\">TweetDeck</a>"
+    , labeled "text" "I doubt a take about why a programming language is the best one has ever elicited action... point out a single cool feature or use that can catch someone's interest"
+    , labeled "retweeted_status_id" ""
+    , labeled "retweeted_status_user_id" ""
+    , labeled "retweeted_status_timestamp" ""
+    , labeled "expanded_urls" ""
     ]

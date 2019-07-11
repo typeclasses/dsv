@@ -33,7 +33,7 @@ readDsvFileStrictUsingHeader
     :: MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
-    -> m (AttoTermination, [Vector (Labeled ByteString ByteString)])
+    -> m (AttoTermination, [Vector (ByteString, ByteString)])
 
 readDsvFileStrictUsingHeader d fp =
     fmap (fmap zipNames) (readDsvFileStrictWithoutHeader d fp)
