@@ -32,7 +32,7 @@ module Dsv
   , handleCsvRowProducer, handleDsvRowProducer
 
   -- * Combining a header with a row
-  , zipNames, zipNames', zipNamesPipe
+  , zipHeader, zipHeader', zipHeaderPipe
 
   -- * Delimiters
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter

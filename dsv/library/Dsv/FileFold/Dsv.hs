@@ -85,7 +85,7 @@ foldDsvFileUsingHeader
 
 foldDsvFileUsingHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
-        foldProducer fld (handleDsvRowProducer d h >-> zipNamesPipe)
+        foldProducer fld (handleDsvRowProducer d h >-> zipHeaderPipe)
 
 foldDsvFileUsingHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
@@ -99,4 +99,4 @@ foldDsvFileUsingHeaderM
 
 foldDsvFileUsingHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $
-        foldProducerM fld (handleDsvRowProducer d h >-> zipNamesPipe)
+        foldProducerM fld (handleDsvRowProducer d h >-> zipHeaderPipe)

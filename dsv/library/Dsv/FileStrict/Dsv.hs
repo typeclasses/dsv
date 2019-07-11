@@ -36,7 +36,7 @@ readDsvFileStrictUsingHeader
     -> m (AttoTermination, [Vector (ByteString, ByteString)])
 
 readDsvFileStrictUsingHeader d fp =
-    fmap (fmap zipNames) (readDsvFileStrictWithoutHeader d fp)
+    fmap (fmap zipHeader) (readDsvFileStrictWithoutHeader d fp)
 
 readDsvFileStrictIgnoringHeader
     :: MonadIO m

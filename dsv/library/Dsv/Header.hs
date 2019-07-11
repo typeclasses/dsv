@@ -1,6 +1,6 @@
 module Dsv.Header
-  ( zipNames, zipNames'
-  , zipNamesPipe
+  ( zipHeader, zipHeader'
+  , zipHeaderPipe
   ) where
 
 import Dsv.Header.Zip
