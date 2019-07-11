@@ -1,5 +1,5 @@
 module Dsv.FileStrict.Csv
-  ( readCsvFileStrictUsingHeader
+  ( readCsvFileStrictWithZippedHeader
   , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
   ) where
@@ -35,12 +35,12 @@ Result:
 
 -}
 
-readCsvFileStrictUsingHeader
+readCsvFileStrictWithZippedHeader
     :: MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
     -> m (AttoTermination, [Vector (ByteString, ByteString)])
 
-readCsvFileStrictUsingHeader fp = readDsvFileStrictUsingHeader comma fp
+readCsvFileStrictWithZippedHeader fp = readDsvFileStrictWithZippedHeader comma fp
 
 {- | Not every CSV file has a header row. Use this function to read a CSV file that does /not/ have a header.
 

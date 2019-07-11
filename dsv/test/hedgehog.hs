@@ -85,11 +85,11 @@ prop_readCsvFileStrictWithoutHeader_doc =
         ]
     )
 
-prop_readCsvFileStrictUsingHeader_tweets =
+prop_readCsvFileStrictWithZippedHeader_tweets =
     (
       do
         fp <- getDataFileName "test-data/tweets.csv"
-        readCsvFileStrictUsingHeader fp
+        readCsvFileStrictWithZippedHeader fp
     )
     ~>
     ( AttoComplete
@@ -97,12 +97,12 @@ prop_readCsvFileStrictUsingHeader_tweets =
           [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
     )
 
--- Corresponds to the example in the documentation for 'readCsvFileStrictUsingHeader'.
-prop_readCsvFileStrictUsingHeader_doc =
+-- Corresponds to the example in the documentation for 'readCsvFileStrictWithZippedHeader'.
+prop_readCsvFileStrictWithZippedHeader_doc =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        readCsvFileStrictUsingHeader fp
+        readCsvFileStrictWithZippedHeader fp
         ----------------------------
     )
     ~>
@@ -156,8 +156,8 @@ sumPricesWithoutHeader =
         (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe))
         L.sum
 
-sumPricesUsingHeader :: L.Fold (Vector (ByteString, ByteString)) Rational
-sumPricesUsingHeader =
+sumPricesWithZippedHeader :: L.Fold (Vector (ByteString, ByteString)) Rational
+sumPricesWithZippedHeader =
     L.premap
         (fromMaybe 0 . (columnName "Price" >=> byteStringDollarsMaybe))
         L.sum
@@ -169,8 +169,8 @@ writeNamesAndCountWithoutHeader r =
   where
     write x = modifyIORef r (<> Seq.singleton x)
 
-writeNamesAndCountUsingHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (ByteString, ByteString)) Int
-writeNamesAndCountUsingHeader r =
+writeNamesAndCountWithZippedHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (ByteString, ByteString)) Int
+writeNamesAndCountWithZippedHeader r =
     L.mapM_ (traverse_ write . columnName "Notes") *>
     L.generalize L.length
   where
@@ -226,24 +226,24 @@ prop_foldPriceM_ignoringHeader_doc =
     ~>
     (AttoComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
 
--- Corresponds to the example in the documentation for 'foldCsvFileUsingHeader'.
-prop_foldPrice_usingHeader_doc =
+-- Corresponds to the example in the documentation for 'foldCsvFileWithZippedHeader'.
+prop_foldPrice_withZippedHeader_doc =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        foldCsvFileUsingHeader fp sumPricesUsingHeader
+        foldCsvFileWithZippedHeader fp sumPricesWithZippedHeader
         ----------------------
     )
     ~>
     (AttoComplete, 624.84)
 
--- Corresponds to the example in the documentation for 'foldCsvFileUsingHeaderM'.
-prop_foldPriceM_usingHeader_doc =
+-- Corresponds to the example in the documentation for 'foldCsvFileWithZippedHeaderM'.
+prop_foldPriceM_withZippedHeader_doc =
     (
       do
         r <- newIORef Seq.empty
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        (t, n) <- foldCsvFileUsingHeaderM fp (writeNamesAndCountUsingHeader r)
+        (t, n) <- foldCsvFileWithZippedHeaderM fp (writeNamesAndCountWithZippedHeader r)
                   -----------------------
         rs <- readIORef r
         return (t, toList rs, n)

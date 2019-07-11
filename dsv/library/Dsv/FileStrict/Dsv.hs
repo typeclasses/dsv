@@ -1,5 +1,5 @@
 module Dsv.FileStrict.Dsv
-  ( readDsvFileStrictUsingHeader
+  ( readDsvFileStrictWithZippedHeader
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
   ) where
@@ -29,13 +29,13 @@ readDsvFileStrictWithoutHeader d fp =
                 handleDsvRowProducer d h
         return (t, xs)
 
-readDsvFileStrictUsingHeader
+readDsvFileStrictWithZippedHeader
     :: MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
     -> m (AttoTermination, [Vector (ByteString, ByteString)])
 
-readDsvFileStrictUsingHeader d fp =
+readDsvFileStrictWithZippedHeader d fp =
     fmap (fmap zipHeader) (readDsvFileStrictWithoutHeader d fp)
 
 readDsvFileStrictIgnoringHeader

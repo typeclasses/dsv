@@ -1,7 +1,7 @@
 module Dsv.FileFold.Dsv
   ( foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
-  , foldDsvFileUsingHeader, foldDsvFileUsingHeaderM
+  , foldDsvFileWithZippedHeader, foldDsvFileWithZippedHeaderM
   ) where
 
 import Dsv.Atto
@@ -73,7 +73,7 @@ foldDsvFileIgnoringHeaderM
 foldDsvFileIgnoringHeaderM d fp fld =
     foldDsvFileWithoutHeaderM d fp (foldDropM 1 fld)
 
-foldDsvFileUsingHeader
+foldDsvFileWithZippedHeader
     :: MonadIO m
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
@@ -83,11 +83,11 @@ foldDsvFileUsingHeader
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 
-foldDsvFileUsingHeader d fp fld =
+foldDsvFileWithZippedHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
         foldProducer fld (handleDsvRowProducer d h >-> zipHeaderPipe)
 
-foldDsvFileUsingHeaderM
+foldDsvFileWithZippedHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
@@ -97,6 +97,6 @@ foldDsvFileUsingHeaderM
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 
-foldDsvFileUsingHeaderM d fp fld =
+foldDsvFileWithZippedHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $
         foldProducerM fld (handleDsvRowProducer d h >-> zipHeaderPipe)

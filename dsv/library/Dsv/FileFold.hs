@@ -3,8 +3,8 @@ module Dsv.FileFold
   , foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
-  , foldDsvFileUsingHeader, foldDsvFileUsingHeaderM
-  , foldCsvFileUsingHeader, foldCsvFileUsingHeaderM
+  , foldDsvFileWithZippedHeader, foldDsvFileWithZippedHeaderM
+  , foldCsvFileWithZippedHeader, foldCsvFileWithZippedHeaderM
   ) where
 
 import Dsv.FileFold.Csv

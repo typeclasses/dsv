@@ -4,24 +4,24 @@ module Dsv
   (
   -- * Reading CSV files strictly
   -- $readingCsvFilesStrictly
-    readCsvFileStrictUsingHeader
+    readCsvFileStrictWithZippedHeader
   , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
 
   -- * Reading DSV files strictly
   -- $readingDsvFilesStrictly
-  , readDsvFileStrictUsingHeader
+  , readDsvFileStrictWithZippedHeader
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
 
   -- * Folding CSV files
   -- $foldingCsvFiles
-  , foldCsvFileUsingHeader, foldCsvFileUsingHeaderM
+  , foldCsvFileWithZippedHeader, foldCsvFileWithZippedHeaderM
   , foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
 
   -- * Folding DSV files
-  , foldDsvFileUsingHeader, foldDsvFileUsingHeaderM
+  , foldDsvFileWithZippedHeader, foldDsvFileWithZippedHeaderM
   , foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
 

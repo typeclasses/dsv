@@ -1,8 +1,8 @@
 module Dsv.FileStrict
-  ( readDsvFileStrictUsingHeader
+  ( readDsvFileStrictWithZippedHeader
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
-  , readCsvFileStrictUsingHeader
+  , readCsvFileStrictWithZippedHeader
   , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
   ) where

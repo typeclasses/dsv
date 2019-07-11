@@ -1,7 +1,7 @@
 module Dsv.FileFold.Csv
   ( foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
-  , foldCsvFileUsingHeader, foldCsvFileUsingHeaderM
+  , foldCsvFileWithZippedHeader, foldCsvFileWithZippedHeaderM
   ) where
 
 import Dsv.Atto
@@ -174,7 +174,7 @@ Result:
 
 -}
 
-foldCsvFileUsingHeader
+foldCsvFileWithZippedHeader
     :: MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
@@ -182,8 +182,8 @@ foldCsvFileUsingHeader
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 
-foldCsvFileUsingHeader fp fld =
-    foldDsvFileUsingHeader comma fp fld
+foldCsvFileWithZippedHeader fp fld =
+    foldDsvFileWithZippedHeader comma fp fld
 
 {- |
 
@@ -215,7 +215,7 @@ Result:
 
 -}
 
-foldCsvFileUsingHeaderM
+foldCsvFileWithZippedHeaderM
     :: (MonadCatch m, MonadMask m, MonadIO m)
     => FilePath
         -- ^ The path of a CSV file to read
@@ -223,5 +223,5 @@ foldCsvFileUsingHeaderM
         -- ^ What to do with each row
     -> m (AttoTermination, result)
 
-foldCsvFileUsingHeaderM fp fld =
-    foldDsvFileUsingHeaderM comma fp fld
+foldCsvFileWithZippedHeaderM fp fld =
+    foldDsvFileWithZippedHeaderM comma fp fld
