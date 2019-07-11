@@ -62,7 +62,6 @@ library
       , Dsv.FileStrict.Dsv
       , Dsv.Fold
       , Dsv.Header
-      , Dsv.Header.Zip
       , Dsv.IO
       , Dsv.Misc
       , Dsv.Vector
