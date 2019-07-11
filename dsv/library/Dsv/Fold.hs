@@ -2,6 +2,7 @@ module Dsv.Fold
   ( Fold, FoldM
   , foldDrop, foldDropM
   , foldProducer, foldProducerM
+  , foldVectorM
   ) where
 
 -- base
@@ -44,3 +45,6 @@ foldProducerM fld p =
   do
     (x, r) <- L.impurely P.foldM' fld p
     return (r, x)
+
+foldVectorM :: (L.PrimMonad m, L.Vector v a) => FoldM m a (v a)
+foldVectorM = L.vectorM

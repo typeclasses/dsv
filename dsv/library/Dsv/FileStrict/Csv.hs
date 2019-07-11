@@ -38,7 +38,7 @@ Result:
 readCsvFileStrictWithZippedHeader
     :: MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
-    -> m (AttoTermination, [Vector (ByteString, ByteString)])
+    -> m (AttoTermination, (Vector (Vector (ByteString, ByteString))))
 
 readCsvFileStrictWithZippedHeader fp = readDsvFileStrictWithZippedHeader comma fp
 
@@ -61,7 +61,7 @@ Result:
 readCsvFileStrictWithoutHeader
     :: MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
-    -> m (AttoTermination, [Vector ByteString])
+    -> m (AttoTermination, (Vector (Vector ByteString)))
 
 readCsvFileStrictWithoutHeader fp = readDsvFileStrictWithoutHeader comma fp
 
@@ -86,6 +86,6 @@ Result:
 readCsvFileStrictIgnoringHeader
     :: MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
-    -> m (AttoTermination, [Vector ByteString])
+    -> m (AttoTermination, (Vector (Vector ByteString)))
 
 readCsvFileStrictIgnoringHeader fp = readDsvFileStrictIgnoringHeader comma fp

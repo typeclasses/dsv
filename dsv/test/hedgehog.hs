@@ -65,7 +65,7 @@ prop_readCsvFileStrictWithoutHeader_tweets =
     )
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map Text.encodeUtf8)
+    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
           [tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5]
     )
 
@@ -79,7 +79,7 @@ prop_readCsvFileStrictWithoutHeader_doc =
     )
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map Text.encodeUtf8)
+    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
         [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
         , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
         ]
@@ -93,7 +93,7 @@ prop_readCsvFileStrictWithZippedHeader_tweets =
     )
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
+    , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
           [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
     )
 
@@ -107,7 +107,7 @@ prop_readCsvFileStrictWithZippedHeader_doc =
     )
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
+    , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
         [ [ ("Date", "2019-03-24")
           , ("Vendor", "Acme Co")
           , ("Price", "$599.89")
@@ -130,7 +130,7 @@ prop_readCsvFileStrictIgnoringHeader_tweets =
     )
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map Text.encodeUtf8)
+    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
           [tweet1, tweet2, tweet3, tweet4, tweet5]
     )
 
@@ -144,7 +144,7 @@ prop_readCsvFileStrictIgnoringHeader_doc =
     )
     ~>
     ( AttoComplete
-    , map (Vector.fromList . map Text.encodeUtf8)
+    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
         [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
         , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
         ]
