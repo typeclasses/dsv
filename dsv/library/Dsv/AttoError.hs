@@ -1,4 +1,6 @@
-module Dsv.Atto.Error (AttoError (..)) where
+module Dsv.AttoError
+  ( AttoError (..)
+  ) where
 
 import Dsv.IO
 

@@ -1,7 +1,10 @@
-module Dsv.Atto.Pipe (attoPipe, handleAttoProducer) where
+module Dsv.AttoPipe
+  ( attoPipe
+  , handleAttoProducer
+  ) where
 
-import Dsv.Atto.Error
-import Dsv.Atto.Termination
+import Dsv.AttoError
+import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.IO
 

@@ -1,6 +1,8 @@
-module Dsv.Atto.Termination (AttoTermination (..)) where
+module Dsv.AttoTermination
+  ( AttoTermination (..)
+  ) where
 
-import Dsv.Atto.Error
+import Dsv.AttoError
 
 data AttoTermination
   = AttoComplete

@@ -4,7 +4,7 @@ module Dsv.FileStrict.Csv
   , readCsvFileStrictIgnoringHeader
   ) where
 
-import Dsv.Atto
+import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Delimiter
 import Dsv.FileStrict.Dsv

@@ -4,7 +4,7 @@ module Dsv.FileFold.Dsv
   , foldDsvFileWithZippedHeader, foldDsvFileWithZippedHeaderM
   ) where
 
-import Dsv.Atto
+import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Cassava
 import Dsv.Delimiter

@@ -42,10 +42,10 @@ library
 
     other-modules:
         Paths_dsv
-      , Dsv.Atto
-      , Dsv.Atto.Error
-      , Dsv.Atto.Pipe
-      , Dsv.Atto.Termination
+      , Dsv.AttoError
+      , Dsv.AttoParser
+      , Dsv.AttoPipe
+      , Dsv.AttoTermination
       , Dsv.ByteString
       , Dsv.Cassava
       , Dsv.Cassava.Atto

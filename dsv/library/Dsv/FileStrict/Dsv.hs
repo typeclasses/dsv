@@ -9,7 +9,7 @@ module Dsv.FileStrict.Dsv
   , mapDsvFileStrictUsingHeader
   ) where
 
-import Dsv.Atto
+import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Cassava
 import Dsv.Delimiter

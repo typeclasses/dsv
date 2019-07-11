@@ -3,7 +3,9 @@ module Dsv.Cassava.Pipes
   , handleCsvRowProducer, handleDsvRowProducer
   ) where
 
-import Dsv.Atto
+import Dsv.AttoPipe
+import Dsv.AttoError
+import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Cassava.Atto
 import Dsv.Delimiter
