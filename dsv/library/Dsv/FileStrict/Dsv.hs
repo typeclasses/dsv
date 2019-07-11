@@ -44,5 +44,6 @@ readDsvFileStrictIgnoringHeader
     -> FilePath   -- ^ The path of a CSV file to read
 
     -> m (AttoTermination, [Vector ByteString])
+
 readDsvFileStrictIgnoringHeader d fp =
     fmap (fmap (drop 1)) (readDsvFileStrictWithoutHeader d fp)
