@@ -49,7 +49,6 @@ library
       , Dsv.ByteString
       , Dsv.Cassava
       , Dsv.Cassava.Atto
-      , Dsv.Cassava.Opts
       , Dsv.Cassava.Pipes
       , Dsv.CommonDelimiters
       , Dsv.DelimiterSplice
