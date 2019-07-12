@@ -15,7 +15,10 @@ module Dsv
   , readDsvFileStrictIgnoringHeader
 
   -- * Reading CSV files strictly with any row type
-  -- todo
+  -- $readingCsvFilesStrictlyWithAnyRowType
+  , mapCsvFileStrictWithoutHeader
+  , mapCsvFileStrictIgnoringHeader
+  , mapCsvFileStrictUsingHeader
 
   -- * Reading DSV files strictly with any row type
   , mapDsvFileStrictWithoutHeader
@@ -71,6 +74,7 @@ import Dsv.DelimiterSplice
 import Dsv.DelimiterType
 import Dsv.FileFold
 import Dsv.FileFoldCsv
+import Dsv.FileStrictCsvMap
 import Dsv.FileStrictCsvRead
 import Dsv.FileStrictMap
 import Dsv.FileStrictRead
@@ -96,6 +100,12 @@ If you need to use a different delimiter, if your input source is something othe
 {- $readingDsvFilesStrictly
 
 \"CSV\" stands for "comma-separated values". But sometimes you may encounter CSV-like files in which the values are separated by some other character; e.g. it may have tabs instead of commas. We refer to such files more generally, then, as DSV files ("delimiter-separated values"). Functions that have a 'Delimiter' parameter, such as 'readDsvFileStrictWithoutHeader', let you specify what kind of DSV file you want to read.
+
+-}
+
+{- $readingCsvFilesStrictlyWithAnyRowType
+
+Most likely, you don't just want to get 'Vector's of 'ByteString' values from a CSV file; you want to interpret the meaning of those bytes somehow, converting each row into some type that is specific to the kind of data that your particular CSV file represents. These functions are parameterized on a function of type @(Vector ByteString -> IO row)@ which will get applied to each row as it is read. Then instead of getting each row as a @Vector ByteString@, each row will be represented in the result as a value of type @row@ (where @row@ is a type parameter that stands for whatever type your conversion function returns).
 
 -}
 
