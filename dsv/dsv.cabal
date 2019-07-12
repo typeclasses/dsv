@@ -55,8 +55,7 @@ library
       , Dsv.Delimiter.TH
       , Dsv.Delimiter.Type
       , Dsv.FileFold
-      , Dsv.FileFold.Csv
-      , Dsv.FileFold.Dsv
+      , Dsv.FileFoldCsv
       , Dsv.FileStrictCsvRead
       , Dsv.FileStrictMap
       , Dsv.FileStrictRead

@@ -69,6 +69,7 @@ import Dsv.ByteString
 import Dsv.Cassava
 import Dsv.Delimiter
 import Dsv.FileFold
+import Dsv.FileFoldCsv
 import Dsv.FileStrictCsvRead
 import Dsv.FileStrictMap
 import Dsv.FileStrictRead

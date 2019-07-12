@@ -1,4 +1,4 @@
-module Dsv.FileFold.Csv
+module Dsv.FileFoldCsv
   ( foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
   , foldCsvFileWithZippedHeader, foldCsvFileWithZippedHeaderM
@@ -7,7 +7,7 @@ module Dsv.FileFold.Csv
 import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Delimiter
-import Dsv.FileFold.Dsv
+import Dsv.FileFold
 import Dsv.Fold
 import Dsv.IO
 import Dsv.Vector
