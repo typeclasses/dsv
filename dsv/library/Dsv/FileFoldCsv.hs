@@ -6,7 +6,7 @@ module Dsv.FileFoldCsv
 
 import Dsv.AttoTermination
 import Dsv.ByteString
-import Dsv.Delimiter
+import Dsv.CommonDelimiters
 import Dsv.FileFold
 import Dsv.Fold
 import Dsv.IO

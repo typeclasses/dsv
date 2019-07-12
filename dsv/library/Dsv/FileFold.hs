@@ -7,7 +7,7 @@ module Dsv.FileFold
 import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Cassava
-import Dsv.Delimiter
+import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.Header
 import Dsv.IO

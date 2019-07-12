@@ -51,9 +51,9 @@ library
       , Dsv.Cassava.Atto
       , Dsv.Cassava.Opts
       , Dsv.Cassava.Pipes
-      , Dsv.Delimiter
-      , Dsv.Delimiter.TH
-      , Dsv.Delimiter.Type
+      , Dsv.CommonDelimiters
+      , Dsv.DelimiterSplice
+      , Dsv.DelimiterType
       , Dsv.FileFold
       , Dsv.FileFoldCsv
       , Dsv.FileStrictCsvRead

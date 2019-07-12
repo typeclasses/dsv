@@ -6,7 +6,7 @@ module Dsv.FileStrictCsvRead
 
 import Dsv.AttoTermination
 import Dsv.ByteString
-import Dsv.Delimiter
+import Dsv.CommonDelimiters
 import Dsv.FileStrictRead
 import Dsv.IO
 import Dsv.Vector

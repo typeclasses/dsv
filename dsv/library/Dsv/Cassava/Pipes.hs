@@ -8,7 +8,7 @@ import Dsv.AttoError
 import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Cassava.Atto
-import Dsv.Delimiter
+import Dsv.CommonDelimiters
 import Dsv.IO
 import Dsv.Vector
 

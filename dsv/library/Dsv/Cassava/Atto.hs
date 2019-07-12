@@ -2,7 +2,7 @@ module Dsv.Cassava.Atto (dsvRowAtto) where
 
 import Dsv.AttoParser
 import Dsv.ByteString
-import Dsv.Delimiter
+import Dsv.DelimiterType
 import Dsv.Vector
 
 -- attoparsec

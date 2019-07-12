@@ -67,7 +67,9 @@ import Dsv.AttoPipe
 import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Cassava
-import Dsv.Delimiter
+import Dsv.CommonDelimiters
+import Dsv.DelimiterSplice
+import Dsv.DelimiterType
 import Dsv.FileFold
 import Dsv.FileFoldCsv
 import Dsv.FileStrictCsvRead

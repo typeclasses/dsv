@@ -1,6 +1,6 @@
 module Dsv.Cassava.Opts (CassavaOpts, delimCassavaOpts) where
 
-import Dsv.Delimiter
+import Dsv.DelimiterType
 
 -- cassava
 import qualified Data.Csv.Parser as Cassava

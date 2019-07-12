@@ -1,6 +1,8 @@
-module Dsv.Delimiter.TH (charDelimiter) where
+module Dsv.DelimiterSplice
+  ( charDelimiter
+  ) where
 
-import Dsv.Delimiter.Type (Delimiter (..))
+import Dsv.DelimiterType (Delimiter (..))
 
 import Data.Word (Word8)
 
