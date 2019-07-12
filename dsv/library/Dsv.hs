@@ -66,7 +66,6 @@ import Dsv.AttoParser
 import Dsv.AttoPipe
 import Dsv.AttoTermination
 import Dsv.ByteString
-import Dsv.Cassava
 import Dsv.CommonDelimiters
 import Dsv.DelimiterSplice
 import Dsv.DelimiterType
@@ -77,6 +76,7 @@ import Dsv.FileStrictMap
 import Dsv.FileStrictRead
 import Dsv.Header
 import Dsv.Misc
+import Dsv.Parsing
 import Dsv.Vector
 
 import qualified Control.Foldl as L

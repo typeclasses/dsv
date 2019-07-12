@@ -1,19 +1,32 @@
-module Dsv.Cassava.Pipes
-  ( dsvRowPipe, csvRowPipe
+module Dsv.Parsing
+  ( dsvRowAtto
+  , dsvRowPipe, csvRowPipe
   , handleCsvRowProducer, handleDsvRowProducer
   ) where
 
-import Dsv.AttoPipe
 import Dsv.AttoError
+import Dsv.AttoParser
+import Dsv.AttoPipe
 import Dsv.AttoTermination
 import Dsv.ByteString
-import Dsv.Cassava.Atto
 import Dsv.CommonDelimiters
 import Dsv.IO
 import Dsv.Vector
 
+-- attoparsec
+import Data.Attoparsec.ByteString.Char8 (endOfLine)
+
+-- cassava
+import qualified Data.Csv.Parser as Cassava
+
 -- pipes
 import Pipes
+
+dsvRowAtto
+    :: Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
+    -> AttoParser (Vector ByteString)
+
+dsvRowAtto d = Cassava.record (delimiterWord8 d) <* endOfLine
 
 dsvRowPipe
     :: Monad m

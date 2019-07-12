@@ -47,9 +47,6 @@ library
       , Dsv.AttoPipe
       , Dsv.AttoTermination
       , Dsv.ByteString
-      , Dsv.Cassava
-      , Dsv.Cassava.Atto
-      , Dsv.Cassava.Pipes
       , Dsv.CommonDelimiters
       , Dsv.DelimiterSplice
       , Dsv.DelimiterType
@@ -62,6 +59,7 @@ library
       , Dsv.Header
       , Dsv.IO
       , Dsv.Misc
+      , Dsv.Parsing
       , Dsv.Vector
 
     build-depends:

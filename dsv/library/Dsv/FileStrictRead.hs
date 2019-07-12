@@ -6,11 +6,11 @@ module Dsv.FileStrictRead
 
 import Dsv.AttoTermination
 import Dsv.ByteString
-import Dsv.Cassava
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.Header
 import Dsv.IO
+import Dsv.Parsing
 import Dsv.Vector
 
 -- pipes
