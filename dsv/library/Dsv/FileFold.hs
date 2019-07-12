@@ -24,7 +24,7 @@ foldDsvFileWithoutHeader
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
@@ -38,7 +38,7 @@ foldDsvFileWithoutHeaderM
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
@@ -52,7 +52,7 @@ foldDsvFileIgnoringHeader
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
@@ -65,7 +65,7 @@ foldDsvFileIgnoringHeaderM
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
@@ -78,7 +78,7 @@ foldDsvFileWithZippedHeader
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> Fold (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
@@ -92,7 +92,7 @@ foldDsvFileWithZippedHeaderM
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> FoldM m (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
     -> m (AttoTermination, result)
