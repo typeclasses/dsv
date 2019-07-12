@@ -1,4 +1,4 @@
-module Dsv.FileStrict.Csv
+module Dsv.FileStrictCsvRead
   ( readCsvFileStrictWithZippedHeader
   , readCsvFileStrictWithoutHeader
   , readCsvFileStrictIgnoringHeader
@@ -7,7 +7,7 @@ module Dsv.FileStrict.Csv
 import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.Delimiter
-import Dsv.FileStrict.Dsv
+import Dsv.FileStrictRead
 import Dsv.IO
 import Dsv.Vector
 

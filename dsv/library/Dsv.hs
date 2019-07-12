@@ -14,6 +14,14 @@ module Dsv
   , readDsvFileStrictWithoutHeader
   , readDsvFileStrictIgnoringHeader
 
+  -- * Reading CSV files strictly with any row type
+  -- todo
+
+  -- * Reading DSV files strictly with any row type
+  , mapDsvFileStrictWithoutHeader
+  , mapDsvFileStrictIgnoringHeader
+  , mapDsvFileStrictUsingHeader
+
   -- * Folding CSV files
   -- $foldingCsvFiles
   , foldCsvFileWithZippedHeader, foldCsvFileWithZippedHeaderM
@@ -61,7 +69,9 @@ import Dsv.ByteString
 import Dsv.Cassava
 import Dsv.Delimiter
 import Dsv.FileFold
-import Dsv.FileStrict
+import Dsv.FileStrictCsvRead
+import Dsv.FileStrictMap
+import Dsv.FileStrictRead
 import Dsv.Header
 import Dsv.Misc
 import Dsv.Vector

@@ -57,9 +57,9 @@ library
       , Dsv.FileFold
       , Dsv.FileFold.Csv
       , Dsv.FileFold.Dsv
-      , Dsv.FileStrict
-      , Dsv.FileStrict.Csv
-      , Dsv.FileStrict.Dsv
+      , Dsv.FileStrictCsvRead
+      , Dsv.FileStrictMap
+      , Dsv.FileStrictRead
       , Dsv.Fold
       , Dsv.Header
       , Dsv.IO
