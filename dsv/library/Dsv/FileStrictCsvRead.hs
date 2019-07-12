@@ -17,21 +17,21 @@ import Dsv.Vector
 
 CSV file:
 
-> Date,Vendor,Price,Notes
+> Date,Vendor,Price,Product
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 
 Result:
 
 > ( AttoComplete,
->   [ [ ("Date",   "2019-03-24"),
->       ("Vendor", "Acme Co"),
->       ("Price",  "$599.89"),
->       ("Notes",  "Dehydrated boulders") ],
->     [ ("Date",   "2019-04-18"),
->       ("Vendor", "Acme Co"),
->       ("Price",  "$24.95"),
->       ("Notes",  "Earthquake pills") ] ] )
+>   [ [ ("Date",    "2019-03-24"),
+>       ("Vendor",  "Acme Co"),
+>       ("Price",   "$599.89"),
+>       ("Product", "Dehydrated boulders") ],
+>     [ ("Date",    "2019-04-18"),
+>       ("Vendor",  "Acme Co"),
+>       ("Price",   "$24.95"),
+>       ("Product", "Earthquake pills") ] ] )
 
 -}
 
@@ -71,7 +71,7 @@ readCsvFileStrictWithoutHeader fp = readDsvFileStrictWithoutHeader comma fp
 
 CSV file:
 
-> Date,Vendor,Price,Notes
+> Date,Vendor,Price,Product
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 

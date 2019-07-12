@@ -88,7 +88,7 @@ foldCsvFileWithoutHeaderM fp fld =
 
 CSV file:
 
-> Date,Vendor,Price,Notes
+> Date,Vendor,Price,Product
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 
@@ -119,7 +119,7 @@ foldCsvFileIgnoringHeader fp fld =
 
 CSV file:
 
-> Date,Vendor,Price,Notes
+> Date,Vendor,Price,Product
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 
@@ -160,7 +160,7 @@ foldCsvFileIgnoringHeaderM fp fld =
 
 CSV file:
 
-> Date,Vendor,Price,Notes
+> Date,Vendor,Price,Product
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 
@@ -191,7 +191,7 @@ foldCsvFileWithZippedHeader fp fld =
 
 CSV file:
 
-> Date,Vendor,Price,Notes
+> Date,Vendor,Price,Product
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 
@@ -201,7 +201,7 @@ Fold:
 > import qualified Data.ByteString.Char8 as BS
 > import qualified Control.Foldl as L
 
-> L.mapM_ (traverse_ BS.putStrLn . columnName "Notes") *>
+> L.mapM_ (traverse_ BS.putStrLn . columnName "Product") *>
 > L.generalize L.length
 
 Output printed to the terminal:
