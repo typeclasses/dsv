@@ -38,7 +38,7 @@ mapCsvFileStrictUsingHeader
     => FilePath
         -- ^ The path of a CSV file to read
     -> (Vector ByteString -> IO (Vector ByteString -> IO row))
-        -- todo: doc
+        -- ^ Function which interprets the header (the first @Vector ByteString@) and returns a conversion function (@Vector ByteString -> IO row@) by which you specify how to interpret one row of bytes from the CSV file
     -> m (AttoTermination, Vector row)
 
 mapCsvFileStrictUsingHeader fp f =
