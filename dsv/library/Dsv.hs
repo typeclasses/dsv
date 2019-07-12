@@ -21,6 +21,7 @@ module Dsv
   , mapCsvFileStrictUsingHeader
 
   -- * Reading DSV files strictly with any row type
+  -- $readingDsvFilesStrictlyWithAnyRowType
   , mapDsvFileStrictWithoutHeader
   , mapDsvFileStrictIgnoringHeader
   , mapDsvFileStrictUsingHeader
@@ -32,6 +33,7 @@ module Dsv
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
 
   -- * Folding DSV files
+  -- $foldingDsvFiles
   , foldDsvFileWithZippedHeader, foldDsvFileWithZippedHeaderM
   , foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
@@ -109,6 +111,12 @@ Most likely, you don't just want to get 'Vector's of 'ByteString' values from a 
 
 -}
 
+{- $readingDsvFilesStrictlyWithAnyRowType
+
+This section is the same as the previous, but generalized with a 'Delimiter' parameter.
+
+-}
+
 {- $foldingCsvFiles
 
 The functions in this section are all parameterized on:
@@ -119,6 +127,12 @@ The functions in this section are all parameterized on:
 Use one of the functions with a 'L.Fold' parameter if you only need to collect information from the rows and aggregate it into some @result@ value. Use a function with a 'L.FoldM' parameter if your fold also needs to perform some kind of /effect/ as the rows are read from the file.
 
 See the "Control.Foldl" module for much more on what folds are and how to construct them.
+
+-}
+
+{- $foldingDsvFiles
+
+This section is the same as the previous, but generalized with a 'Delimiter' parameter.
 
 -}
 
