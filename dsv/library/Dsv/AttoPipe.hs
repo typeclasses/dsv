@@ -4,6 +4,7 @@ module Dsv.AttoPipe
   ) where
 
 import Dsv.AttoError
+import Dsv.AttoParser
 import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.IO
@@ -17,7 +18,7 @@ import Pipes
 -- pipes-bytestring
 import qualified Pipes.ByteString
 
-attoPipe :: Monad m => Atto.Parser a -> Pipe ByteString a m AttoError
+attoPipe :: Monad m => AttoParser a -> Pipe ByteString a m AttoError
 attoPipe p =
   do
     x <- await
@@ -39,7 +40,7 @@ attoPipe p =
 
 handleAttoProducer
     :: MonadIO m
-    => Atto.Parser a
+    => AttoParser a
     -> Handle         -- ^ File handle to read parser input from
     -> Producer a m AttoTermination
 

@@ -51,7 +51,7 @@ module Dsv
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
   -- * Attoparsec
-  , attoPipe, handleAttoProducer, AttoError (..)
+  , AttoParser, attoPipe, handleAttoProducer, AttoError (..)
 
   -- * Locating a column in a row
   -- todo: rethink these names in light of the new Lookup stuff

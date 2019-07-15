@@ -1,4 +1,6 @@
-module Dsv.AttoParser (AttoParser) where
+module Dsv.AttoParser
+  ( AttoParser
+  ) where
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto
