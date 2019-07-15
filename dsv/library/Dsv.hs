@@ -51,10 +51,44 @@ module Dsv
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
   -- * Attoparsec
-  , attoPipe, handleAttoProducer, AttoError (..), AttoTermination (..)
+  , attoPipe, handleAttoProducer, AttoError (..)
 
   -- * Locating a column in a row
+  -- todo: rethink these names in light of the new Lookup stuff
   , nthColumn, columnName
+
+  -- * The Lookup type
+  , Lookup (..)
+
+  -- * Converting lookups to pipes
+  , lookupPipe
+  , lookupPipeIgnoringAllErrors
+  , lookupPipeThrowFirstError
+
+  -- * Some lookups
+  , column, columnN, entireRow
+
+  -- * Lookup errors
+  -- $lookupErrors
+  , RowTooShort (..)
+  , DuplicateColumn (..)
+  , MissingColumn (..)
+
+  -- * English
+  , EnglishText (..)
+
+  -- * Reading strictly from CSV files using Lookup
+  , lookupCsvFileStrict
+  , lookupCsvFileStrictIgnoringAllErrors
+  , lookupCsvFileStrictThrowFirstError
+
+  -- * Reading strictly from DSV files using Lookup
+  , lookupDsvFileStrict
+  , lookupDsvFileStrictIgnoringAllErrors
+  , lookupDsvFileStrictThrowFirstError
+
+  -- * Termination types
+  , AttoTermination (..), AttoLookupTermination (..)
 
   -- * Miscellania
   -- $miscellania
@@ -67,6 +101,7 @@ module Dsv
   ) where
 
 import Dsv.AttoError
+import Dsv.AttoLookupTermination
 import Dsv.AttoParser
 import Dsv.AttoPipe
 import Dsv.AttoTermination
@@ -74,13 +109,20 @@ import Dsv.ByteString
 import Dsv.CommonDelimiters
 import Dsv.DelimiterSplice
 import Dsv.DelimiterType
+import Dsv.English
 import Dsv.FileFold
 import Dsv.FileFoldCsv
+import Dsv.FileStrictCsvLookup
 import Dsv.FileStrictCsvMap
 import Dsv.FileStrictCsvRead
+import Dsv.FileStrictLookup
 import Dsv.FileStrictMap
 import Dsv.FileStrictRead
 import Dsv.Header
+import Dsv.LookupErrors
+import Dsv.Lookups
+import Dsv.LookupPipe
+import Dsv.LookupType
 import Dsv.Misc
 import Dsv.Parsing
 import Dsv.Vector
@@ -95,7 +137,12 @@ We present these functions first because they require the least amount of effort
   2. Reads from a file (specified by a 'FilePath');
   3. Reads all of the results into memory at once ("strictly");
 
-If you need to use a different delimiter, if your input source is something other than a file, or if you need streaming to control memory usage, read on to the next sections.
+Read on to the subsequent sections if:
+
+  - you need to use a different delimiter;
+  - your input source is something other than a file;
+  - you need streaming to control memory usage; or
+  - you would like assistance in converting the data from 'Vector's of 'ByteString's to other types.
 
 -}
 
@@ -133,6 +180,12 @@ See the "Control.Foldl" module for much more on what folds are and how to constr
 {- $foldingDsvFiles
 
 This section is the same as the previous, but generalized with a 'Delimiter' parameter.
+
+-}
+
+{- $lookupErrors
+
+When you're looking for particular information in DSV data, there is a lot that can go wrong. The columns that you want might not be there, or the strings that you find in the rows may not be correctly formatted.
 
 -}
 

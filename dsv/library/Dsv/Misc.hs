@@ -12,19 +12,13 @@ module Dsv.Misc
   ) where
 
 import Dsv.ByteString
+import Dsv.Text
 import Dsv.Vector
 
 -- base
 import Control.Monad ((>=>))
 
--- text
-import Data.Text (Text)
-import qualified Data.Text as Text
-import qualified Data.Text.Encoding as Text
-import qualified Data.Text.Read as Text
-
 -- vector
-import Data.Vector ((!?))
 import qualified Data.Vector as Vector
 
 {- |
@@ -40,7 +34,7 @@ import qualified Data.Vector as Vector
 -}
 
 nthColumn :: Integer -> Vector a -> Maybe a
-nthColumn n xs = xs !? (fromIntegral n - 1)
+nthColumn n xs = vectorIndexInteger xs (n - 1)
 
 columnName :: Eq name => name -> Vector (name, value) -> Maybe value
 columnName n xs =
@@ -48,20 +42,15 @@ columnName n xs =
     (_, v) <- Vector.find (\(n', _) -> n == n') xs
     return v
 
-rightMaybe :: Either a b -> Maybe b
-rightMaybe =
-    either (const Nothing) Just
-
 -- | Decode a byte string as UTF-8 text, failing with 'Nothing' if the decoding fails.
 
 byteStringTextUtf8Maybe :: ByteString -> Maybe Text
-byteStringTextUtf8Maybe =
-    rightMaybe . Text.decodeUtf8'
+byteStringTextUtf8Maybe = textDecodeUtf8Maybe
 
-textReadMaybe :: Text.Reader a -> Text -> Maybe a
+textReadMaybe :: TextReader a -> Text -> Maybe a
 textReadMaybe f t =
     case f t of
-        Right (x, r) | Text.null r -> Just x
+        Right (x, r) | textNull r -> Just x
         _ -> Nothing
 
 {- | Read a dollar amount.
@@ -88,7 +77,7 @@ byteStringDollarsMaybe =
 
 textDollarsMaybe :: Text -> Maybe Rational
 textDollarsMaybe =
-    Text.stripPrefix "$" >=> textDecimalRationalMaybe
+    textStripPrefix "$" >=> textDecimalRationalMaybe
 
 {- |
 
@@ -104,7 +93,7 @@ Read a rational number written in decimal notation.
 
 textDecimalRationalMaybe :: Text -> Maybe Rational
 textDecimalRationalMaybe =
-    textReadMaybe Text.rational
+    textReadMaybe textReadRational
 
 {- |
 
