@@ -76,6 +76,7 @@ library
       , Dsv.ParseLookupTermination
       , Dsv.ParseTermination
       , Dsv.Parsing
+      , Dsv.Pipes
       , Dsv.Text
       , Dsv.Validation
       , Dsv.Vector

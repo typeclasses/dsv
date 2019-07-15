@@ -14,24 +14,12 @@ import Dsv.LookupType
 import Dsv.ParseTermination
 import Dsv.ParseLookupTermination
 import Dsv.Parsing
+import Dsv.Pipes
 import Dsv.Validation
 import Dsv.Vector
 
--- base
-import Numeric.Natural
-
 -- pipes
 import Pipes
-
-count :: Monad m => Producer a m r -> Producer a m (Natural, r)
-count = go 0
-  where
-    go n p =
-      do
-        eit <- lift (next p)
-        case eit of
-            Left r -> return (n, r)
-            Right (a, p') -> do { yield a; go (n + 1) p' }
 
 lookupDsvFileStrict ::
     forall m headerError rowError row .

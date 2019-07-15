@@ -5,8 +5,7 @@ module Dsv.Fold
   , foldVectorM
   ) where
 
--- base
-import Numeric.Natural (Natural)
+import Dsv.Numbers
 
 -- foldl
 import qualified Control.Foldl as L

@@ -2,7 +2,11 @@
 
 module Dsv.Numbers
   ( fromIntegerMaybe
+  , Natural
   ) where
+
+-- base
+import Numeric.Natural (Natural)
 
 fromIntegerMaybe
     :: forall n. (Bounded n, Integral n)
