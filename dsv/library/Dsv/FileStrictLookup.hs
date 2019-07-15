@@ -24,8 +24,11 @@ lookupDsvFileStrict ::
     forall m headerError rowError row .
     MonadIO m
     => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
+        -- ^ The path of a DSV file to read
     -> Lookup headerError rowError row
+        -- ^ How to interpret the rows
     -> m (AttoLookupTermination headerError, Vector (Validation rowError row))
 
 lookupDsvFileStrict d fp lu =
@@ -41,8 +44,11 @@ lookupDsvFileStrictIgnoringAllErrors ::
     forall m headerError rowError row .
     MonadIO m
     => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
+        -- ^ The path of a DSV file to read
     -> Lookup headerError rowError row
+        -- ^ How to interpret the rows
     -> m (Vector row)
 
 lookupDsvFileStrictIgnoringAllErrors d fp lu =
@@ -57,8 +63,11 @@ lookupDsvFileStrictThrowFirstError ::
     forall m headerError rowError row .
     (MonadIO m, Exception headerError, Exception rowError)
     => Delimiter
+        -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
+        -- ^ The path of a DSV file to read
     -> Lookup headerError rowError row
+        -- ^ How to interpret the rows
     -> m (Vector row)
 
 lookupDsvFileStrictThrowFirstError d fp lu =

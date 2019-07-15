@@ -18,7 +18,9 @@ lookupCsvFileStrict ::
     forall m headerError rowError row .
     MonadIO m
     => FilePath
+        -- ^ The path of a CSV file to read
     -> Lookup headerError rowError row
+        -- ^ How to interpret the rows
     -> m (AttoLookupTermination headerError, Vector (Validation rowError row))
 
 lookupCsvFileStrict fp lu =
@@ -28,7 +30,9 @@ lookupCsvFileStrictIgnoringAllErrors ::
     forall m headerError rowError row .
     MonadIO m
     => FilePath
+        -- ^ The path of a CSV file to read
     -> Lookup headerError rowError row
+        -- ^ How to interpret the rows
     -> m (Vector row)
 
 lookupCsvFileStrictIgnoringAllErrors fp lu =
@@ -38,7 +42,9 @@ lookupCsvFileStrictThrowFirstError ::
     forall m headerError rowError row .
     (MonadIO m, Exception headerError, Exception rowError)
     => FilePath
+        -- ^ The path of a CSV file to read
     -> Lookup headerError rowError row
+        -- ^ How to interpret the rows
     -> m (Vector row)
 
 lookupCsvFileStrictThrowFirstError fp lu =
