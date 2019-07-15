@@ -22,7 +22,7 @@ mapDsvFileStrictWithoutHeader
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> (Vector ByteString -> IO row)
         -- ^ Conversion function by which you specify how to interpret one row of bytes from the DSV file
     -> m (AttoTermination, Vector row)
@@ -39,7 +39,7 @@ mapDsvFileStrictIgnoringHeader
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> (Vector ByteString -> IO row)
         -- ^ Conversion function by which you specify how to interpret one row of bytes from the DSV file
     -> m (AttoTermination, Vector row)
@@ -56,9 +56,9 @@ mapDsvFileStrictUsingHeader
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
-        -- ^ The path of a CSV file to read
+        -- ^ The path of a DSV file to read
     -> (Vector ByteString -> IO (Vector ByteString -> IO row))
-        -- ^ Function which interprets the header (the first @Vector ByteString@) and returns a conversion function (@Vector ByteString -> IO row@) by which you specify how to interpret one row of bytes from the CSV file
+        -- ^ Function which interprets the header (the first @Vector ByteString@) and returns a conversion function (@Vector ByteString -> IO row@) by which you specify how to interpret one row of bytes from the DSV file
     -> m (AttoTermination, Vector row)
 
 mapDsvFileStrictUsingHeader d fp f =
