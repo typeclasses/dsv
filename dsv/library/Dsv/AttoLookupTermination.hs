@@ -5,7 +5,6 @@ module Dsv.AttoLookupTermination
   , attoLookupTerminationEitherIso
   ) where
 
-import Dsv.AttoError
 import Dsv.AttoTermination
 import Dsv.Lens
 
@@ -13,7 +12,7 @@ import Dsv.Lens
 data AttoLookupTermination headerError
   = AttoLookupComplete
       -- ^ All of the input was consumed.
-  | AttoLookupParseError AttoError
+  | AttoLookupParseError
       -- ^ The parsing stopped where the data was malformed.
   | AttoLookupHeaderError headerError
       -- ^ There is some problem with the header that would prevent us from interpreting the subsequent rows.
@@ -29,9 +28,9 @@ attoLookupTerminationEitherIso = iso f g
     g :: Either AttoTermination y -> AttoLookupTermination  y
 
     f AttoLookupComplete          =  Left AttoComplete
-    f (AttoLookupParseError e)    =  Left (AttoIncomplete e)
+    f AttoLookupParseError        =  Left AttoIncomplete
     f (AttoLookupHeaderError e)   =  Right e
 
     g (Left AttoComplete)         =  AttoLookupComplete
-    g (Left (AttoIncomplete e))   =  AttoLookupParseError e
+    g (Left AttoIncomplete)       =  AttoLookupParseError
     g (Right e)                   =  AttoLookupHeaderError e

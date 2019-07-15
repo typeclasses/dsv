@@ -85,6 +85,21 @@ prop_readCsvFileStrictWithoutHeader_doc =
         ]
     )
 
+-- Corresponds to the second example in the documentation for 'readCsvFileStrictWithoutHeader'.
+prop_readCsvFileStrictWithoutHeader_doc_error =
+    (
+      do
+        fp <- getDataFileName "test-data/doc-example-malformed-without-header.csv"
+        readCsvFileStrictWithoutHeader fp
+        ------------------------------
+    )
+    ~>
+    ( AttoIncomplete
+    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
+        [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
+        ]
+    )
+
 prop_readCsvFileStrictWithZippedHeader_tweets =
     (
       do
@@ -103,7 +118,7 @@ prop_readCsvFileStrictWithZippedHeader_doc =
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
         readCsvFileStrictWithZippedHeader fp
-        ----------------------------
+        ---------------------------------
     )
     ~>
     ( AttoComplete
@@ -117,6 +132,26 @@ prop_readCsvFileStrictWithZippedHeader_doc =
           , ("Vendor", "Acme Co")
           , ("Price", "$24.95")
           , ("Notes", "Earthquake pills")
+          ]
+        ]
+
+    )
+
+-- Corresponds to the second example in the documentation for 'readCsvFileStrictWithZippedHeader'.
+prop_readCsvFileStrictWithZippedHeader_doc_error =
+    (
+      do
+        fp <- getDataFileName "test-data/doc-example-malformed-with-header.csv"
+        readCsvFileStrictWithZippedHeader fp
+        ---------------------------------
+    )
+    ~>
+    ( AttoIncomplete
+    , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
+        [ [ ("Date", "2019-03-24")
+          , ("Vendor", "Acme Co")
+          , ("Price", "$599.89")
+          , ("Notes", "Dehydrated boulders")
           ]
         ]
 
@@ -232,7 +267,7 @@ prop_foldPrice_withZippedHeader_doc =
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
         foldCsvFileWithZippedHeader fp sumPricesWithZippedHeader
-        ----------------------
+        ---------------------------
     )
     ~>
     (AttoComplete, 624.84)
@@ -244,7 +279,7 @@ prop_foldPriceM_withZippedHeader_doc =
         r <- newIORef Seq.empty
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
         (t, n) <- foldCsvFileWithZippedHeaderM fp (writeNamesAndCountWithZippedHeader r)
-                  -----------------------
+                  ----------------------------
         rs <- readIORef r
         return (t, toList rs, n)
     )

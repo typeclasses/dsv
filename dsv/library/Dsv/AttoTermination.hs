@@ -2,9 +2,7 @@ module Dsv.AttoTermination
   ( AttoTermination (..)
   ) where
 
-import Dsv.AttoError
-
 data AttoTermination
   = AttoComplete
-  | AttoIncomplete AttoError
+  | AttoIncomplete
   deriving (Eq, Show)

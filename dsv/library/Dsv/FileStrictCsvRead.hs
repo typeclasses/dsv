@@ -33,6 +33,27 @@ Result:
 >       ("Price",   "$24.95"),
 >       ("Product", "Earthquake pills") ] ] )
 
+=== Example with a malformed file
+
+CSV file:
+
+> Date,Vendor,Price,Notes
+> 2019-03-24,Acme Co,$599.89,Dehydrated boulders
+> 2019-03-29,Store Mart,"$8.14,Coffee beans
+> 2019-04-18,Acme Co,"$24.95,Earthquake pills
+
+Notice the unmatched quotation mark on the third line.
+
+Result:
+
+> ( AttoIncomplete,
+>   [ [ ("Date",    "2019-03-24"),
+>       ("Vendor",  "Acme Co"),
+>       ("Price",   "$599.89"),
+>       ("Product", "Dehydrated boulders") ] )
+
+The result includes the first row of data because it appears /before/ the malformed line. All data that comes /after/ the erroneous quotation mark is discarded.
+
 -}
 
 readCsvFileStrictWithZippedHeader
@@ -56,6 +77,19 @@ Result:
 > ( AttoComplete,
 >   [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"],
 >     ["2019-04-18", "Acme Co", "$24.95",  "Earthquake pills"] ] )
+
+=== Example with a malformed file
+
+CSV file:
+
+> 2019-03-24,Acme Co,$599.89,Dehydrated boulders
+> 2019-03-29,Store Mart,"$8.14,Coffee beans
+> 2019-04-18,Acme Co,"$24.95,Earthquake pills
+
+Result:
+
+> ( AttoIncomplete,
+>   [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"] ] )
 
 -}
 readCsvFileStrictWithoutHeader

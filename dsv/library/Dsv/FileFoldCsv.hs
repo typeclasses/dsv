@@ -57,8 +57,7 @@ Fold:
 > import qualified Data.ByteString.Char8 as BS
 > import qualified Control.Foldl as L
 
-> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *>
-> L.generalize L.length
+> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *> L.generalize L.length
 
 Output printed to the terminal:
 
@@ -129,8 +128,7 @@ Fold:
 > import qualified Data.ByteString.Char8 as BS
 > import qualified Control.Foldl as L
 
-> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *>
-> L.generalize L.length
+> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *> L.generalize L.length
 
 Output printed to the terminal:
 
@@ -201,8 +199,7 @@ Fold:
 > import qualified Data.ByteString.Char8 as BS
 > import qualified Control.Foldl as L
 
-> L.mapM_ (traverse_ BS.putStrLn . columnName "Product") *>
-> L.generalize L.length
+> L.mapM_ (traverse_ BS.putStrLn . columnName "Product") *> L.generalize L.length
 
 Output printed to the terminal:
 

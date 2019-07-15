@@ -34,8 +34,8 @@ attoPipe p =
         yield x
         proceed (Atto.parse p remainingInput)
 
-    proceed (Atto.Fail _remainingInput ctxs msg) =
-        return (AttoError ctxs msg)
+    proceed (Atto.Fail _remainingInput _ctxs _msg) =
+        return AttoError
 
 handleAttoProducer
     :: MonadIO m
@@ -49,5 +49,5 @@ handleAttoProducer p h = readBytes >-> parseRows
       do  Pipes.ByteString.fromHandle h
           return AttoComplete
     parseRows =
-      do  e <- attoPipe p
-          return (AttoIncomplete e)
+      do  _ <- attoPipe p
+          return AttoIncomplete
