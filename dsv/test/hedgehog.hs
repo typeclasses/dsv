@@ -64,7 +64,7 @@ prop_readCsvFileStrictWithoutHeader_tweets =
         readCsvFileStrictWithoutHeader fp
     )
     ~>
-    ( AttoComplete
+    ( ParseComplete
     , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
           [tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5]
     )
@@ -78,7 +78,7 @@ prop_readCsvFileStrictWithoutHeader_doc =
         ------------------------------
     )
     ~>
-    ( AttoComplete
+    ( ParseComplete
     , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
         [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
         , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
@@ -94,7 +94,7 @@ prop_readCsvFileStrictWithoutHeader_doc_error =
         ------------------------------
     )
     ~>
-    ( AttoIncomplete
+    ( ParseIncomplete
     , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
         [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
         ]
@@ -107,7 +107,7 @@ prop_readCsvFileStrictWithZippedHeader_tweets =
         readCsvFileStrictWithZippedHeader fp
     )
     ~>
-    ( AttoComplete
+    ( ParseComplete
     , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
           [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
     )
@@ -121,7 +121,7 @@ prop_readCsvFileStrictWithZippedHeader_doc =
         ---------------------------------
     )
     ~>
-    ( AttoComplete
+    ( ParseComplete
     , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
         [ [ ("Date", "2019-03-24")
           , ("Vendor", "Acme Co")
@@ -146,7 +146,7 @@ prop_readCsvFileStrictWithZippedHeader_doc_error =
         ---------------------------------
     )
     ~>
-    ( AttoIncomplete
+    ( ParseIncomplete
     , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
         [ [ ("Date", "2019-03-24")
           , ("Vendor", "Acme Co")
@@ -164,7 +164,7 @@ prop_readCsvFileStrictIgnoringHeader_tweets =
         readCsvFileStrictIgnoringHeader fp
     )
     ~>
-    ( AttoComplete
+    ( ParseComplete
     , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
           [tweet1, tweet2, tweet3, tweet4, tweet5]
     )
@@ -178,7 +178,7 @@ prop_readCsvFileStrictIgnoringHeader_doc =
         -------------------------------
     )
     ~>
-    ( AttoComplete
+    ( ParseComplete
     , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
         [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
         , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
@@ -220,7 +220,7 @@ prop_foldPrice_withoutHeader_doc =
         ------------------------
     )
     ~>
-    (AttoComplete, 624.84)
+    (ParseComplete, 624.84)
 
 -- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeaderM'.
 prop_foldPriceM_withoutHeader_doc =
@@ -234,7 +234,7 @@ prop_foldPriceM_withoutHeader_doc =
         return (t, toList rs, n)
     )
     ~>
-    (AttoComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
+    (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
 
 -- Corresponds to the example in the documentation for 'foldCsvFileIgnoringHeader'.
 prop_foldPrice_ignoringHeader_doc =
@@ -245,7 +245,7 @@ prop_foldPrice_ignoringHeader_doc =
         -------------------------
     )
     ~>
-    (AttoComplete, 624.84)
+    (ParseComplete, 624.84)
 
 -- Corresponds to the example in the documentation for 'foldCsvFileIgnoringHeaderM'.
 prop_foldPriceM_ignoringHeader_doc =
@@ -259,7 +259,7 @@ prop_foldPriceM_ignoringHeader_doc =
         return (t, toList rs, n)
     )
     ~>
-    (AttoComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
+    (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
 
 -- Corresponds to the example in the documentation for 'foldCsvFileWithZippedHeader'.
 prop_foldPrice_withZippedHeader_doc =
@@ -270,7 +270,7 @@ prop_foldPrice_withZippedHeader_doc =
         ---------------------------
     )
     ~>
-    (AttoComplete, 624.84)
+    (ParseComplete, 624.84)
 
 -- Corresponds to the example in the documentation for 'foldCsvFileWithZippedHeaderM'.
 prop_foldPriceM_withZippedHeader_doc =
@@ -284,7 +284,7 @@ prop_foldPriceM_withZippedHeader_doc =
         return (t, toList rs, n)
     )
     ~>
-    (AttoComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
+    (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
 
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
 

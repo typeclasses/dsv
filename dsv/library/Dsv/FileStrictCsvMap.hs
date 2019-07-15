@@ -4,11 +4,11 @@ module Dsv.FileStrictCsvMap
   , mapCsvFileStrictUsingHeader
   ) where
 
-import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.CommonDelimiters
 import Dsv.FileStrictMap
 import Dsv.IO
+import Dsv.ParseTermination
 import Dsv.Vector
 
 mapCsvFileStrictWithoutHeader
@@ -17,7 +17,7 @@ mapCsvFileStrictWithoutHeader
         -- ^ The path of a CSV file to read
     -> (Vector ByteString -> IO row)
         -- ^ Conversion function by which you specify how to interpret one row of bytes from the CSV file
-    -> m (AttoTermination, Vector row)
+    -> m (ParseTermination, Vector row)
 
 mapCsvFileStrictWithoutHeader fp f =
     mapDsvFileStrictWithoutHeader comma fp f
@@ -28,7 +28,7 @@ mapCsvFileStrictIgnoringHeader
         -- ^ The path of a CSV file to read
     -> (Vector ByteString -> IO row)
         -- ^ Conversion function by which you specify how to interpret one row of bytes from the CSV file
-    -> m (AttoTermination, Vector row)
+    -> m (ParseTermination, Vector row)
 
 mapCsvFileStrictIgnoringHeader fp f =
     mapDsvFileStrictIgnoringHeader comma fp f
@@ -39,7 +39,7 @@ mapCsvFileStrictUsingHeader
         -- ^ The path of a CSV file to read
     -> (Vector ByteString -> IO (Vector ByteString -> IO row))
         -- ^ Function which interprets the header (the first @Vector ByteString@) and returns a conversion function (@Vector ByteString -> IO row@) by which you specify how to interpret one row of bytes from the CSV file
-    -> m (AttoTermination, Vector row)
+    -> m (ParseTermination, Vector row)
 
 mapCsvFileStrictUsingHeader fp f =
     mapDsvFileStrictUsingHeader comma fp f

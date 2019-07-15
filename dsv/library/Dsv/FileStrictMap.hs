@@ -4,12 +4,12 @@ module Dsv.FileStrictMap
   , mapDsvFileStrictUsingHeader
   ) where
 
-import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.Header
 import Dsv.IO
+import Dsv.ParseTermination
 import Dsv.Parsing
 import Dsv.Vector
 
@@ -25,7 +25,7 @@ mapDsvFileStrictWithoutHeader
         -- ^ The path of a DSV file to read
     -> (Vector ByteString -> IO row)
         -- ^ Conversion function by which you specify how to interpret one row of bytes from the DSV file
-    -> m (AttoTermination, Vector row)
+    -> m (ParseTermination, Vector row)
 
 mapDsvFileStrictWithoutHeader d fp f =
     liftIO $ runSafeT $
@@ -42,7 +42,7 @@ mapDsvFileStrictIgnoringHeader
         -- ^ The path of a DSV file to read
     -> (Vector ByteString -> IO row)
         -- ^ Conversion function by which you specify how to interpret one row of bytes from the DSV file
-    -> m (AttoTermination, Vector row)
+    -> m (ParseTermination, Vector row)
 
 mapDsvFileStrictIgnoringHeader d fp f =
     liftIO $ runSafeT $
@@ -59,7 +59,7 @@ mapDsvFileStrictUsingHeader
         -- ^ The path of a DSV file to read
     -> (Vector ByteString -> IO (Vector ByteString -> IO row))
         -- ^ Function which interprets the header (the first @Vector ByteString@) and returns a conversion function (@Vector ByteString -> IO row@) by which you specify how to interpret one row of bytes from the DSV file
-    -> m (AttoTermination, Vector row)
+    -> m (ParseTermination, Vector row)
 
 mapDsvFileStrictUsingHeader d fp f =
     liftIO $ runSafeT $

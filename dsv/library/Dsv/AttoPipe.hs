@@ -4,10 +4,10 @@ module Dsv.AttoPipe
   ) where
 
 import Dsv.AttoParser
-import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.IO
 import Dsv.ParseError
+import Dsv.ParseTermination
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto
@@ -42,13 +42,13 @@ handleAttoProducer
     :: MonadIO m
     => AttoParser a
     -> Handle         -- ^ File handle to read parser input from
-    -> Producer a m AttoTermination
+    -> Producer a m ParseTermination
 
 handleAttoProducer p h = readBytes >-> parseRows
   where
     readBytes =
       do  Pipes.ByteString.fromHandle h
-          return AttoComplete
+          return ParseComplete
     parseRows =
       do  _ <- attoPipe p
-          return AttoIncomplete
+          return ParseIncomplete

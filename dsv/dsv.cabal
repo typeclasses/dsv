@@ -47,7 +47,6 @@ library
       , Dsv.AttoLookupTermination
       , Dsv.AttoParser
       , Dsv.AttoPipe
-      , Dsv.AttoTermination
       , Dsv.ByteString
       , Dsv.CommonDelimiters
       , Dsv.DelimiterSplice
@@ -73,6 +72,7 @@ library
       , Dsv.Misc
       , Dsv.Numbers
       , Dsv.ParseError
+      , Dsv.ParseTermination
       , Dsv.Parsing
       , Dsv.Text
       , Dsv.Validation

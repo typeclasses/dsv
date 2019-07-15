@@ -4,12 +4,12 @@ module Dsv.FileFoldCsv
   , foldCsvFileWithZippedHeader, foldCsvFileWithZippedHeaderM
   ) where
 
-import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.CommonDelimiters
 import Dsv.FileFold
 import Dsv.Fold
 import Dsv.IO
+import Dsv.ParseTermination
 import Dsv.Vector
 
 {- |
@@ -27,7 +27,7 @@ Fold:
 
 Result:
 
-> (AttoComplete, 624.84)
+> (ParseComplete, 624.84)
 
 -}
 
@@ -37,7 +37,7 @@ foldCsvFileWithoutHeader
         -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldCsvFileWithoutHeader fp fld =
     foldDsvFileWithoutHeader comma fp fld
@@ -66,7 +66,7 @@ Output printed to the terminal:
 
 Result:
 
-> (AttoComplete, 2)
+> (ParseComplete, 2)
 
 -}
 
@@ -76,7 +76,7 @@ foldCsvFileWithoutHeaderM
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldCsvFileWithoutHeaderM fp fld =
     foldDsvFileWithoutHeaderM comma fp fld
@@ -97,7 +97,7 @@ Fold:
 
 Result:
 
-> (AttoComplete, 624.84)
+> (ParseComplete, 624.84)
 
 -}
 
@@ -107,7 +107,7 @@ foldCsvFileIgnoringHeader
         -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldCsvFileIgnoringHeader fp fld =
     foldDsvFileIgnoringHeader comma fp fld
@@ -137,7 +137,7 @@ Output printed to the terminal:
 
 Result:
 
-> (AttoComplete, 2)
+> (ParseComplete, 2)
 
 -}
 
@@ -147,7 +147,7 @@ foldCsvFileIgnoringHeaderM
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldCsvFileIgnoringHeaderM fp fld =
     foldDsvFileIgnoringHeaderM comma fp fld
@@ -168,7 +168,7 @@ Fold:
 
 Result:
 
-> (AttoComplete, 624.84)
+> (ParseComplete, 624.84)
 
 -}
 
@@ -178,7 +178,7 @@ foldCsvFileWithZippedHeader
         -- ^ The path of a CSV file to read
     -> Fold (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldCsvFileWithZippedHeader fp fld =
     foldDsvFileWithZippedHeader comma fp fld
@@ -208,7 +208,7 @@ Output printed to the terminal:
 
 Result:
 
-> (AttoComplete, 2)
+> (ParseComplete, 2)
 
 -}
 
@@ -218,7 +218,7 @@ foldCsvFileWithZippedHeaderM
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldCsvFileWithZippedHeaderM fp fld =
     foldDsvFileWithZippedHeaderM comma fp fld

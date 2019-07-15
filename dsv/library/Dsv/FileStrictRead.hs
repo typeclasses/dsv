@@ -4,12 +4,12 @@ module Dsv.FileStrictRead
   , readDsvFileStrictIgnoringHeader
   ) where
 
-import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.Header
 import Dsv.IO
+import Dsv.ParseTermination
 import Dsv.Parsing
 import Dsv.Vector
 
@@ -20,7 +20,7 @@ readDsvFileStrictWithoutHeader
     :: MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
-    -> m (AttoTermination, Vector (Vector ByteString))
+    -> m (ParseTermination, Vector (Vector ByteString))
 
 readDsvFileStrictWithoutHeader d fp =
     liftIO $ runSafeT $
@@ -33,7 +33,7 @@ readDsvFileStrictWithZippedHeader
     :: MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
-    -> m (AttoTermination, Vector (Vector (ByteString, ByteString)))
+    -> m (ParseTermination, Vector (Vector (ByteString, ByteString)))
 
 readDsvFileStrictWithZippedHeader d fp =
     liftIO $ runSafeT $
@@ -47,7 +47,7 @@ readDsvFileStrictIgnoringHeader
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
 
-    -> m (AttoTermination, Vector (Vector ByteString))
+    -> m (ParseTermination, Vector (Vector ByteString))
 
 readDsvFileStrictIgnoringHeader d fp =
     liftIO $ runSafeT $

@@ -4,12 +4,12 @@ module Dsv.FileFold
   , foldDsvFileWithZippedHeader, foldDsvFileWithZippedHeaderM
   ) where
 
-import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.Header
 import Dsv.IO
+import Dsv.ParseTermination
 import Dsv.Parsing
 import Dsv.Vector
 
@@ -27,7 +27,7 @@ foldDsvFileWithoutHeader
         -- ^ The path of a DSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldDsvFileWithoutHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
@@ -41,7 +41,7 @@ foldDsvFileWithoutHeaderM
         -- ^ The path of a DSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldDsvFileWithoutHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $
@@ -55,7 +55,7 @@ foldDsvFileIgnoringHeader
         -- ^ The path of a DSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldDsvFileIgnoringHeader d fp fld =
     foldDsvFileWithoutHeader d fp (foldDrop 1 fld)
@@ -68,7 +68,7 @@ foldDsvFileIgnoringHeaderM
         -- ^ The path of a DSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldDsvFileIgnoringHeaderM d fp fld =
     foldDsvFileWithoutHeaderM d fp (foldDropM 1 fld)
@@ -81,7 +81,7 @@ foldDsvFileWithZippedHeader
         -- ^ The path of a DSV file to read
     -> Fold (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldDsvFileWithZippedHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
@@ -95,7 +95,7 @@ foldDsvFileWithZippedHeaderM
         -- ^ The path of a DSV file to read
     -> FoldM m (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
-    -> m (AttoTermination, result)
+    -> m (ParseTermination, result)
 
 foldDsvFileWithZippedHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $

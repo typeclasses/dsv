@@ -5,10 +5,10 @@ module Dsv.AttoLookupTermination
   , attoLookupTerminationEitherIso
   ) where
 
-import Dsv.AttoTermination
 import Dsv.Lens
+import Dsv.ParseTermination
 
--- | Like 'AttoTermination', but with the additional possibility that the reading was stopped by a problem with the header.
+-- | Like 'ParseTermination', but with the additional possibility that the reading was stopped by a problem with the header.
 data AttoLookupTermination headerError
   = AttoLookupComplete
       -- ^ All of the input was consumed.
@@ -20,17 +20,17 @@ data AttoLookupTermination headerError
 attoLookupTerminationEitherIso ::
   forall x y. Iso
     (AttoLookupTermination  x) (AttoLookupTermination  y)
-    (Either AttoTermination x) (Either AttoTermination y)
+    (Either ParseTermination x) (Either ParseTermination y)
 
 attoLookupTerminationEitherIso = iso f g
   where
-    f :: AttoLookupTermination  x -> Either AttoTermination x
-    g :: Either AttoTermination y -> AttoLookupTermination  y
+    f :: AttoLookupTermination   x -> Either ParseTermination x
+    g :: Either ParseTermination y -> AttoLookupTermination  y
 
-    f AttoLookupComplete          =  Left AttoComplete
-    f AttoLookupParseError        =  Left AttoIncomplete
+    f AttoLookupComplete          =  Left ParseComplete
+    f AttoLookupParseError        =  Left ParseIncomplete
     f (AttoLookupHeaderError e)   =  Right e
 
-    g (Left AttoComplete)         =  AttoLookupComplete
-    g (Left AttoIncomplete)       =  AttoLookupParseError
+    g (Left ParseComplete)        =  AttoLookupComplete
+    g (Left ParseIncomplete)      =  AttoLookupParseError
     g (Right e)                   =  AttoLookupHeaderError e
