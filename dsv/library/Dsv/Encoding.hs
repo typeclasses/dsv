@@ -2,10 +2,14 @@
 
 module Dsv.Encoding
   ( EncodeUtf8 (..)
+  , DecodeUtf8 (..)
   ) where
 
 import Dsv.ByteString
 import Dsv.Text
+
+
+--- Encode ---
 
 class EncodeUtf8 a
   where
@@ -18,3 +22,18 @@ instance EncodeUtf8 Text
 instance EncodeUtf8 [Char]
   where
     encodeUtf8 = encodeUtf8 . stringToText
+
+
+--- Decode ---
+
+class DecodeUtf8 a
+  where
+    decodeUtf8Maybe :: ByteString -> Maybe a
+
+instance DecodeUtf8 Text
+  where
+    decodeUtf8Maybe = textDecodeUtf8Maybe
+
+instance DecodeUtf8 [Char]
+  where
+    decodeUtf8Maybe = fmap textToString . textDecodeUtf8Maybe

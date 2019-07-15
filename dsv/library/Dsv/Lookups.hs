@@ -2,6 +2,7 @@
 
 module Dsv.Lookups
   ( column, columnUtf8, columnN, entireRow
+  , mapLookup, (%>)
   ) where
 
 import Dsv.ByteString
@@ -14,6 +15,25 @@ import Dsv.Vector
 -- base
 import qualified Data.Foldable as Foldable
 import qualified Data.List as List
+
+mapLookup :: (a -> Validation re b) -> Lookup he re a -> Lookup he re b
+mapLookup g (Lookup f) =
+  Lookup (
+    \header ->
+      case f header of
+        Failure e -> Failure e
+        Success h ->
+          Success
+            (\row ->
+              case h row of
+                Failure e -> Failure e
+                Success x -> g x
+            )
+  )
+
+-- | @(%>) = 'flip' 'mapLookup'@
+(%>) :: Lookup he re a -> (a -> Validation re b) -> Lookup he re b
+(%>) = flip mapLookup
 
 column
     :: (DuplicateColumn ByteString he, MissingColumn ByteString he, RowTooShort re)
@@ -35,8 +55,8 @@ column name =
     )
 
 columnUtf8
-    :: (EncodeUtf8 txt, DuplicateColumn txt he, MissingColumn txt he, RowTooShort re)
-    => txt -> Lookup he re ByteString
+    :: (EncodeUtf8 txt, DecodeUtf8 txt, DuplicateColumn txt he, MissingColumn txt he, RowTooShort re, FieldInvalidUtf8 txt re)
+    => txt -> Lookup he re txt
 
 columnUtf8 name =
   Lookup
@@ -48,7 +68,10 @@ columnUtf8 name =
                     (\row ->
                         case vectorIndexInt row i of
                             Nothing -> Failure rowTooShort
-                            Just x -> Success x
+                            Just x ->
+                                case decodeUtf8Maybe x of
+                                    Nothing -> Failure (fieldInvalidUtf8 name)
+                                    Just y -> Success y
                     )
             _   -> Failure (duplicateColumn name)
 

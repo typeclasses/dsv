@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}
+
 module Dsv.FileFoldCsv
   ( foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
@@ -9,8 +11,19 @@ import Dsv.CommonDelimiters
 import Dsv.FileFold
 import Dsv.Fold
 import Dsv.IO
+import Dsv.Misc
 import Dsv.ParseTermination
 import Dsv.Vector
+
+-- base
+import Data.Foldable (traverse_)
+import Data.Maybe (fromMaybe)
+
+-- bytestring
+import qualified Data.ByteString.Char8 as BS
+
+-- foldl
+import qualified Control.Foldl as L
 
 {- |
 
@@ -23,11 +36,15 @@ CSV file:
 
 Fold:
 
-> L.premap (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe)) L.sum
+@
+'L.premap' ('fromMaybe' 0 . ('nthColumn' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
+@
 
 Result:
 
-> (ParseComplete, 624.84)
+@
+('ParseComplete', 624.84)
+@
 
 -}
 
@@ -53,11 +70,9 @@ CSV file:
 
 Fold:
 
-> import Data.Foldable (traverse_)
-> import qualified Data.ByteString.Char8 as BS
-> import qualified Control.Foldl as L
-
-> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *> L.generalize L.length
+@
+'L.mapM_' ('traverse_' 'BS.putStrLn' . 'nthColumn' 4) *> 'L.generalize' 'L.length'
+@
 
 Output printed to the terminal:
 
@@ -66,7 +81,9 @@ Output printed to the terminal:
 
 Result:
 
-> (ParseComplete, 2)
+@
+('ParseComplete', 2)
+@
 
 -}
 
@@ -93,11 +110,15 @@ CSV file:
 
 Fold:
 
-> L.premap (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe)) L.sum
+@
+'L.premap' ('fromMaybe' 0 . ('nthColumn' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
+@
 
 Result:
 
-> (ParseComplete, 624.84)
+@
+('ParseComplete', 624.84)
+@
 
 -}
 
@@ -124,11 +145,9 @@ CSV file:
 
 Fold:
 
-> import Data.Foldable (traverse_)
-> import qualified Data.ByteString.Char8 as BS
-> import qualified Control.Foldl as L
-
-> L.mapM_ (traverse_ BS.putStrLn . nthColumn 4) *> L.generalize L.length
+@
+'L.mapM_' ('traverse_' 'BS.putStrLn' . 'nthColumn' 4) *> 'L.generalize' 'L.length'
+@
 
 Output printed to the terminal:
 
@@ -137,7 +156,9 @@ Output printed to the terminal:
 
 Result:
 
-> (ParseComplete, 2)
+@
+('ParseComplete', 2)
+@
 
 -}
 
@@ -164,11 +185,15 @@ CSV file:
 
 Fold:
 
-> L.premap (fromMaybe 0 . (columnName "Price" >=> byteStringDollarsMaybe)) L.sum
+@
+'L.premap' ('fromMaybe' 0 . ('columnName' "Price" >=> 'byteStringDollarsMaybe')) 'L.sum'
+@
 
 Result:
 
-> (ParseComplete, 624.84)
+@
+('ParseComplete', 624.84)
+@
 
 -}
 
@@ -195,11 +220,9 @@ CSV file:
 
 Fold:
 
-> import Data.Foldable (traverse_)
-> import qualified Data.ByteString.Char8 as BS
-> import qualified Control.Foldl as L
-
-> L.mapM_ (traverse_ BS.putStrLn . columnName "Product") *> L.generalize L.length
+@
+'L.mapM_' ('traverse_' 'BS.putStrLn' . 'columnName' "Product") *> 'L.generalize' 'L.length'
+@
 
 Output printed to the terminal:
 
@@ -208,7 +231,9 @@ Output printed to the terminal:
 
 Result:
 
-> (ParseComplete, 2)
+@
+('ParseComplete', 2)
+@
 
 -}
 

@@ -1,7 +1,7 @@
 module Dsv.Text
   ( Text
   , textEncodeUtf8, textDecodeUtf8Maybe
-  , stringToText
+  , stringToText, textToString
   , textNull, textStripPrefix
   , TextReader, textReadRational
   ) where
@@ -22,6 +22,9 @@ textEncodeUtf8 = Data.Text.Encoding.encodeUtf8
 
 stringToText :: String -> Text
 stringToText = Data.Text.pack
+
+textToString :: Text -> String
+textToString = Data.Text.unpack
 
 rightMaybe :: Either a b -> Maybe b
 rightMaybe = either (const Nothing) Just

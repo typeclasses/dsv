@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE LambdaCase, ScopedTypeVariables #-}
 
 module Dsv.FileStrictLookup
   ( lookupDsvFileStrict
@@ -9,16 +9,29 @@ module Dsv.FileStrictLookup
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.IO
-import Dsv.Lens
 import Dsv.LookupPipe
 import Dsv.LookupType
+import Dsv.ParseTermination
 import Dsv.ParseLookupTermination
 import Dsv.Parsing
 import Dsv.Validation
 import Dsv.Vector
 
+-- base
+import Numeric.Natural
+
 -- pipes
 import Pipes
+
+count :: Monad m => Producer a m r -> Producer a m (Natural, r)
+count = go 0
+  where
+    go n p =
+      do
+        eit <- lift (next p)
+        case eit of
+            Left r -> return (n, r)
+            Right (a, p') -> do { yield a; go (n + 1) p' }
 
 lookupDsvFileStrict ::
     forall m headerError rowError row .
@@ -36,9 +49,21 @@ lookupDsvFileStrict d fp lu =
       do
         foldProducerM foldVectorM $
             withFile fp ReadMode $ \h ->
-                fmap (review parseLookupTerminationEitherIso) $
-                    fmap Left (handleDsvRowProducer d h) >->
-                    fmap Right (lookupPipe lu)
+                readRows h >-> interpretRows
+
+  where
+    readRows h =
+      fmap
+        (
+          \case
+            (_, ParseIncomplete) -> ParseLookupParseError
+            (0, ParseComplete) -> ParseLookupEmpty
+            (_, ParseComplete) -> ParseLookupComplete
+        )
+        (count (handleDsvRowProducer d h))
+
+    interpretRows =
+      fmap ParseLookupHeaderError (lookupPipe lu)
 
 lookupDsvFileStrictIgnoringAllErrors ::
     forall m headerError rowError row .

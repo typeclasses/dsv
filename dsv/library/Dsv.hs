@@ -69,13 +69,17 @@ module Dsv
   , lookupPipeThrowFirstError
 
   -- * Some lookups
-  , column, columnN, entireRow
+  , column, columnUtf8, columnN, entireRow
+
+  -- * Modifying lookups
+  , mapLookup, (%>)
 
   -- * Lookup errors
   -- $lookupErrors
   , RowTooShort (..)
   , DuplicateColumn (..)
   , MissingColumn (..)
+  , FieldInvalidUtf8 (..)
 
   -- * English
   , EnglishText (..)
@@ -101,6 +105,13 @@ module Dsv
   , byteStringDollarsMaybe
   , textDollarsMaybe
 
+  -- * Validation
+  -- $validation
+  , Validation (..)
+
+  -- * Text encoding
+  , EncodeUtf8 (..), DecodeUtf8 (..)
+
   ) where
 
 import Dsv.AttoParser
@@ -109,6 +120,7 @@ import Dsv.ByteString
 import Dsv.CommonDelimiters
 import Dsv.DelimiterSplice
 import Dsv.DelimiterType
+import Dsv.Encoding
 import Dsv.English
 import Dsv.FileFold
 import Dsv.FileFoldCsv
@@ -128,6 +140,7 @@ import Dsv.ParseError
 import Dsv.ParseLookupTermination
 import Dsv.ParseTermination
 import Dsv.Parsing
+import Dsv.Validation
 import Dsv.Vector
 
 import qualified Control.Foldl as L
@@ -195,5 +208,11 @@ When you're looking for particular information in DSV data, there is a lot that 
 {- $miscellania
 
 These functions are not directly relevant to this library's primary purpose of consuming DSV files, but we include them because you might find some of them useful for reading particular kinds of values.
+
+-}
+
+{- $validation
+
+See the "Data.Validation" module for more on the 'Validation' type.
 
 -}

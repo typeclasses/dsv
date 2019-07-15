@@ -126,12 +126,12 @@ prop_readCsvFileStrictWithZippedHeader_doc =
         [ [ ("Date", "2019-03-24")
           , ("Vendor", "Acme Co")
           , ("Price", "$599.89")
-          , ("Notes", "Dehydrated boulders")
+          , ("Product", "Dehydrated boulders")
           ]
         , [ ("Date", "2019-04-18")
           , ("Vendor", "Acme Co")
           , ("Price", "$24.95")
-          , ("Notes", "Earthquake pills")
+          , ("Product", "Earthquake pills")
           ]
         ]
 
@@ -151,7 +151,7 @@ prop_readCsvFileStrictWithZippedHeader_doc_error =
         [ [ ("Date", "2019-03-24")
           , ("Vendor", "Acme Co")
           , ("Price", "$599.89")
-          , ("Notes", "Dehydrated boulders")
+          , ("Product", "Dehydrated boulders")
           ]
         ]
 
@@ -206,7 +206,7 @@ writeNamesAndCountWithoutHeader r =
 
 writeNamesAndCountWithZippedHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (ByteString, ByteString)) Int
 writeNamesAndCountWithZippedHeader r =
-    L.mapM_ (traverse_ write . columnName "Notes") *>
+    L.mapM_ (traverse_ write . columnName "Product") *>
     L.generalize L.length
   where
     write x = modifyIORef r (<> Seq.singleton x)
@@ -285,6 +285,71 @@ prop_foldPriceM_withZippedHeader_doc =
     )
     ~>
     (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
+
+-- | This is an example in the documentation for 'lookupCsvFileStrict'.
+prop_lookupCsvFileStrict_entireRow =
+    (
+      do
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
+        lookupCsvFileStrict fp (entireRow :: Lookup () () (Vector ByteString))
+        -------------------
+    )
+    ~>
+    ( ParseLookupComplete
+    , Vector.fromList $ map (fmap (Vector.fromList . map Text.encodeUtf8)) $
+        [ Success [ "2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders" ]
+        , Success [ "2019-04-18", "Acme Co", "$24.95", "Earthquake pills" ]
+        ]
+    )
+
+-- | This is an example in the documentation for 'lookupCsvFileStrict'.
+prop_lookupCsvFileStrict_particularColumns =
+    (
+      do
+        fp <- getDataFileName "test-data/doc-example-with-header.csv"
+        lookupCsvFileStrict fp
+          (
+            ((,) <$> columnUtf8 "Date" <*> columnUtf8 "Product")
+            :: Lookup EnglishText EnglishText (Text, Text)
+          )
+        -------------------
+    )
+    ~>
+    ( ParseLookupComplete
+    , Vector.fromList
+        [ Success ("2019-03-24", "Dehydrated boulders")
+        , Success ("2019-04-18", "Earthquake pills")
+        ]
+    )
+
+-- | This is an example in the documentation for 'lookupCsvFileStrict'.
+prop_lookupCsvFileStrict_particularColumns_utf8Error =
+    (
+      do
+        fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
+        lookupCsvFileStrict fp
+          (
+            ((,) <$> columnUtf8 "Date" <*> columnUtf8 "Product")
+            :: Lookup EnglishText EnglishText (Text, Text)
+          )
+        -------------------
+    )
+    ~>
+    ( ParseLookupComplete
+    , Vector.fromList
+        [ Failure (EnglishText ["The byte string in column named 'Product' is not valid UTF-8."])
+        , Success ("2019-04-18", "Earthquake pills")
+        ]
+    )
+
+prop_lookupCsvFileStrict_empty =
+    (
+      do
+        fp <- getDataFileName "test-data/empty.csv"
+        lookupCsvFileStrict fp (entireRow :: Lookup () () (Vector ByteString))
+    )
+    ~>
+    (ParseLookupEmpty, Vector.empty)
 
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
 

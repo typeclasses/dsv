@@ -17,6 +17,8 @@ data-files:
   , test-data/doc-example-without-header.csv
   , test-data/doc-example-malformed-with-header.csv
   , test-data/doc-example-malformed-without-header.csv
+  , test-data/doc-example-with-utf8-errors.csv
+  , test-data/empty.csv
 
 copyright: 2019 Typeclass Consulting, LLC
 license: MIT
