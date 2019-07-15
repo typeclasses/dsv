@@ -15,6 +15,7 @@ import Dsv.IO
 import Dsv.Lookups
 import Dsv.LookupType
 import Dsv.ParseLookupTermination
+import Dsv.Text
 import Dsv.Validation
 import Dsv.Vector
 
