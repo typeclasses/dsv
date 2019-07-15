@@ -91,7 +91,7 @@ module Dsv
   , lookupDsvFileStrictThrowFirstError
 
   -- * Termination types
-  , ParseTermination (..), AttoLookupTermination (..)
+  , ParseTermination (..), ParseLookupTermination (..)
 
   -- * Miscellania
   -- $miscellania
@@ -103,7 +103,6 @@ module Dsv
 
   ) where
 
-import Dsv.AttoLookupTermination
 import Dsv.AttoParser
 import Dsv.AttoPipe
 import Dsv.ByteString
@@ -126,6 +125,7 @@ import Dsv.LookupPipe
 import Dsv.LookupType
 import Dsv.Misc
 import Dsv.ParseError
+import Dsv.ParseLookupTermination
 import Dsv.ParseTermination
 import Dsv.Parsing
 import Dsv.Vector

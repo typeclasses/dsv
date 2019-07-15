@@ -6,13 +6,13 @@ module Dsv.FileStrictLookup
   , lookupDsvFileStrictThrowFirstError
   ) where
 
-import Dsv.AttoLookupTermination
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.IO
 import Dsv.Lens
 import Dsv.LookupPipe
 import Dsv.LookupType
+import Dsv.ParseLookupTermination
 import Dsv.Parsing
 import Dsv.Validation
 import Dsv.Vector
@@ -29,14 +29,14 @@ lookupDsvFileStrict ::
         -- ^ The path of a DSV file to read
     -> Lookup headerError rowError row
         -- ^ How to interpret the rows
-    -> m (AttoLookupTermination headerError, Vector (Validation rowError row))
+    -> m (ParseLookupTermination headerError, Vector (Validation rowError row))
 
 lookupDsvFileStrict d fp lu =
     liftIO $ runSafeT $
       do
         foldProducerM foldVectorM $
             withFile fp ReadMode $ \h ->
-                fmap (review attoLookupTerminationEitherIso) $
+                fmap (review parseLookupTerminationEitherIso) $
                     fmap Left (handleDsvRowProducer d h) >->
                     fmap Right (lookupPipe lu)
 

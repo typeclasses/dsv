@@ -6,11 +6,11 @@ module Dsv.FileStrictCsvLookup
   , lookupCsvFileStrictThrowFirstError
   ) where
 
-import Dsv.AttoLookupTermination
 import Dsv.CommonDelimiters
 import Dsv.FileStrictLookup
 import Dsv.IO
 import Dsv.LookupType
+import Dsv.ParseLookupTermination
 import Dsv.Validation
 import Dsv.Vector
 
@@ -21,7 +21,7 @@ lookupCsvFileStrict ::
         -- ^ The path of a CSV file to read
     -> Lookup headerError rowError row
         -- ^ How to interpret the rows
-    -> m (AttoLookupTermination headerError, Vector (Validation rowError row))
+    -> m (ParseLookupTermination headerError, Vector (Validation rowError row))
 
 lookupCsvFileStrict fp lu =
     lookupDsvFileStrict comma fp lu
