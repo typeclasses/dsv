@@ -44,7 +44,6 @@ library
 
     other-modules:
         Paths_dsv
-      , Dsv.AttoError
       , Dsv.AttoLookupTermination
       , Dsv.AttoParser
       , Dsv.AttoPipe
@@ -73,6 +72,7 @@ library
       , Dsv.LookupType
       , Dsv.Misc
       , Dsv.Numbers
+      , Dsv.ParseError
       , Dsv.Parsing
       , Dsv.Text
       , Dsv.Validation

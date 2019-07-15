@@ -3,11 +3,11 @@ module Dsv.AttoPipe
   , handleAttoProducer
   ) where
 
-import Dsv.AttoError
 import Dsv.AttoParser
 import Dsv.AttoTermination
 import Dsv.ByteString
 import Dsv.IO
+import Dsv.ParseError
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto
@@ -18,7 +18,7 @@ import Pipes
 -- pipes-bytestring
 import qualified Pipes.ByteString
 
-attoPipe :: Monad m => AttoParser a -> Pipe ByteString a m AttoError
+attoPipe :: Monad m => AttoParser a -> Pipe ByteString a m ParseError
 attoPipe p =
   do
     x <- await
@@ -36,7 +36,7 @@ attoPipe p =
         proceed (Atto.parse p remainingInput)
 
     proceed (Atto.Fail _remainingInput _ctxs _msg) =
-        return AttoError
+        return ParseError
 
 handleAttoProducer
     :: MonadIO m

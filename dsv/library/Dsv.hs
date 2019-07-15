@@ -50,8 +50,11 @@ module Dsv
   -- * Delimiters
   , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
+  -- * Parsing-related types
+  , ParseError (..)
+
   -- * Attoparsec
-  , AttoParser, attoPipe, handleAttoProducer, AttoError (..)
+  , AttoParser, attoPipe, handleAttoProducer
 
   -- * Locating a column in a row
   -- todo: rethink these names in light of the new Lookup stuff
@@ -100,7 +103,6 @@ module Dsv
 
   ) where
 
-import Dsv.AttoError
 import Dsv.AttoLookupTermination
 import Dsv.AttoParser
 import Dsv.AttoPipe
@@ -124,6 +126,7 @@ import Dsv.Lookups
 import Dsv.LookupPipe
 import Dsv.LookupType
 import Dsv.Misc
+import Dsv.ParseError
 import Dsv.Parsing
 import Dsv.Vector
 
