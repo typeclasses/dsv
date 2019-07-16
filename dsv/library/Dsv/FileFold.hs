@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.FileFold
   ( foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
@@ -19,8 +21,9 @@ import Pipes
 -- pipes-safe
 import qualified Pipes.Safe.Prelude as P
 
-foldDsvFileWithoutHeader
-    :: MonadIO m
+foldDsvFileWithoutHeader ::
+    forall m result .
+    MonadIO m
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -33,8 +36,9 @@ foldDsvFileWithoutHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
         foldProducer fld (handleDsvRowProducer d h)
 
-foldDsvFileWithoutHeaderM
-    :: (MonadCatch m, MonadMask m, MonadIO m)
+foldDsvFileWithoutHeaderM ::
+    forall m result .
+    (MonadCatch m, MonadMask m, MonadIO m)
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -47,8 +51,9 @@ foldDsvFileWithoutHeaderM d fp fld =
     runSafeT $ P.withFile fp ReadMode $ \h -> lift $
         foldProducerM fld (handleDsvRowProducer d h)
 
-foldDsvFileIgnoringHeader
-    :: MonadIO m
+foldDsvFileIgnoringHeader ::
+    forall m result .
+    MonadIO m
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -60,8 +65,9 @@ foldDsvFileIgnoringHeader
 foldDsvFileIgnoringHeader d fp fld =
     foldDsvFileWithoutHeader d fp (foldDrop 1 fld)
 
-foldDsvFileIgnoringHeaderM
-    :: (MonadCatch m, MonadMask m, MonadIO m)
+foldDsvFileIgnoringHeaderM ::
+    forall m result .
+    (MonadCatch m, MonadMask m, MonadIO m)
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -73,8 +79,9 @@ foldDsvFileIgnoringHeaderM
 foldDsvFileIgnoringHeaderM d fp fld =
     foldDsvFileWithoutHeaderM d fp (foldDropM 1 fld)
 
-foldDsvFileWithZippedHeader
-    :: MonadIO m
+foldDsvFileWithZippedHeader ::
+    forall m result .
+    MonadIO m
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -87,8 +94,9 @@ foldDsvFileWithZippedHeader d fp fld =
     liftIO $ runSafeT $ P.withFile fp ReadMode $ \h -> lift $
         foldProducer fld (handleDsvRowProducer d h >-> zipHeaderPipe)
 
-foldDsvFileWithZippedHeaderM
-    :: (MonadCatch m, MonadMask m, MonadIO m)
+foldDsvFileWithZippedHeaderM ::
+    forall m result .
+    (MonadCatch m, MonadMask m, MonadIO m)
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath

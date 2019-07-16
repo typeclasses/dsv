@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts, ScopedTypeVariables #-}
 
 module Dsv.Lookups
   ( column, columnUtf8, columnN, entireRow
@@ -16,7 +16,12 @@ import Dsv.Vector
 import qualified Data.Foldable as Foldable
 import qualified Data.List as List
 
-mapLookup :: (a -> Validation re b) -> Lookup he re a -> Lookup he re b
+mapLookup ::
+    forall he re a b .
+    (a -> Validation re b)
+    -> Lookup he re a
+    -> Lookup he re b
+
 mapLookup g (Lookup f) =
   Lookup (
     \header ->
@@ -32,11 +37,17 @@ mapLookup g (Lookup f) =
   )
 
 -- | @(%>) = 'flip' 'mapLookup'@
-(%>) :: Lookup he re a -> (a -> Validation re b) -> Lookup he re b
+(%>) ::
+    forall he re a b .
+    Lookup he re a
+    -> (a -> Validation re b)
+    -> Lookup he re b
+
 (%>) = flip mapLookup
 
-column
-    :: (DuplicateColumn ByteString he, MissingColumn ByteString he, RowTooShort re)
+column ::
+    forall he re .
+    (DuplicateColumn ByteString he, MissingColumn ByteString he, RowTooShort re)
     => ByteString -> Lookup he re ByteString
 
 column name =
@@ -54,8 +65,9 @@ column name =
             _   -> Failure (duplicateColumn name)
     )
 
-columnUtf8
-    :: (EncodeUtf8 txt, DecodeUtf8 txt, DuplicateColumn txt he, MissingColumn txt he, RowTooShort re, FieldInvalidUtf8 txt re)
+columnUtf8 ::
+    forall he re txt .
+    (EncodeUtf8 txt, DecodeUtf8 txt, DuplicateColumn txt he, MissingColumn txt he, RowTooShort re, FieldInvalidUtf8 txt re)
     => txt -> Lookup he re txt
 
 columnUtf8 name =
@@ -77,9 +89,11 @@ columnUtf8 name =
 
     )
 
-columnN
-    :: RowTooShort re
-    => Integer -> Lookup he re ByteString
+columnN ::
+    forall he re .
+    RowTooShort re
+    => Integer
+    -> Lookup he re ByteString
 
 columnN n =
   Lookup
@@ -92,5 +106,5 @@ columnN n =
             )
     )
 
-entireRow :: Lookup he re (Vector ByteString)
+entireRow :: forall he re . Lookup he re (Vector ByteString)
 entireRow = Lookup (\_header -> Success (\row -> Success row))

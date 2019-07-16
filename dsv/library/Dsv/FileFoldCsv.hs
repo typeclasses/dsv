@@ -1,5 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.FileFoldCsv
   ( foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
@@ -48,8 +50,9 @@ Result:
 
 -}
 
-foldCsvFileWithoutHeader
-    :: MonadIO m
+foldCsvFileWithoutHeader ::
+    forall m result .
+    MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) result
@@ -87,8 +90,9 @@ Result:
 
 -}
 
-foldCsvFileWithoutHeaderM
-    :: (MonadCatch m, MonadMask m, MonadIO m)
+foldCsvFileWithoutHeaderM ::
+    forall m result .
+    (MonadCatch m, MonadMask m, MonadIO m)
     => FilePath
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) result
@@ -122,8 +126,9 @@ Result:
 
 -}
 
-foldCsvFileIgnoringHeader
-    :: MonadIO m
+foldCsvFileIgnoringHeader ::
+    forall m result .
+    MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) result
@@ -162,8 +167,9 @@ Result:
 
 -}
 
-foldCsvFileIgnoringHeaderM
-    :: (MonadCatch m, MonadMask m, MonadIO m)
+foldCsvFileIgnoringHeaderM ::
+    forall m result .
+    (MonadCatch m, MonadMask m, MonadIO m)
     => FilePath
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) result
@@ -197,8 +203,9 @@ Result:
 
 -}
 
-foldCsvFileWithZippedHeader
-    :: MonadIO m
+foldCsvFileWithZippedHeader ::
+    forall m result .
+    MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
     -> Fold (Vector (ByteString, ByteString)) result
@@ -237,8 +244,9 @@ Result:
 
 -}
 
-foldCsvFileWithZippedHeaderM
-    :: (MonadCatch m, MonadMask m, MonadIO m)
+foldCsvFileWithZippedHeaderM ::
+    forall m result .
+    (MonadCatch m, MonadMask m, MonadIO m)
     => FilePath
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector (ByteString, ByteString)) result

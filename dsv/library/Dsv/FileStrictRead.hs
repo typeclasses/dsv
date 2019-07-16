@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.FileStrictRead
   ( readDsvFileStrictWithZippedHeader
   , readDsvFileStrictWithoutHeader
@@ -16,8 +18,9 @@ import Dsv.Vector
 -- pipes
 import Pipes
 
-readDsvFileStrictWithoutHeader
-    :: MonadIO m
+readDsvFileStrictWithoutHeader ::
+    forall m .
+    MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
     -> m (ParseTermination, Vector (Vector ByteString))
@@ -29,8 +32,9 @@ readDsvFileStrictWithoutHeader d fp =
             withFile fp ReadMode $ \h ->
                 handleDsvRowProducer d h
 
-readDsvFileStrictWithZippedHeader
-    :: MonadIO m
+readDsvFileStrictWithZippedHeader ::
+    forall m .
+    MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
     -> m (ParseTermination, Vector (Vector (ByteString, ByteString)))
@@ -42,8 +46,9 @@ readDsvFileStrictWithZippedHeader d fp =
             withFile fp ReadMode $ \h ->
                 handleDsvRowProducer d h >-> zipHeaderPipe
 
-readDsvFileStrictIgnoringHeader
-    :: MonadIO m
+readDsvFileStrictIgnoringHeader ::
+    forall m .
+    MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath   -- ^ The path of a CSV file to read
 

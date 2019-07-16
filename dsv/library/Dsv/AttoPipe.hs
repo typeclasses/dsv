@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.AttoPipe
   ( attoPipe
   , handleAttoProducer
@@ -18,7 +20,11 @@ import Pipes
 -- pipes-bytestring
 import qualified Pipes.ByteString
 
-attoPipe :: Monad m => AttoParser a -> Pipe ByteString a m ParseError
+attoPipe :: forall a m .
+    Monad m
+    => AttoParser a
+    -> Pipe ByteString a m ParseError
+
 attoPipe p =
   do
     x <- await
@@ -38,8 +44,9 @@ attoPipe p =
     proceed (Atto.Fail _remainingInput _ctxs _msg) =
         return ParseError
 
-handleAttoProducer
-    :: MonadIO m
+handleAttoProducer ::
+    forall a m .
+    MonadIO m
     => AttoParser a
     -> Handle         -- ^ File handle to read parser input from
     -> Producer a m ParseTermination

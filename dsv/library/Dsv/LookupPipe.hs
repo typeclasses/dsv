@@ -43,10 +43,10 @@ lookupPipeIgnoringAllErrors (Lookup f) =
         Success g -> P.mapFoldable g
 
 lookupPipeThrowFirstError ::
-    forall m headerError rowError row a .
+    forall m headerError rowError row r .
     (Monad m, MonadThrow m, Exception headerError, Exception rowError)
     => Lookup headerError rowError row
-    -> Pipe (Vector ByteString) row m a
+    -> Pipe (Vector ByteString) row m r
 
 lookupPipeThrowFirstError (Lookup f) =
   do

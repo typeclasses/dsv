@@ -8,8 +8,9 @@ module Dsv.Numbers
 -- base
 import Numeric.Natural (Natural)
 
-fromIntegerMaybe
-    :: forall n. (Bounded n, Integral n)
+fromIntegerMaybe ::
+    forall n .
+    (Bounded n, Integral n)
     => Integer -> Maybe n
 
 fromIntegerMaybe i

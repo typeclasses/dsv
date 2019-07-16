@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
 
 -- | Miscellania
 
@@ -33,10 +33,16 @@ import qualified Data.Vector as Vector
 
 -}
 
-nthColumn :: Integer -> Vector a -> Maybe a
+nthColumn :: forall a . Integer -> Vector a -> Maybe a
 nthColumn n xs = vectorIndexInteger xs (n - 1)
 
-columnName :: Eq name => name -> Vector (name, value) -> Maybe value
+columnName ::
+    forall name value .
+    Eq name
+    => name
+    -> Vector (name, value)
+    -> Maybe value
+
 columnName n xs =
   do
     (_, v) <- Vector.find (\(n', _) -> n == n') xs
@@ -47,7 +53,10 @@ columnName n xs =
 byteStringTextUtf8Maybe :: ByteString -> Maybe Text
 byteStringTextUtf8Maybe = textDecodeUtf8Maybe
 
-textReadMaybe :: TextReader a -> Text -> Maybe a
+textReadMaybe ::
+    forall a .
+    TextReader a -> Text -> Maybe a
+
 textReadMaybe f t =
     case f t of
         Right (x, r) | textNull r -> Just x

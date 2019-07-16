@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.Vector
   ( Vector, vectorIndexInt, vectorIndexInteger, vectorZip, vectorZipWith
   ) where
@@ -11,14 +13,24 @@ import Control.Monad ((>=>))
 import Data.Vector (Vector)
 import qualified Data.Vector as Vector
 
-vectorIndexInt :: Vector a -> Int -> Maybe a
+vectorIndexInt :: forall a . Vector a -> Int -> Maybe a
 vectorIndexInt = (Vector.!?)
 
-vectorIndexInteger :: Vector a -> Integer -> Maybe a
-vectorIndexInteger xs = fromIntegerMaybe >=> vectorIndexInt xs
+vectorIndexInteger ::
+    forall a .
+    Vector a -> Integer -> Maybe a
 
-vectorZip :: Vector a -> Vector b -> Vector (a, b)
+vectorIndexInteger xs =
+    fromIntegerMaybe >=> vectorIndexInt xs
+
+vectorZip ::
+    forall a b .
+    Vector a -> Vector b -> Vector (a, b)
+
 vectorZip = Vector.zip
 
-vectorZipWith :: (a -> b -> c) -> Vector a -> Vector b -> Vector c
+vectorZipWith ::
+    forall a b c  .
+    (a -> b -> c) -> Vector a -> Vector b -> Vector c
+
 vectorZipWith = Vector.zipWith

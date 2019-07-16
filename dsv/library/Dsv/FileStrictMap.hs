@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.FileStrictMap
   ( mapDsvFileStrictWithoutHeader
   , mapDsvFileStrictIgnoringHeader
@@ -17,8 +19,9 @@ import Dsv.Vector
 import Pipes
 import qualified Pipes.Prelude as P
 
-mapDsvFileStrictWithoutHeader
-    :: MonadIO m
+mapDsvFileStrictWithoutHeader ::
+    forall m row .
+    MonadIO m
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -34,8 +37,9 @@ mapDsvFileStrictWithoutHeader d fp f =
             withFile fp ReadMode $ \h ->
                 handleDsvRowProducer d h >-> P.mapM (lift . f)
 
-mapDsvFileStrictIgnoringHeader
-    :: MonadIO m
+mapDsvFileStrictIgnoringHeader ::
+    forall m row .
+    MonadIO m
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -51,8 +55,9 @@ mapDsvFileStrictIgnoringHeader d fp f =
             withFile fp ReadMode $ \h ->
                 handleDsvRowProducer d h >-> P.mapM (lift . f)
 
-mapDsvFileStrictUsingHeader
-    :: MonadIO m
+mapDsvFileStrictUsingHeader ::
+    forall m row .
+    MonadIO m
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
@@ -68,8 +73,8 @@ mapDsvFileStrictUsingHeader d fp f =
             withFile fp ReadMode $ \h ->
                 handleDsvRowProducer d h >-> applyHeaderPipeM (bigLift f)
 
-bigLift
-    :: (Vector ByteString ->       IO (Vector ByteString ->       IO a))
+bigLift ::
+       (Vector ByteString ->       IO (Vector ByteString ->       IO a))
     -> (Vector ByteString -> SafeT IO (Vector ByteString -> SafeT IO a))
 
 bigLift = fmap liftIO . ((fmap . fmap . fmap) liftIO)

@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.FileStrictCsvMap
   ( mapCsvFileStrictWithoutHeader
   , mapCsvFileStrictIgnoringHeader
@@ -11,8 +13,9 @@ import Dsv.IO
 import Dsv.ParseTermination
 import Dsv.Vector
 
-mapCsvFileStrictWithoutHeader
-    :: MonadIO m
+mapCsvFileStrictWithoutHeader ::
+    forall m row .
+    MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
     -> (Vector ByteString -> IO row)
@@ -22,8 +25,9 @@ mapCsvFileStrictWithoutHeader
 mapCsvFileStrictWithoutHeader fp f =
     mapDsvFileStrictWithoutHeader comma fp f
 
-mapCsvFileStrictIgnoringHeader
-    :: MonadIO m
+mapCsvFileStrictIgnoringHeader ::
+    forall m row .
+    MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
     -> (Vector ByteString -> IO row)
@@ -33,8 +37,9 @@ mapCsvFileStrictIgnoringHeader
 mapCsvFileStrictIgnoringHeader fp f =
     mapDsvFileStrictIgnoringHeader comma fp f
 
-mapCsvFileStrictUsingHeader
-    :: MonadIO m
+mapCsvFileStrictUsingHeader ::
+    forall m row .
+    MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
     -> (Vector ByteString -> IO (Vector ByteString -> IO row))

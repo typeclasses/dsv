@@ -1,3 +1,5 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Dsv.FileStrictCsvRead
   ( readCsvFileStrictWithZippedHeader
   , readCsvFileStrictWithoutHeader
@@ -56,8 +58,9 @@ The result includes the first row of data because it appears /before/ the malfor
 
 -}
 
-readCsvFileStrictWithZippedHeader
-    :: MonadIO m
+readCsvFileStrictWithZippedHeader ::
+    forall m .
+    MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
     -> m (ParseTermination, (Vector (Vector (ByteString, ByteString))))
 
@@ -92,8 +95,9 @@ Result:
 >   [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"] ] )
 
 -}
-readCsvFileStrictWithoutHeader
-    :: MonadIO m
+readCsvFileStrictWithoutHeader ::
+    forall m .
+    MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
     -> m (ParseTermination, (Vector (Vector ByteString)))
 
@@ -117,8 +121,9 @@ Result:
 
 -}
 
-readCsvFileStrictIgnoringHeader
-    :: MonadIO m
+readCsvFileStrictIgnoringHeader ::
+    forall m .
+    MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
     -> m (ParseTermination, (Vector (Vector ByteString)))
 
