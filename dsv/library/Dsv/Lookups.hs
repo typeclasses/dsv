@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleContexts, ScopedTypeVariables #-}
 
 module Dsv.Lookups
-  ( byteStringLookup, textLookupUtf8, columnN, entireRow
+  ( byteStringLookup, textLookupUtf8, columnN, entireRowLookup
   , mapLookup
   ) where
 
@@ -97,5 +97,5 @@ columnN n =
             )
     )
 
-entireRow :: forall he re . Lookup he re (Vector ByteString)
-entireRow = Lookup (\_header -> Success (\row -> Success row))
+entireRowLookup :: forall he re . Lookup he re (Vector ByteString)
+entireRowLookup = Lookup (\_header -> Success (\row -> Success row))

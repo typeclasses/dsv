@@ -291,7 +291,7 @@ prop_lookupCsvFileStrict_entireRow =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        lookupCsvFileStrict fp (entireRow :: Lookup () () (Vector ByteString))
+        lookupCsvFileStrict fp (entireRowLookup :: Lookup () () (Vector ByteString))
         -------------------
     )
     ~>
@@ -346,7 +346,7 @@ prop_lookupCsvFileStrict_empty =
     (
       do
         fp <- getDataFileName "test-data/empty.csv"
-        lookupCsvFileStrict fp (entireRow :: Lookup () () (Vector ByteString))
+        lookupCsvFileStrict fp (entireRowLookup :: Lookup () () (Vector ByteString))
     )
     ~>
     (ParseLookupEmpty, Vector.empty)
