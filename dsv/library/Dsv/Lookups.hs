@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleContexts, ScopedTypeVariables #-}
 
 module Dsv.Lookups
-  ( column, columnUtf8, columnN, entireRow
+  ( byteStringLookup, columnUtf8, columnN, entireRow
   , mapLookup
   ) where
 
@@ -36,12 +36,12 @@ mapLookup g (Lookup f) =
             )
   )
 
-column ::
+byteStringLookup ::
     forall he re .
     (DuplicateColumn ByteString he, MissingColumn ByteString he, RowTooShort re)
     => ByteString -> Lookup he re ByteString
 
-column name =
+byteStringLookup name =
   Lookup
     (\header ->
         case List.findIndices (== name) (Foldable.toList header) of
