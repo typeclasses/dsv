@@ -309,7 +309,7 @@ prop_lookupCsvFileStrict_particularColumns =
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
         lookupCsvFileStrict fp
           (
-            ((,) <$> columnUtf8 "Date" <*> columnUtf8 "Product")
+            ((,) <$> textLookupUtf8 "Date" <*> textLookupUtf8 "Product")
             :: Lookup EnglishText EnglishText (Text, Text)
           )
         -------------------
@@ -329,7 +329,7 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error =
         fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
         lookupCsvFileStrict fp
           (
-            ((,) <$> columnUtf8 "Date" <*> columnUtf8 "Product")
+            ((,) <$> textLookupUtf8 "Date" <*> textLookupUtf8 "Product")
             :: Lookup EnglishText EnglishText (Text, Text)
           )
         -------------------

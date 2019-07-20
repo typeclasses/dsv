@@ -54,7 +54,7 @@ CSV file:
 Lookup:
 
 @
-((,) \<$> 'columnUtf8' \"Date" \<*> 'columnUtf8' \"Product")
+((,) \<$> 'textLookupUtf8' \"Date" \<*> 'textLookupUtf8' \"Product")
     :: 'Lookup' 'EnglishText' 'EnglishText' ('Text', 'Text')
 @
 
@@ -79,7 +79,7 @@ In this example, @\\xc3\\x28@ represents two bytes which constitute an invalid s
 Lookup:
 
 @
-((,) \<$> 'columnUtf8' \"Date" \<*> 'columnUtf8' \"Product")
+((,) \<$> 'textLookupUtf8' \"Date" \<*> 'textLookupUtf8' \"Product")
     :: 'Lookup' 'EnglishText' 'EnglishText' ('Text', 'Text')
 @
 
