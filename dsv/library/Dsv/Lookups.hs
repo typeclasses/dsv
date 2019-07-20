@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleContexts, ScopedTypeVariables #-}
 
 module Dsv.Lookups
-  ( byteStringLookup, textLookupUtf8, columnN, entireRowLookup
+  ( byteStringLookup, textLookupUtf8, byteStringLookupPosition, entireRowLookup
   , mapLookup
   ) where
 
@@ -80,13 +80,13 @@ textLookupUtf8 name =
 
     )
 
-columnN ::
+byteStringLookupPosition ::
     forall he re .
     RowTooShort re
     => Integer
     -> Lookup he re ByteString
 
-columnN n =
+byteStringLookupPosition n =
   Lookup
     (\_header ->
         Success

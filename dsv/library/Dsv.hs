@@ -69,7 +69,7 @@ module Dsv
   , lookupPipeThrowFirstError
 
   -- * Some lookups
-  , byteStringLookup, textLookupUtf8, columnN, entireRowLookup
+  , byteStringLookup, textLookupUtf8, byteStringLookupPosition, entireRowLookup
 
   -- * Modifying lookups
   , mapLookup
