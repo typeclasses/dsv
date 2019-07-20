@@ -72,7 +72,7 @@ module Dsv
   , byteStringLookup, textLookupUtf8, byteStringLookupPosition, entireRowLookup
 
   -- * Modifying lookups
-  , mapLookup
+  , lookupRead
 
   -- * Lookup errors
   -- $lookupErrors

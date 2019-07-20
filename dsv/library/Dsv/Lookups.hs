@@ -2,7 +2,7 @@
 
 module Dsv.Lookups
   ( byteStringLookup, textLookupUtf8, byteStringLookupPosition, entireRowLookup
-  , mapLookup
+  , lookupRead
   ) where
 
 import Dsv.ByteString
@@ -16,13 +16,13 @@ import Dsv.Vector
 import qualified Data.Foldable as Foldable
 import qualified Data.List as List
 
-mapLookup ::
+lookupRead ::
     forall he re a b .
     (a -> Validation re b)
     -> Lookup he re a
     -> Lookup he re b
 
-mapLookup g (Lookup f) =
+lookupRead g (Lookup f) =
   Lookup (
     \header ->
       case f header of
