@@ -2,7 +2,7 @@
 
 module Dsv.Lookups
   ( column, columnUtf8, columnN, entireRow
-  , mapLookup, (%>)
+  , mapLookup
   ) where
 
 import Dsv.ByteString
@@ -35,15 +35,6 @@ mapLookup g (Lookup f) =
                 Success x -> g x
             )
   )
-
--- | @(%>) = 'flip' 'mapLookup'@
-(%>) ::
-    forall he re a b .
-    Lookup he re a
-    -> (a -> Validation re b)
-    -> Lookup he re b
-
-(%>) = flip mapLookup
 
 column ::
     forall he re .

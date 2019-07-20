@@ -72,7 +72,7 @@ module Dsv
   , column, columnUtf8, columnN, entireRow
 
   -- * Modifying lookups
-  , mapLookup, (%>)
+  , mapLookup
 
   -- * Lookup errors
   -- $lookupErrors
