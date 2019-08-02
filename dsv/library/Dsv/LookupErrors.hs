@@ -2,24 +2,13 @@
 
 module Dsv.LookupErrors where
 
-class RowTooShort err
-  where
-    rowTooShort :: err
+class DsvError a b where
+  dsvError :: a -> b
 
-class DuplicateColumn str err
-  where
-    duplicateColumn
-        :: str  -- ^ Column name
-        -> err
+data RowTooShort = RowTooShort
 
-class MissingColumn str err
-  where
-    missingColumn
-        :: str  -- ^ Column name
-        -> err
+data DuplicateColumn str = DuplicateColumn str -- ^ Column name
 
-class FieldInvalidUtf8 str err
-  where
-    fieldInvalidUtf8
-        :: str  -- ^ Column name
-        -> err
+data MissingColumn str = MissingColumn str -- ^ Column name
+
+data InvalidUtf8 str = InvalidUtf8 str -- ^ Column name

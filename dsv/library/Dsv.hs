@@ -82,10 +82,11 @@ module Dsv
 
   -- * Lookup errors
   -- $lookupErrors
+  , DsvError (..)
   , RowTooShort (..)
   , DuplicateColumn (..)
   , MissingColumn (..)
-  , FieldInvalidUtf8 (..)
+  , InvalidUtf8 (..)
 
   -- * English
   , EnglishText (..)

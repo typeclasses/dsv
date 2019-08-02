@@ -32,7 +32,10 @@ refineLookup (Lookup (Reading f)) r2 =
 
 byteStringLookup ::
     forall he re .
-    (DuplicateColumn ByteString he, MissingColumn ByteString he, RowTooShort re)
+    ( DsvError (DuplicateColumn ByteString) he
+    , DsvError (MissingColumn ByteString) he
+    , DsvError RowTooShort re
+    )
     => ByteString -> Lookup he re ByteString
 
 byteStringLookup name =
@@ -40,19 +43,24 @@ byteStringLookup name =
     Reading $
       \header ->
           case List.findIndices (== name) (Foldable.toList header) of
-              []  -> Failure (missingColumn name)
+              []  -> Failure (dsvError (MissingColumn name))
               [i] ->
                   Success $
                     Reading $
                       \row ->
                           case vectorIndexInt row i of
-                              Nothing -> Failure rowTooShort
+                              Nothing -> Failure (dsvError RowTooShort)
                               Just x -> Success x
-              _   -> Failure (duplicateColumn name)
+              _   -> Failure (dsvError (DuplicateColumn name))
 
 textLookupUtf8 ::
     forall he re txt .
-    (EncodeUtf8 txt, DecodeUtf8 txt, DuplicateColumn txt he, MissingColumn txt he, RowTooShort re, FieldInvalidUtf8 txt re)
+    ( EncodeUtf8 txt, DecodeUtf8 txt
+    , DsvError (DuplicateColumn txt) he
+    , DsvError (MissingColumn txt) he
+    , DsvError RowTooShort re
+    , DsvError (InvalidUtf8 txt) re
+    )
     => txt -> Lookup he re txt
 
 textLookupUtf8 name =
@@ -60,22 +68,22 @@ textLookupUtf8 name =
     Reading $
       \header ->
         case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
-            []  -> Failure (missingColumn name)
+            []  -> Failure (dsvError (MissingColumn name))
             [i] ->
                 Success $
                   Reading $
                     \row ->
                         case vectorIndexInt row i of
-                            Nothing -> Failure rowTooShort
+                            Nothing -> Failure (dsvError RowTooShort)
                             Just x ->
                                 case decodeUtf8Maybe x of
-                                    Nothing -> Failure (fieldInvalidUtf8 name)
+                                    Nothing -> Failure (dsvError (InvalidUtf8 name))
                                     Just y -> Success y
-            _   -> Failure (duplicateColumn name)
+            _   -> Failure (dsvError (DuplicateColumn name))
 
 byteStringLookupPosition ::
     forall he re .
-    RowTooShort re
+    DsvError RowTooShort re
     => Integer
     -> Lookup he re ByteString
 
@@ -87,7 +95,7 @@ byteStringLookupPosition n =
           Reading $
             \row ->
                 case vectorIndexInteger row (n - 1) of
-                    Nothing -> Failure rowTooShort
+                    Nothing -> Failure (dsvError RowTooShort)
                     Just x -> Success x
 
 entireRowLookup :: forall he re . Lookup he re (Vector ByteString)
