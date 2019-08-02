@@ -54,15 +54,6 @@ columnName n xs =
 byteStringTextUtf8Maybe :: ByteString -> Maybe Text
 byteStringTextUtf8Maybe = textDecodeUtf8Maybe
 
-textReadMaybe ::
-    forall a .
-    TextReader a -> Text -> Maybe a
-
-textReadMaybe f t =
-    case f t of
-        Right (x, r) | textNull r -> Just x
-        _ -> Nothing
-
 {- | Read a dollar amount.
 
 === Examples

@@ -75,7 +75,7 @@ module Dsv
   , Reading (..)
 
   -- * Some readings
-  , constReading
+  , constReading, natTextReading
 
   -- * Lookup + Reading
   , refineLookup

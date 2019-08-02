@@ -1,14 +1,15 @@
-{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.Text
   ( Text
   , textEncodeUtf8, textDecodeUtf8Maybe
   , stringToText, textToString
   , textNull, textStripPrefix
-  , TextReader, textReadRational
+  , TextReader, textReadMaybe, textReadRational, textReadDecimal
   ) where
 
 import Dsv.ByteString
+import Dsv.Numbers
 import Dsv.Prelude
 
 -- text
@@ -40,5 +41,17 @@ textStripPrefix = Data.Text.stripPrefix
 
 type TextReader a = Data.Text.Read.Reader a
 
+textReadMaybe ::
+    forall a .
+    TextReader a -> Text -> Maybe a
+
+textReadMaybe f t =
+    case f t of
+        Right (x, r) | textNull r -> Just x
+        _ -> Nothing
+
 textReadRational :: TextReader Rational
 textReadRational = Data.Text.Read.rational
+
+textReadDecimal :: TextReader Natural
+textReadDecimal = Data.Text.Read.decimal
