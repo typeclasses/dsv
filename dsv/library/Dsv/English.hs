@@ -4,6 +4,7 @@ module Dsv.English
   ( EnglishText (..)
   ) where
 
+import Dsv.IO
 import Dsv.LookupErrors
 import Dsv.Prelude
 import Dsv.Text
@@ -11,6 +12,10 @@ import Dsv.Text
 newtype EnglishText = EnglishText [Text]
     deriving stock (Eq, Show)
     deriving newtype Semigroup
+
+instance Exception EnglishText
+  where
+    displayException (EnglishText xs) = unwords (map textToString xs)
 
 instance DsvError RowTooShort EnglishText
   where
@@ -31,3 +36,8 @@ instance DsvError (InvalidUtf8 Text) EnglishText
   where
     dsvError (InvalidUtf8 name) =
       EnglishText ["The content of the column named '" <> name <> "' is not valid UTF-8."]
+
+instance DsvError (InvalidNat Text) EnglishText
+  where
+    dsvError (InvalidNat name) =
+      EnglishText ["The content of the column named '" <> name <> "' must consist of one or more characters between 0 and 9."]

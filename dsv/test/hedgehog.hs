@@ -22,6 +22,8 @@ import Control.Applicative (liftA2)
 import Control.Monad (when)
 import Control.Monad.IO.Class
 
+import Numeric.Natural
+
 import System.IO (hSetEncoding, stdout, stderr, utf8)
 import System.Exit (exitFailure)
 
@@ -350,6 +352,21 @@ prop_lookupCsvFileStrict_empty =
     )
     ~>
     (ParseLookupEmpty, Vector.empty)
+
+prop_tweetIds =
+    (
+      do
+        fp <- getDataFileName "test-data/tweets.csv"
+        lookupCsvFileStrictThrowFirstError fp (natLookupUtf8 ("tweet_id" :: Text) :: Lookup EnglishText EnglishText Natural)
+    )
+    ~>
+    Vector.fromList
+      [ 1145722305135423488
+      , 1144834283204415488
+      , 1144470003963420672
+      , 1143630783963389954
+      , 1143602240722210823
+      ]
 
 tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5 :: [Text]
 

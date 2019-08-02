@@ -69,7 +69,7 @@ module Dsv
   , lookupPipeThrowFirstError
 
   -- * Some lookups
-  , byteStringLookup, textLookupUtf8, byteStringLookupPosition, entireRowLookup
+  , byteStringLookup, textLookupUtf8, textLookupUtf8', byteStringLookupPosition, entireRowLookup, natLookupUtf8
 
   -- * The Reading type
   , Reading (..)
