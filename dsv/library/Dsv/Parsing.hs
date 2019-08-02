@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.Parsing
   ( dsvRowAtto
@@ -13,6 +13,7 @@ import Dsv.CommonDelimiters
 import Dsv.IO
 import Dsv.ParseError
 import Dsv.ParseTermination
+import Dsv.Prelude
 import Dsv.Vector
 
 -- attoparsec

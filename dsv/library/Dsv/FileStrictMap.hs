@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.FileStrictMap
   ( mapDsvFileStrictWithoutHeader
@@ -13,6 +13,7 @@ import Dsv.Header
 import Dsv.IO
 import Dsv.ParseTermination
 import Dsv.Parsing
+import Dsv.Prelude
 import Dsv.Vector
 
 -- pipes

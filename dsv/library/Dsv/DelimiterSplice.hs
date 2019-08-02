@@ -1,8 +1,11 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Dsv.DelimiterSplice
   ( charDelimiter
   ) where
 
-import Dsv.DelimiterType (Delimiter (..))
+import Dsv.DelimiterType
+import Dsv.Prelude
 
 import Data.Word (Word8)
 

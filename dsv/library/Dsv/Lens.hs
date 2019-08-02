@@ -1,3 +1,5 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Dsv.Lens
   ( view, review, preview
   , Iso, iso

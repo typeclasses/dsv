@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveLift #-}
+{-# LANGUAGE DeriveLift, NoImplicitPrelude #-}
 
 module Dsv.DelimiterType
   ( Delimiter (..)

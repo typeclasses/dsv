@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.Fold
   ( Fold, FoldM
@@ -8,6 +8,7 @@ module Dsv.Fold
   ) where
 
 import Dsv.Numbers
+import Dsv.Prelude
 
 -- foldl
 import qualified Control.Foldl as L

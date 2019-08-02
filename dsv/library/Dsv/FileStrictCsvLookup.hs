@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.FileStrictCsvLookup
   ( lookupCsvFileStrict
@@ -15,6 +15,7 @@ import Dsv.IO
 import Dsv.Lookups
 import Dsv.LookupType
 import Dsv.ParseLookupTermination
+import Dsv.Prelude
 import Dsv.Text
 import Dsv.Validation
 import Dsv.Vector

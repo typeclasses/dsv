@@ -1,3 +1,5 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Dsv.Text
   ( Text
   , textEncodeUtf8, textDecodeUtf8Maybe
@@ -7,6 +9,7 @@ module Dsv.Text
   ) where
 
 import Dsv.ByteString
+import Dsv.Prelude
 
 -- text
 import Data.Text (Text)

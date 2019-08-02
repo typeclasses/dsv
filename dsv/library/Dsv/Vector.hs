@@ -1,10 +1,11 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.Vector
   ( Vector, vectorIndexInt, vectorIndexInteger, vectorZip, vectorZipWith
   ) where
 
 import Dsv.Numbers
+import Dsv.Prelude
 
 -- base
 import Control.Monad ((>=>))

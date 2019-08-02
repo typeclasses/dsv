@@ -1,4 +1,4 @@
-{-# LANGUAGE LambdaCase, ScopedTypeVariables #-}
+{-# LANGUAGE LambdaCase, NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.FileStrictLookup
   ( lookupDsvFileStrict
@@ -15,6 +15,7 @@ import Dsv.ParseTermination
 import Dsv.ParseLookupTermination
 import Dsv.Parsing
 import Dsv.Pipes
+import Dsv.Prelude
 import Dsv.Validation
 import Dsv.Vector
 

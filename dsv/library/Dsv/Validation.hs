@@ -1,3 +1,5 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Dsv.Validation
   ( Validation (Success, Failure)
   ) where

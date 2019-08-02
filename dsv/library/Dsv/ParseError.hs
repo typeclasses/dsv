@@ -1,8 +1,11 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Dsv.ParseError
   ( ParseError (..)
   ) where
 
 import Dsv.IO
+import Dsv.Prelude
 
 data ParseError =
   ParseError

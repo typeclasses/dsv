@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.FileStrictCsvRead
   ( readCsvFileStrictWithZippedHeader
@@ -11,6 +11,7 @@ import Dsv.CommonDelimiters
 import Dsv.FileStrictRead
 import Dsv.IO
 import Dsv.ParseTermination
+import Dsv.Prelude
 import Dsv.Vector
 
 {- | Often, the first line of a CSV file is a row that gives the name of each column in the file. If present, this row is called the /header/.

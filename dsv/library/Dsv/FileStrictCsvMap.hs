@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.FileStrictCsvMap
   ( mapCsvFileStrictWithoutHeader
@@ -11,6 +11,7 @@ import Dsv.CommonDelimiters
 import Dsv.FileStrictMap
 import Dsv.IO
 import Dsv.ParseTermination
+import Dsv.Prelude
 import Dsv.Vector
 
 mapCsvFileStrictWithoutHeader ::

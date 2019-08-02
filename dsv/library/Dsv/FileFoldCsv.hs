@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.FileFoldCsv
   ( foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
@@ -15,6 +15,7 @@ import Dsv.Fold
 import Dsv.IO
 import Dsv.Misc
 import Dsv.ParseTermination
+import Dsv.Prelude
 import Dsv.Vector
 
 -- base

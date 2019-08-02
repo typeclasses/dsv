@@ -1,9 +1,11 @@
-{-# LANGUAGE ScopedTypeVariables, TypeApplications #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables, TypeApplications #-}
 
 module Dsv.Numbers
   ( fromIntegerMaybe
   , Natural
   ) where
+
+import Dsv.Prelude
 
 -- base
 import Numeric.Natural (Natural)

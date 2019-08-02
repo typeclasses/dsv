@@ -71,8 +71,14 @@ module Dsv
   -- * Some lookups
   , byteStringLookup, textLookupUtf8, byteStringLookupPosition, entireRowLookup
 
-  -- * Modifying lookups
-  , lookupRead
+  -- * The Reading type
+  , Reading (..)
+
+  -- * Some readings
+  , constReading
+
+  -- * Lookup + Reading
+  , refineLookup
 
   -- * Lookup errors
   -- $lookupErrors
@@ -140,6 +146,8 @@ import Dsv.ParseError
 import Dsv.ParseLookupTermination
 import Dsv.ParseTermination
 import Dsv.Parsing
+import Dsv.Readings
+import Dsv.ReadingType
 import Dsv.Validation
 import Dsv.Vector
 

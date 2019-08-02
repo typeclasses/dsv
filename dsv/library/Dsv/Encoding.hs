@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances, NoImplicitPrelude #-}
 
 module Dsv.Encoding
   ( EncodeUtf8 (..)
@@ -6,6 +6,7 @@ module Dsv.Encoding
   ) where
 
 import Dsv.ByteString
+import Dsv.Prelude
 import Dsv.Text
 
 

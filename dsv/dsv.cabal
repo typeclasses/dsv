@@ -72,11 +72,14 @@ library
       , Dsv.LookupType
       , Dsv.Misc
       , Dsv.Numbers
+      , Dsv.Readings
+      , Dsv.ReadingType
       , Dsv.ParseError
       , Dsv.ParseLookupTermination
       , Dsv.ParseTermination
       , Dsv.Parsing
       , Dsv.Pipes
+      , Dsv.Prelude
       , Dsv.Text
       , Dsv.Validation
       , Dsv.Vector

@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.AttoPipe
   ( attoPipe
@@ -10,6 +10,7 @@ import Dsv.ByteString
 import Dsv.IO
 import Dsv.ParseError
 import Dsv.ParseTermination
+import Dsv.Prelude
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto

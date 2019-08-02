@@ -1,10 +1,11 @@
-{-# LANGUAGE DerivingStrategies, GeneralizedNewtypeDeriving, MultiParamTypeClasses, OverloadedStrings #-}
+{-# LANGUAGE DerivingStrategies, GeneralizedNewtypeDeriving, MultiParamTypeClasses, NoImplicitPrelude, OverloadedStrings #-}
 
 module Dsv.English
   ( EnglishText (..)
   ) where
 
 import Dsv.LookupErrors
+import Dsv.Prelude
 import Dsv.Text
 
 newtype EnglishText = EnglishText [Text]

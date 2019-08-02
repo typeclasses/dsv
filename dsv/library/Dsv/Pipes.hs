@@ -1,10 +1,11 @@
-{-# LANGUAGE LambdaCase, ScopedTypeVariables #-}
+{-# LANGUAGE LambdaCase, NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.Pipes
   ( count
   ) where
 
 import Dsv.Numbers
+import Dsv.Prelude
 
 -- pipes
 import Pipes

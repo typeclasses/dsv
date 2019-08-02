@@ -1,3 +1,5 @@
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Dsv.IO
   ( MonadIO (liftIO), MonadThrow (throwM), MonadCatch, MonadMask
   , IOMode (ReadMode)

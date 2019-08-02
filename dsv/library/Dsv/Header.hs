@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
 
 module Dsv.Header
   ( zipHeader, zipHeader', zipHeaderPipe
@@ -6,6 +6,7 @@ module Dsv.Header
   , applyHeaderPipe, applyHeaderPipeM
   ) where
 
+import Dsv.Prelude
 import Dsv.Vector
 
 -- pipes

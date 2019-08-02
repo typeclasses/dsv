@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude, OverloadedStrings, ScopedTypeVariables #-}
 
 -- | Miscellania
 
@@ -12,6 +12,7 @@ module Dsv.Misc
   ) where
 
 import Dsv.ByteString
+import Dsv.Prelude
 import Dsv.Text
 import Dsv.Vector
 
