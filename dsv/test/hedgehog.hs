@@ -337,7 +337,7 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error =
     ~>
     ( ParseLookupComplete
     , Vector.fromList
-        [ Failure (EnglishText ["The byte string in column named 'Product' is not valid UTF-8."])
+        [ Failure (EnglishText ["The content of the column named 'Product' is not valid UTF-8."])
         , Success ("2019-04-18", "Earthquake pills")
         ]
     )

@@ -30,4 +30,4 @@ instance DsvError (MissingColumn Text) EnglishText
 instance DsvError (InvalidUtf8 Text) EnglishText
   where
     dsvError (InvalidUtf8 name) =
-      EnglishText ["The byte string in column named '" <> name <> "' is not valid UTF-8."]
+      EnglishText ["The content of the column named '" <> name <> "' is not valid UTF-8."]
