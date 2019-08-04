@@ -83,6 +83,7 @@ library
       , Dsv.Text
       , Dsv.Validation
       , Dsv.Vector
+      , Dsv.ViewType
 
     build-depends:
         attoparsec ^>= 0.13.2.2
