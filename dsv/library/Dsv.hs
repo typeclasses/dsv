@@ -71,13 +71,13 @@ module Dsv
   -- * Some lookups
   , byteStringLookup, textLookupUtf8, textLookupUtf8', byteStringLookupPosition, entireRowLookup, natLookupUtf8
 
-  -- * The Reading type
-  , Reading (..)
+  -- * The View type
+  , View (..)
 
-  -- * Some readings
-  , constReading, natTextReading
+  -- * Some views
+  , constView, natTextView
 
-  -- * Lookup + Reading
+  -- * Lookup + View
   , refineLookup
 
   -- * Lookup errors
@@ -153,10 +153,10 @@ import Dsv.ParseLookupTermination
 import Dsv.ParseTermination
 import Dsv.Parsing
 import Dsv.Position
-import Dsv.Readings
-import Dsv.ReadingType
 import Dsv.Validation
 import Dsv.Vector
+import Dsv.Views
+import Dsv.ViewType
 
 import qualified Control.Foldl as L
 

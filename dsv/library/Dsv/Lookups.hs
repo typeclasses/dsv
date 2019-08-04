@@ -11,10 +11,10 @@ import Dsv.LookupErrors
 import Dsv.LookupType
 import Dsv.Numbers
 import Dsv.Prelude
-import Dsv.Readings
-import Dsv.ReadingType
 import Dsv.Validation
 import Dsv.Vector
+import Dsv.Views
+import Dsv.ViewType
 
 -- base
 import qualified Data.Foldable as Foldable
@@ -27,12 +27,12 @@ import qualified Data.Attoparsec.ByteString.Char8
 refineLookup ::
     forall he re a b .
     Lookup he re a
-    -> Reading re a b
+    -> View re a b
     -> Lookup he re b
 
-refineLookup (Lookup (Reading f)) r2 =
+refineLookup (Lookup (View f)) r2 =
   Lookup $
-    Reading $
+    View $
       fmap (r2 .) . f
 
 byteStringLookup ::
@@ -45,13 +45,13 @@ byteStringLookup ::
 
 byteStringLookup name =
   Lookup $
-    Reading $
+    View $
       \header ->
           case List.findIndices (== name) (Foldable.toList header) of
               []  -> Failure (dsvError (MissingColumn name))
               [i] ->
                   Success $
-                    Reading $
+                    View $
                       \row ->
                           case vectorIndexInt row i of
                               Nothing -> Failure (dsvError RowTooShort)
@@ -70,13 +70,13 @@ textLookupUtf8 ::
 
 textLookupUtf8 name =
   Lookup $
-    Reading $
+    View $
       \header ->
         case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
             []  -> Failure (dsvError (MissingColumn name))
             [i] ->
                 Success $
-                  Reading $
+                  View $
                     \row ->
                         case vectorIndexInt row i of
                             Nothing -> Failure (dsvError RowTooShort)
@@ -97,13 +97,13 @@ textLookupUtf8' ::
 
 textLookupUtf8' name =
   Lookup $
-    Reading $
+    View $
       \header ->
         case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
             []  -> Failure (dsvError (MissingColumn name))
             [i] ->
                 Success $
-                  Reading $
+                  View $
                     \row ->
                         case vectorIndexInt row i of
                             Nothing -> Failure (dsvError RowTooShort)
@@ -118,17 +118,17 @@ byteStringLookupPosition ::
 
 byteStringLookupPosition n =
   Lookup $
-    Reading $
+    View $
       \_header ->
         Success $
-          Reading $
+          View $
             \row ->
                 case vectorIndexInteger row (n - 1) of
                     Nothing -> Failure (dsvError RowTooShort)
                     Just x -> Success x
 
 entireRowLookup :: forall he re . Lookup he re (Vector ByteString)
-entireRowLookup = Lookup (constReading id)
+entireRowLookup = Lookup (constView id)
 
 natLookupUtf8 ::
     forall he re txt .
@@ -144,11 +144,11 @@ natLookupUtf8 ::
 natLookupUtf8 name =
   refineLookup
     (textLookupUtf8' name)
-    (attoByteStringReading (dsvError (InvalidNat name)) Data.Attoparsec.ByteString.Char8.decimal)
+    (attoByteStringView (dsvError (InvalidNat name)) Data.Attoparsec.ByteString.Char8.decimal)
 
-attoByteStringReading :: e -> Data.Attoparsec.ByteString.Parser a -> Reading e ByteString a
-attoByteStringReading e p =
-  Reading $ \bs ->
+attoByteStringView :: e -> Data.Attoparsec.ByteString.Parser a -> View e ByteString a
+attoByteStringView e p =
+  View $ \bs ->
     case Data.Attoparsec.ByteString.parseOnly (p <* Data.Attoparsec.ByteString.endOfInput) bs of
       Left _ -> Failure e
       Right x -> Success x

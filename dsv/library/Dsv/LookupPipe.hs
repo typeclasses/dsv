@@ -10,9 +10,9 @@ import Dsv.ByteString
 import Dsv.IO
 import Dsv.LookupType
 import Dsv.Prelude
-import Dsv.ReadingType
 import Dsv.Validation
 import Dsv.Vector
+import Dsv.ViewType
 
 -- pipes
 import Pipes
@@ -24,12 +24,12 @@ lookupPipe ::
     => Lookup headerError rowError row
     -> Pipe (Vector ByteString) (Validation rowError row) m headerError
 
-lookupPipe (Lookup (Reading f)) =
+lookupPipe (Lookup (View f)) =
   do
     header <- await
     case (f header) of
         Failure err -> return err
-        Success (Reading g) -> P.map g
+        Success (View g) -> P.map g
 
 lookupPipeIgnoringAllErrors ::
     forall m headerError rowError row .
@@ -37,12 +37,12 @@ lookupPipeIgnoringAllErrors ::
     => Lookup headerError rowError row
     -> Pipe (Vector ByteString) row m ()
 
-lookupPipeIgnoringAllErrors (Lookup (Reading f)) =
+lookupPipeIgnoringAllErrors (Lookup (View f)) =
   do
     header <- await
     case (f header) of
         Failure _ -> return ()
-        Success (Reading g) -> P.mapFoldable g
+        Success (View g) -> P.mapFoldable g
 
 lookupPipeThrowFirstError ::
     forall m headerError rowError row r .
@@ -50,12 +50,12 @@ lookupPipeThrowFirstError ::
     => Lookup headerError rowError row
     -> Pipe (Vector ByteString) row m r
 
-lookupPipeThrowFirstError (Lookup (Reading f)) =
+lookupPipeThrowFirstError (Lookup (View f)) =
   do
     header <- await
     case (f header) of
         Failure e -> throwM e
-        Success (Reading g) ->
+        Success (View g) ->
             P.mapM $ \x ->
                 case g x of
                     Failure e -> throwM e

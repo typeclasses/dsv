@@ -72,8 +72,6 @@ library
       , Dsv.LookupType
       , Dsv.Misc
       , Dsv.Numbers
-      , Dsv.Readings
-      , Dsv.ReadingType
       , Dsv.ParseError
       , Dsv.ParseLookupTermination
       , Dsv.ParseTermination
@@ -84,6 +82,7 @@ library
       , Dsv.Text
       , Dsv.Validation
       , Dsv.Vector
+      , Dsv.Views
       , Dsv.ViewType
 
     build-depends:
