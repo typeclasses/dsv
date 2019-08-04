@@ -3,11 +3,13 @@
 module Dsv.Numbers
   ( fromIntegerMaybe
   , Natural
+  , ArithException (..)
   ) where
 
 import Dsv.Prelude
 
 -- base
+import Control.Exception (ArithException (..))
 import Numeric.Natural (Natural)
 
 fromIntegerMaybe ::
