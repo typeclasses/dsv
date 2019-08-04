@@ -5,12 +5,12 @@ module Dsv.IO
   , IOMode (ReadMode)
   , SafeT, runSafeT
   , withFile
-  , Exception (displayException)
+  , Exception (displayException), throw
   , Handle
   ) where
 
 -- base
-import Control.Exception (Exception (displayException))
+import Control.Exception (Exception (displayException), throw)
 import Control.Monad.IO.Class (MonadIO (liftIO))
 import System.IO (IOMode (ReadMode), Handle)
 
