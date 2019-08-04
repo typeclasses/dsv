@@ -79,6 +79,7 @@ library
       , Dsv.ParseTermination
       , Dsv.Parsing
       , Dsv.Pipes
+      , Dsv.Position
       , Dsv.Prelude
       , Dsv.Text
       , Dsv.Validation

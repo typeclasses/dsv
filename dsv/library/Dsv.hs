@@ -104,6 +104,10 @@ module Dsv
   -- * Termination types
   , ParseTermination (..), ParseLookupTermination (..)
 
+  -- * Position types
+  , Position (..), RowNumber (..), ColumnNumber (..)
+  , Positive (..)
+
   -- * Miscellania
   -- $miscellania
   , byteStringTextUtf8Maybe
@@ -143,10 +147,12 @@ import Dsv.Lookups
 import Dsv.LookupPipe
 import Dsv.LookupType
 import Dsv.Misc
+import Dsv.Numbers
 import Dsv.ParseError
 import Dsv.ParseLookupTermination
 import Dsv.ParseTermination
 import Dsv.Parsing
+import Dsv.Position
 import Dsv.Readings
 import Dsv.ReadingType
 import Dsv.Validation
