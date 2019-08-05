@@ -1,13 +1,20 @@
-{-# LANGUAGE FlexibleInstances, NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE DerivingStrategies, DeriveAnyClass #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Dsv.Encoding
   ( EncodeUtf8 (..)
   , DecodeUtf8 (..)
+  , InvalidUtf8 (..)
+  , utf8View
   ) where
 
 import Dsv.ByteString
+import Dsv.IO
 import Dsv.Prelude
 import Dsv.Text
+import Dsv.Validation
+import Dsv.ViewType
 
 
 --- Encode ---
@@ -38,3 +45,17 @@ instance DecodeUtf8 Text
 instance DecodeUtf8 [Char]
   where
     decodeUtf8Maybe = fmap textToString . textDecodeUtf8Maybe
+
+
+--- Views ---
+
+data InvalidUtf8 = InvalidUtf8
+  deriving stock (Eq, Show)
+  deriving anyclass Exception
+
+utf8View :: DecodeUtf8 txt => View InvalidUtf8 ByteString txt
+utf8View =
+  View $ \x ->
+    case decodeUtf8Maybe x of
+        Nothing -> Failure InvalidUtf8
+        Just y -> Success y

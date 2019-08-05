@@ -1,4 +1,6 @@
-{-# LANGUAGE LambdaCase, NoImplicitPrelude, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE LambdaCase #-}
 
 module Dsv.FileStrictLookup
   ( lookupDsvFileStrict
@@ -75,7 +77,10 @@ lookupDsvFileStrictIgnoringAllErrors d fp lu =
 
 lookupDsvFileStrictThrowFirstError ::
     forall m headerError rowError row .
-    (MonadIO m, Exception headerError, Exception rowError)
+    ( MonadIO m
+    , Exception headerError
+    , Show rowError, Typeable rowError
+    )
     => Delimiter
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath

@@ -62,6 +62,7 @@ module Dsv
 
   -- * The Lookup type
   , Lookup (..)
+  , mapLookupError, overHeaderError, mapRowError
 
   -- * Converting lookups to pipes
   , lookupPipe
@@ -69,24 +70,26 @@ module Dsv
   , lookupPipeThrowFirstError
 
   -- * Some lookups
-  , byteStringLookup, textLookupUtf8, textLookupUtf8', byteStringLookupPosition, entireRowLookup, natLookupUtf8
+  , byteStringLookup, textLookupUtf8, textLookupUtf8', byteStringLookupPosition, entireRowLookup
 
   -- * The View type
   , View (..)
 
   -- * Some views
-  , constView, natTextView
+  , constView, utf8View, byteStringNatView, textNatView
 
   -- * Lookup + View
   , refineLookup
 
   -- * Lookup errors
   -- $lookupErrors
-  , DsvError (..)
-  , RowTooShort (..)
-  , DuplicateColumn (..)
-  , MissingColumn (..)
   , InvalidUtf8 (..)
+  , InvalidNat (..)
+  , Missing (..)
+  , Duplicate (..)
+  , LookupError (..)
+  , TooShort (..)
+  , IndexError (..)
 
   -- * English
   , EnglishText (..)
@@ -106,7 +109,7 @@ module Dsv
 
   -- * Position types
   , Position (..), RowNumber (..), ColumnNumber (..)
-  , Positive (..)
+  , ColumnName (..), Positive (..), At (..)
 
   -- * Miscellania
   -- $miscellania
@@ -148,6 +151,7 @@ import Dsv.LookupPipe
 import Dsv.LookupType
 import Dsv.Misc
 import Dsv.Numbers
+import Dsv.NumberViews
 import Dsv.ParseError
 import Dsv.ParseLookupTermination
 import Dsv.ParseTermination

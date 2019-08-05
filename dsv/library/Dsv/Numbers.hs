@@ -1,4 +1,8 @@
-{-# LANGUAGE DerivingStrategies, GeneralizedNewtypeDeriving, LambdaCase, NoImplicitPrelude, ScopedTypeVariables, TypeApplications #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE DerivingStrategies, DeriveAnyClass, GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Dsv.Numbers
   ( fromIntegerMaybe

@@ -1,4 +1,4 @@
-{-# LANGUAGE DataKinds, OverloadedStrings, TemplateHaskell #-}
+{-# LANGUAGE ApplicativeDo, DataKinds, OverloadedStrings, TemplateHaskell, TypeApplications #-}
 
 -- Some tests are roughly equivalent to examples given in the library documentation. If this is the case, it is noted in a comment next to the test. Please be sure to keep these tests consistent with the documentation when either changes.
 
@@ -9,7 +9,11 @@ import Hedgehog
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
+import Prelude hiding (product)
+
 import Control.Monad ((>=>))
+
+import Control.Exception.Safe (try)
 
 import Data.IORef
 import Data.Bifunctor
@@ -17,6 +21,8 @@ import Data.ByteString (ByteString)
 import Data.Foldable (toList, traverse_)
 import Data.Maybe (fromMaybe)
 import Data.Monoid (Sum (..))
+import Data.Semigroup (First (..))
+import Data.Void
 
 import Control.Applicative (liftA2)
 import Control.Monad (when)
@@ -293,7 +299,7 @@ prop_lookupCsvFileStrict_entireRow =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        lookupCsvFileStrict fp (entireRowLookup :: Lookup () () (Vector ByteString))
+        lookupCsvFileStrict fp (entireRowLookup @Void @Void)
         -------------------
     )
     ~>
@@ -309,12 +315,12 @@ prop_lookupCsvFileStrict_particularColumns =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        lookupCsvFileStrict fp
-          (
-            ((,) <$> textLookupUtf8 "Date" <*> textLookupUtf8 "Product")
-            :: Lookup EnglishText EnglishText (Text, Text)
-          )
+        lookupCsvFileStrict fp $
         -------------------
+          do
+            date    <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
+            product <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
+            return (date, product)
     )
     ~>
     ( ParseLookupComplete
@@ -329,26 +335,41 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
-        lookupCsvFileStrict fp
-          (
-            ((,) <$> textLookupUtf8 "Date" <*> textLookupUtf8 "Product")
-            :: Lookup EnglishText EnglishText (Text, Text)
-          )
+        lookupCsvFileStrict fp $
         -------------------
+          do
+            date    <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
+            product <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
+            return (date, product)
     )
     ~>
     ( ParseLookupComplete
     , Vector.fromList
-        [ Failure (EnglishText ["The content of the column named 'Product' is not valid UTF-8."])
+        [ Failure [At (ColumnName "Product") (IndexError_FieldError InvalidUtf8)]
         , Success ("2019-04-18", "Earthquake pills")
         ]
     )
+
+prop_lookupCsvFileStrict_particularColumns_utf8Error_throw =
+    (
+      try $
+        do
+          fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
+          lookupCsvFileStrictThrowFirstError fp $
+            mapLookupError getFirst getFirst $
+              do
+                date    <- mapLookupError First First (textLookupUtf8 @Text "Date"    (utf8View @Text))
+                product <- mapLookupError First First (textLookupUtf8 @Text "Product" (utf8View @Text))
+                return (date, product)
+    )
+    ~>
+    Left (At (RowNumber 1) (At (ColumnName @Text "Product") (IndexError_FieldError InvalidUtf8)))
 
 prop_lookupCsvFileStrict_empty =
     (
       do
         fp <- getDataFileName "test-data/empty.csv"
-        lookupCsvFileStrict fp (entireRowLookup :: Lookup () () (Vector ByteString))
+        lookupCsvFileStrict fp (entireRowLookup @() @())
     )
     ~>
     (ParseLookupEmpty, Vector.empty)
@@ -357,7 +378,8 @@ prop_tweetIds =
     (
       do
         fp <- getDataFileName "test-data/tweets.csv"
-        lookupCsvFileStrictThrowFirstError fp (natLookupUtf8 ("tweet_id" :: Text) :: Lookup EnglishText EnglishText Natural)
+        lookupCsvFileStrictThrowFirstError fp
+            (textLookupUtf8 @Text "tweet_id" byteStringNatView)
     )
     ~>
     Vector.fromList

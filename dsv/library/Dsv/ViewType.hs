@@ -1,7 +1,8 @@
-{-# LANGUAGE DeriveFunctor, DerivingVia, NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia #-}
 
 module Dsv.ViewType
-  ( View (..)
+  ( View (..), overViewError, applyView
   ) where
 
 import Dsv.Prelude
@@ -20,6 +21,9 @@ newtype View e a b =
       Compose
         ((->) a)
         (Validation e)
+
+applyView :: View e a b -> a -> Validation e b
+applyView (View f) x = f x
 
 instance Category (View e)
   where
@@ -46,3 +50,10 @@ instance Arrow (View e)
         case f y of
           Failure e -> Failure e
           Success z -> Success (x, z)
+
+overViewError :: (e1 -> e2) -> View e1 a b -> View e2 a b
+overViewError f (View v) =
+  View $ \x ->
+    case v x of
+      Failure e -> Failure (f e)
+      Success s -> Success s

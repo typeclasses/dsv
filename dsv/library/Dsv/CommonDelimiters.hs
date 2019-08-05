@@ -1,4 +1,5 @@
-{-# LANGUAGE NoImplicitPrelude, TemplateHaskell #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 module Dsv.CommonDelimiters
   ( Delimiter (..)

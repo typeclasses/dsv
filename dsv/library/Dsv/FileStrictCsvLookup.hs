@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
-{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Dsv.FileStrictCsvLookup
   ( lookupCsvFileStrict
@@ -123,7 +124,10 @@ lookupCsvFileStrictIgnoringAllErrors fp lu =
 
 lookupCsvFileStrictThrowFirstError ::
     forall m headerError rowError row .
-    (MonadIO m, Exception headerError, Exception rowError)
+    ( MonadIO m
+    , Exception headerError
+    , Show rowError, Typeable rowError
+    )
     => FilePath
         -- ^ The path of a CSV file to read
     -> Lookup headerError rowError row

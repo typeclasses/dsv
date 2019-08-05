@@ -1,4 +1,5 @@
-{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Dsv.LookupPipe
   ( lookupPipe
@@ -9,6 +10,7 @@ module Dsv.LookupPipe
 import Dsv.ByteString
 import Dsv.IO
 import Dsv.LookupType
+import Dsv.Position
 import Dsv.Prelude
 import Dsv.Validation
 import Dsv.Vector
@@ -46,7 +48,10 @@ lookupPipeIgnoringAllErrors (Lookup (View f)) =
 
 lookupPipeThrowFirstError ::
     forall m headerError rowError row r .
-    (Monad m, MonadThrow m, Exception headerError, Exception rowError)
+    ( Monad m, MonadThrow m
+    , Exception headerError
+    , Show rowError, Typeable rowError
+    )
     => Lookup headerError rowError row
     -> Pipe (Vector ByteString) row m r
 
@@ -55,8 +60,14 @@ lookupPipeThrowFirstError (Lookup (View f)) =
     header <- await
     case (f header) of
         Failure e -> throwM e
-        Success (View g) ->
-            P.mapM $ \x ->
-                case g x of
-                    Failure e -> throwM e
-                    Success row -> return row
+        Success v -> go v (RowNumber 1)
+  where
+    go v (RowNumber n) =
+      do
+        x <- await
+        case applyView v x of
+            Failure e -> throwM (At (RowNumber n) e)
+            Success row ->
+              do
+                yield row
+                go v (RowNumber (n + 1))

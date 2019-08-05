@@ -1,4 +1,6 @@
-{-# LANGUAGE LambdaCase, NoImplicitPrelude, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Dsv.Pipes
   ( count

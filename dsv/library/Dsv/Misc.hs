@@ -1,4 +1,6 @@
-{-# LANGUAGE NoImplicitPrelude, OverloadedStrings, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 -- | Miscellania
 

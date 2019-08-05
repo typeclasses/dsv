@@ -1,4 +1,5 @@
-{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Dsv.FileStrictRead
   ( readDsvFileStrictWithZippedHeader

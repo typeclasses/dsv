@@ -48,6 +48,7 @@ library
         Paths_dsv
       , Dsv.AttoParser
       , Dsv.AttoPipe
+      , Dsv.AttoView
       , Dsv.ByteString
       , Dsv.CommonDelimiters
       , Dsv.DelimiterSplice
@@ -72,6 +73,7 @@ library
       , Dsv.LookupType
       , Dsv.Misc
       , Dsv.Numbers
+      , Dsv.NumberViews
       , Dsv.ParseError
       , Dsv.ParseLookupTermination
       , Dsv.ParseTermination
@@ -80,6 +82,7 @@ library
       , Dsv.Position
       , Dsv.Prelude
       , Dsv.Text
+      , Dsv.TextReaderView
       , Dsv.Validation
       , Dsv.Vector
       , Dsv.Views
@@ -123,5 +126,6 @@ test-suite hedgehog
     , containers ^>= 0.6.0.1
     , foldl ^>= 1.4.5
     , hedgehog ^>= 1.0
+    , safe-exceptions ^>= 0.1.7.0
     , text ^>= 1.2.3.1
     , vector ^>= 0.12.0.3

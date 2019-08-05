@@ -1,7 +1,10 @@
-{-# LANGUAGE NoImplicitPrelude, ScopedTypeVariables #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Dsv.Vector
-  ( Vector, vectorIndexInt, vectorIndexInteger, vectorZip, vectorZipWith
+  ( Vector
+  , vectorIndexInt, vectorIndexNat, vectorIndexInteger
+  , vectorZip, vectorZipWith
   ) where
 
 import Dsv.Numbers
@@ -16,6 +19,9 @@ import qualified Data.Vector as Vector
 
 vectorIndexInt :: forall a . Vector a -> Int -> Maybe a
 vectorIndexInt = (Vector.!?)
+
+vectorIndexNat :: forall a. Vector a -> Natural -> Maybe a
+vectorIndexNat xs n = vectorIndexInt xs (fromIntegral n)
 
 vectorIndexInteger ::
     forall a .
