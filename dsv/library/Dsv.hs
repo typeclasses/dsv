@@ -105,7 +105,7 @@ module Dsv
   , lookupDsvFileStrictThrowFirstError
 
   -- * Termination types
-  , ParseTermination (..), ParseLookupTermination (..)
+  , ParseTermination (..), ZipViewStop (..)
 
   -- * Position types
   , Position (..), RowNumber (..), ColumnNumber (..)
@@ -151,7 +151,6 @@ import Dsv.Misc
 import Dsv.Numbers
 import Dsv.NumberViews
 import Dsv.ParseError
-import Dsv.ParseLookupTermination
 import Dsv.ParseTermination
 import Dsv.Parsing
 import Dsv.Position
@@ -160,6 +159,7 @@ import Dsv.Vector
 import Dsv.Views
 import Dsv.ViewType
 import Dsv.ZipViewPipe
+import Dsv.ZipViewStop
 import Dsv.ZipViewType
 
 import qualified Control.Foldl as L

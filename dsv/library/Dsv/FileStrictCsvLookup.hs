@@ -13,7 +13,7 @@ import Dsv.CommonDelimiters
 import Dsv.English
 import Dsv.FileStrictLookup
 import Dsv.IO
-import Dsv.ParseLookupTermination
+import Dsv.ZipViewStop
 import Dsv.Prelude
 import Dsv.Text
 import Dsv.Validation
@@ -40,7 +40,7 @@ Lookup:
 Result:
 
 @
-( 'ParseLookupComplete',
+( 'ZipViewComplete',
   [ 'Success' ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"],
     'Success' ["2019-04-18", "Acme Co", "$24.95",  "Earthquake pills"] ] )
 @
@@ -63,7 +63,7 @@ Lookup:
 Result:
 
 @
-( 'ParseLookupComplete',
+( 'ZipViewComplete',
   [ 'Success' ("2019-03-24", "Dehydrated boulders"),
     'Success' ("2019-04-18", "Earthquake pills") ] )
 @
@@ -88,7 +88,7 @@ Lookup:
 Result:
 
 @
-( 'ParseLookupComplete',
+( 'ZipViewComplete',
   [ 'Failure' ('EnglishText' ["The byte string in column named \'Product' is not valid UTF-8."])
   , 'Success' ("2019-04-18", "Earthquake pills")
   ]
@@ -105,7 +105,7 @@ lookupCsvFileStrict ::
         -- ^ The path of a CSV file to read
     -> ZipView headerError rowError row
         -- ^ How to interpret the rows
-    -> m (ParseLookupTermination headerError, Vector (Validation rowError row))
+    -> m (ZipViewStop headerError, Vector (Validation rowError row))
 
 lookupCsvFileStrict fp lu =
     lookupDsvFileStrict comma fp lu

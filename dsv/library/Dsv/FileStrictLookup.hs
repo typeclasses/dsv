@@ -13,7 +13,7 @@ import Dsv.Fold
 import Dsv.IO
 import Dsv.ZipViewPipe
 import Dsv.ParseTermination
-import Dsv.ParseLookupTermination
+import Dsv.ZipViewStop
 import Dsv.Parsing
 import Dsv.Pipes
 import Dsv.Prelude
@@ -33,7 +33,7 @@ lookupDsvFileStrict ::
         -- ^ The path of a DSV file to read
     -> ZipView headerError rowError row
         -- ^ How to interpret the rows
-    -> m (ParseLookupTermination headerError, Vector (Validation rowError row))
+    -> m (ZipViewStop headerError, Vector (Validation rowError row))
 
 lookupDsvFileStrict d fp lu =
     liftIO $ runSafeT $
@@ -47,14 +47,14 @@ lookupDsvFileStrict d fp lu =
       fmap
         (
           \case
-            (_, ParseIncomplete) -> ParseLookupParseError
-            (0, ParseComplete) -> ParseLookupEmpty
-            (_, ParseComplete) -> ParseLookupComplete
+            (_, ParseIncomplete) -> ZipViewParseError
+            (0, ParseComplete) -> ZipViewEmpty
+            (_, ParseComplete) -> ZipViewComplete
         )
         (count (handleDsvRowProducer d h))
 
     interpretRows =
-      fmap ParseLookupHeaderError (zipViewPipe lu)
+      fmap ZipViewHeaderError (zipViewPipe lu)
 
 lookupDsvFileStrictIgnoringAllErrors ::
     forall m headerError rowError row .

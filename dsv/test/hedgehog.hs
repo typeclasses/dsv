@@ -303,7 +303,7 @@ prop_lookupCsvFileStrict_entireRow =
         -------------------
     )
     ~>
-    ( ParseLookupComplete
+    ( ZipViewComplete
     , Vector.fromList $ map (fmap (Vector.fromList . map Text.encodeUtf8)) $
         [ Success [ "2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders" ]
         , Success [ "2019-04-18", "Acme Co", "$24.95", "Earthquake pills" ]
@@ -323,7 +323,7 @@ prop_lookupCsvFileStrict_particularColumns =
             return (date, product)
     )
     ~>
-    ( ParseLookupComplete
+    ( ZipViewComplete
     , Vector.fromList
         [ Success ("2019-03-24", "Dehydrated boulders")
         , Success ("2019-04-18", "Earthquake pills")
@@ -343,7 +343,7 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error =
             return (date, product)
     )
     ~>
-    ( ParseLookupComplete
+    ( ZipViewComplete
     , Vector.fromList
         [ Failure [At (ColumnName "Product") (IndexError_FieldError InvalidUtf8)]
         , Success ("2019-04-18", "Earthquake pills")
@@ -372,7 +372,7 @@ prop_lookupCsvFileStrict_empty =
         lookupCsvFileStrict fp (entireRowZipView @() @())
     )
     ~>
-    (ParseLookupEmpty, Vector.empty)
+    (ZipViewEmpty, Vector.empty)
 
 prop_tweetIds =
     (
