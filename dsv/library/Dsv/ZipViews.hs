@@ -2,10 +2,10 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-module Dsv.Lookups
-  ( byteStringLookup, byteStringLookupPosition
-  , textLookupUtf8, textLookupUtf8'
-  , entireRowLookup
+module Dsv.ZipViews
+  ( byteStringZipView, byteStringZipViewPosition
+  , textZipViewUtf8, textZipViewUtf8'
+  , entireRowZipView
   ) where
 
 import Dsv.ByteString
@@ -24,11 +24,11 @@ import Dsv.ZipViewType
 import qualified Data.Foldable as Foldable
 import qualified Data.List as List
 
-byteStringLookup
+byteStringZipView
     :: ByteString
     -> ZipView LookupError TooShort ByteString
 
-byteStringLookup name =
+byteStringZipView name =
   ZipView $
     View $
       \header ->
@@ -43,7 +43,7 @@ byteStringLookup name =
                               Just x -> Success x
               _   -> Failure LookupError_Duplicate
 
-textLookupUtf8 ::
+textZipViewUtf8 ::
     forall txt e a .
     EncodeUtf8 txt
     => txt
@@ -53,7 +53,7 @@ textLookupUtf8 ::
         (At (ColumnName txt) (IndexError e))
         a
 
-textLookupUtf8 name fieldView =
+textZipViewUtf8 name fieldView =
   mapZipViewError (At (ColumnName name)) (At (ColumnName name)) $
     ZipView $ View $ \header ->
       case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
@@ -67,7 +67,7 @@ textLookupUtf8 name fieldView =
         Nothing -> Failure IndexError_TooShort
         Just x -> applyView (overViewError IndexError_FieldError fieldView) x
 
-textLookupUtf8' ::
+textZipViewUtf8' ::
     forall txt .
     EncodeUtf8 txt
     => txt
@@ -76,7 +76,7 @@ textLookupUtf8' ::
         (At (ColumnName txt) TooShort)
         ByteString
 
-textLookupUtf8' name =
+textZipViewUtf8' name =
   mapZipViewError (At (ColumnName name)) (At (ColumnName name)) $
     ZipView $ View $ \header ->
       case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
@@ -89,12 +89,12 @@ textLookupUtf8' name =
             Nothing -> Failure TooShort
             Just x -> Success x
 
-byteStringLookupPosition ::
+byteStringZipViewPosition ::
     forall headerError .
     ColumnNumber
     -> ZipView headerError TooShort ByteString
 
-byteStringLookupPosition (ColumnNumber (Positive n)) =
+byteStringZipViewPosition (ColumnNumber (Positive n)) =
   ZipView $
     View $
       \_header ->
@@ -105,5 +105,5 @@ byteStringLookupPosition (ColumnNumber (Positive n)) =
                     Nothing -> Failure TooShort
                     Just x -> Success x
 
-entireRowLookup :: forall he re . ZipView he re (Vector ByteString)
-entireRowLookup = ZipView (constView id)
+entireRowZipView :: forall he re . ZipView he re (Vector ByteString)
+entireRowZipView = ZipView (constView id)

@@ -299,7 +299,7 @@ prop_lookupCsvFileStrict_entireRow =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        lookupCsvFileStrict fp (entireRowLookup @Void @Void)
+        lookupCsvFileStrict fp (entireRowZipView @Void @Void)
         -------------------
     )
     ~>
@@ -318,8 +318,8 @@ prop_lookupCsvFileStrict_particularColumns =
         lookupCsvFileStrict fp $
         -------------------
           do
-            date    <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
-            product <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
+            date    <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
+            product <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
             return (date, product)
     )
     ~>
@@ -338,8 +338,8 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error =
         lookupCsvFileStrict fp $
         -------------------
           do
-            date    <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
-            product <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
+            date    <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
+            product <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
             return (date, product)
     )
     ~>
@@ -358,8 +358,8 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error_throw =
           lookupCsvFileStrictThrowFirstError fp $
             mapZipViewError getFirst getFirst $
               do
-                date    <- mapZipViewError First First (textLookupUtf8 @Text "Date"    (utf8View @Text))
-                product <- mapZipViewError First First (textLookupUtf8 @Text "Product" (utf8View @Text))
+                date    <- mapZipViewError First First (textZipViewUtf8 @Text "Date"    (utf8View @Text))
+                product <- mapZipViewError First First (textZipViewUtf8 @Text "Product" (utf8View @Text))
                 return (date, product)
     )
     ~>
@@ -369,7 +369,7 @@ prop_lookupCsvFileStrict_empty =
     (
       do
         fp <- getDataFileName "test-data/empty.csv"
-        lookupCsvFileStrict fp (entireRowLookup @() @())
+        lookupCsvFileStrict fp (entireRowZipView @() @())
     )
     ~>
     (ParseLookupEmpty, Vector.empty)
@@ -379,7 +379,7 @@ prop_tweetIds =
       do
         fp <- getDataFileName "test-data/tweets.csv"
         lookupCsvFileStrictThrowFirstError fp
-            (textLookupUtf8 @Text "tweet_id" byteStringNatView)
+            (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
     )
     ~>
     Vector.fromList

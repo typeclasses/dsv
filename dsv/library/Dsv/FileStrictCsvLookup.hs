@@ -13,12 +13,12 @@ import Dsv.CommonDelimiters
 import Dsv.English
 import Dsv.FileStrictLookup
 import Dsv.IO
-import Dsv.Lookups
 import Dsv.ParseLookupTermination
 import Dsv.Prelude
 import Dsv.Text
 import Dsv.Validation
 import Dsv.Vector
+import Dsv.ZipViews
 import Dsv.ZipViewType
 
 {- |

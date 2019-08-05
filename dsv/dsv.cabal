@@ -68,7 +68,6 @@ library
       , Dsv.IO
       , Dsv.Lens
       , Dsv.LookupErrors
-      , Dsv.Lookups
       , Dsv.Misc
       , Dsv.Numbers
       , Dsv.NumberViews
@@ -85,8 +84,9 @@ library
       , Dsv.Vector
       , Dsv.Views
       , Dsv.ViewType
-      , Dsv.ZipViewPipe
       , Dsv.ZipViewType
+      , Dsv.ZipViews
+      , Dsv.ZipViewPipe
 
     build-depends:
         attoparsec ^>= 0.13.2.2

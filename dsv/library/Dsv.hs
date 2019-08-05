@@ -69,8 +69,8 @@ module Dsv
   , zipViewPipeIgnoringAllErrors
   , zipViewPipeThrowFirstError
 
-  -- * Some lookups
-  , byteStringLookup, textLookupUtf8, textLookupUtf8', byteStringLookupPosition, entireRowLookup
+  -- * Some zip views
+  , byteStringZipView, textZipViewUtf8, textZipViewUtf8', byteStringZipViewPosition, entireRowZipView
 
   -- * The View type
   , View (..)
@@ -146,7 +146,7 @@ import Dsv.FileStrictMap
 import Dsv.FileStrictRead
 import Dsv.Header
 import Dsv.LookupErrors
-import Dsv.Lookups
+import Dsv.ZipViews
 import Dsv.Misc
 import Dsv.Numbers
 import Dsv.NumberViews
