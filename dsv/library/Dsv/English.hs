@@ -11,10 +11,10 @@ module Dsv.English
 
 import Dsv.IO
 import Dsv.LookupErrors
-import Dsv.LookupType
 --import Dsv.Position
 import Dsv.Prelude
 import Dsv.Text
+import Dsv.ZipViewType
 
 newtype EnglishText = EnglishText [Text]
     deriving stock (Eq, Show)

@@ -148,7 +148,6 @@ import Dsv.Header
 import Dsv.LookupErrors
 import Dsv.Lookups
 import Dsv.LookupPipe
-import Dsv.LookupType
 import Dsv.Misc
 import Dsv.Numbers
 import Dsv.NumberViews
@@ -161,6 +160,7 @@ import Dsv.Validation
 import Dsv.Vector
 import Dsv.Views
 import Dsv.ViewType
+import Dsv.ZipViewType
 
 import qualified Control.Foldl as L
 

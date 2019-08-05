@@ -2,7 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia #-}
 
-module Dsv.LookupType
+module Dsv.ZipViewType
   ( Lookup (..), refineLookup, overHeaderError, mapRowError, mapLookupError
   ) where
 

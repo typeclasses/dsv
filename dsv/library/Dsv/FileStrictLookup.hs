@@ -12,7 +12,6 @@ import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.IO
 import Dsv.LookupPipe
-import Dsv.LookupType
 import Dsv.ParseTermination
 import Dsv.ParseLookupTermination
 import Dsv.Parsing
@@ -20,6 +19,7 @@ import Dsv.Pipes
 import Dsv.Prelude
 import Dsv.Validation
 import Dsv.Vector
+import Dsv.ZipViewType
 
 -- pipes
 import Pipes

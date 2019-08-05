@@ -9,12 +9,12 @@ module Dsv.LookupPipe
 
 import Dsv.ByteString
 import Dsv.IO
-import Dsv.LookupType
 import Dsv.Position
 import Dsv.Prelude
 import Dsv.Validation
 import Dsv.Vector
 import Dsv.ViewType
+import Dsv.ZipViewType
 
 -- pipes
 import Pipes

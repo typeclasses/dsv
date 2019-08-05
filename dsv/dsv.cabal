@@ -70,7 +70,6 @@ library
       , Dsv.LookupErrors
       , Dsv.Lookups
       , Dsv.LookupPipe
-      , Dsv.LookupType
       , Dsv.Misc
       , Dsv.Numbers
       , Dsv.NumberViews
@@ -87,6 +86,7 @@ library
       , Dsv.Vector
       , Dsv.Views
       , Dsv.ViewType
+      , Dsv.ZipViewType
 
     build-depends:
         attoparsec ^>= 0.13.2.2

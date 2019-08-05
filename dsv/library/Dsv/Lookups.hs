@@ -11,7 +11,6 @@ module Dsv.Lookups
 import Dsv.ByteString
 import Dsv.Encoding
 import Dsv.LookupErrors
-import Dsv.LookupType
 import Dsv.Numbers
 import Dsv.Position
 import Dsv.Prelude
@@ -19,6 +18,7 @@ import Dsv.Validation
 import Dsv.Vector
 import Dsv.Views
 import Dsv.ViewType
+import Dsv.ZipViewType
 
 -- base
 import qualified Data.Foldable as Foldable
