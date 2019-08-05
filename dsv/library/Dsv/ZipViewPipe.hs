@@ -1,10 +1,10 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Dsv.LookupPipe
-  ( lookupPipe
-  , lookupPipeIgnoringAllErrors
-  , lookupPipeThrowFirstError
+module Dsv.ZipViewPipe
+  ( zipViewPipe
+  , zipViewPipeIgnoringAllErrors
+  , zipViewPipeThrowFirstError
   ) where
 
 import Dsv.ByteString
@@ -20,33 +20,33 @@ import Dsv.ZipViewType
 import Pipes
 import qualified Pipes.Prelude as P
 
-lookupPipe ::
+zipViewPipe ::
     forall m headerError rowError row .
     Monad m
     => ZipView headerError rowError row
     -> Pipe (Vector ByteString) (Validation rowError row) m headerError
 
-lookupPipe (ZipView (View f)) =
+zipViewPipe (ZipView (View f)) =
   do
     header <- await
     case (f header) of
         Failure err -> return err
         Success (View g) -> P.map g
 
-lookupPipeIgnoringAllErrors ::
+zipViewPipeIgnoringAllErrors ::
     forall m headerError rowError row .
     Monad m
     => ZipView headerError rowError row
     -> Pipe (Vector ByteString) row m ()
 
-lookupPipeIgnoringAllErrors (ZipView (View f)) =
+zipViewPipeIgnoringAllErrors (ZipView (View f)) =
   do
     header <- await
     case (f header) of
         Failure _ -> return ()
         Success (View g) -> P.mapFoldable g
 
-lookupPipeThrowFirstError ::
+zipViewPipeThrowFirstError ::
     forall m headerError rowError row r .
     ( Monad m, MonadThrow m
     , Exception headerError
@@ -55,7 +55,7 @@ lookupPipeThrowFirstError ::
     => ZipView headerError rowError row
     -> Pipe (Vector ByteString) row m r
 
-lookupPipeThrowFirstError (ZipView (View f)) =
+zipViewPipeThrowFirstError (ZipView (View f)) =
   do
     header <- await
     case (f header) of

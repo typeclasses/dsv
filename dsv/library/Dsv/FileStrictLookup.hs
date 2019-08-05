@@ -11,7 +11,7 @@ module Dsv.FileStrictLookup
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.IO
-import Dsv.LookupPipe
+import Dsv.ZipViewPipe
 import Dsv.ParseTermination
 import Dsv.ParseLookupTermination
 import Dsv.Parsing
@@ -54,7 +54,7 @@ lookupDsvFileStrict d fp lu =
         (count (handleDsvRowProducer d h))
 
     interpretRows =
-      fmap ParseLookupHeaderError (lookupPipe lu)
+      fmap ParseLookupHeaderError (zipViewPipe lu)
 
 lookupDsvFileStrictIgnoringAllErrors ::
     forall m headerError rowError row .
@@ -73,7 +73,7 @@ lookupDsvFileStrictIgnoringAllErrors d fp lu =
         foldProducerM foldVectorM $
             withFile fp ReadMode $ \h ->
                 void (handleDsvRowProducer d h) >->
-                lookupPipeIgnoringAllErrors lu
+                zipViewPipeIgnoringAllErrors lu
 
 lookupDsvFileStrictThrowFirstError ::
     forall m headerError rowError row .
@@ -95,4 +95,4 @@ lookupDsvFileStrictThrowFirstError d fp lu =
         foldProducerM foldVectorM $
             withFile fp ReadMode $ \h ->
                 void (handleDsvRowProducer d h) >->
-                lookupPipeThrowFirstError lu
+                zipViewPipeThrowFirstError lu

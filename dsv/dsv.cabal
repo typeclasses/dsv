@@ -69,7 +69,6 @@ library
       , Dsv.Lens
       , Dsv.LookupErrors
       , Dsv.Lookups
-      , Dsv.LookupPipe
       , Dsv.Misc
       , Dsv.Numbers
       , Dsv.NumberViews
@@ -86,6 +85,7 @@ library
       , Dsv.Vector
       , Dsv.Views
       , Dsv.ViewType
+      , Dsv.ZipViewPipe
       , Dsv.ZipViewType
 
     build-depends:

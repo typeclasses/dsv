@@ -64,10 +64,10 @@ module Dsv
   , ZipView (..)
   , mapZipViewError, overHeaderError, mapRowError
 
-  -- * Converting lookups to pipes
-  , lookupPipe
-  , lookupPipeIgnoringAllErrors
-  , lookupPipeThrowFirstError
+  -- * Converting zip views to pipes
+  , zipViewPipe
+  , zipViewPipeIgnoringAllErrors
+  , zipViewPipeThrowFirstError
 
   -- * Some lookups
   , byteStringLookup, textLookupUtf8, textLookupUtf8', byteStringLookupPosition, entireRowLookup
@@ -147,7 +147,6 @@ import Dsv.FileStrictRead
 import Dsv.Header
 import Dsv.LookupErrors
 import Dsv.Lookups
-import Dsv.LookupPipe
 import Dsv.Misc
 import Dsv.Numbers
 import Dsv.NumberViews
@@ -160,6 +159,7 @@ import Dsv.Validation
 import Dsv.Vector
 import Dsv.Views
 import Dsv.ViewType
+import Dsv.ZipViewPipe
 import Dsv.ZipViewType
 
 import qualified Control.Foldl as L
