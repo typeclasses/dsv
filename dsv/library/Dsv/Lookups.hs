@@ -26,10 +26,10 @@ import qualified Data.List as List
 
 byteStringLookup
     :: ByteString
-    -> Lookup LookupError TooShort ByteString
+    -> ZipView LookupError TooShort ByteString
 
 byteStringLookup name =
-  Lookup $
+  ZipView $
     View $
       \header ->
           case List.findIndices (== name) (Foldable.toList header) of
@@ -48,14 +48,14 @@ textLookupUtf8 ::
     EncodeUtf8 txt
     => txt
     -> View e ByteString a
-    -> Lookup
+    -> ZipView
         (At (ColumnName txt) LookupError)
         (At (ColumnName txt) (IndexError e))
         a
 
 textLookupUtf8 name fieldView =
-  mapLookupError (At (ColumnName name)) (At (ColumnName name)) $
-    Lookup $ View $ \header ->
+  mapZipViewError (At (ColumnName name)) (At (ColumnName name)) $
+    ZipView $ View $ \header ->
       case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
           []  -> Failure LookupError_Missing
           [i] -> withI i
@@ -71,14 +71,14 @@ textLookupUtf8' ::
     forall txt .
     EncodeUtf8 txt
     => txt
-    -> Lookup
+    -> ZipView
         (At (ColumnName txt) LookupError)
         (At (ColumnName txt) TooShort)
         ByteString
 
 textLookupUtf8' name =
-  mapLookupError (At (ColumnName name)) (At (ColumnName name)) $
-    Lookup $ View $ \header ->
+  mapZipViewError (At (ColumnName name)) (At (ColumnName name)) $
+    ZipView $ View $ \header ->
       case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
           []  -> Failure LookupError_Missing
           [i] -> withI i
@@ -92,10 +92,10 @@ textLookupUtf8' name =
 byteStringLookupPosition ::
     forall headerError .
     ColumnNumber
-    -> Lookup headerError TooShort ByteString
+    -> ZipView headerError TooShort ByteString
 
 byteStringLookupPosition (ColumnNumber (Positive n)) =
-  Lookup $
+  ZipView $
     View $
       \_header ->
         Success $
@@ -105,5 +105,5 @@ byteStringLookupPosition (ColumnNumber (Positive n)) =
                     Nothing -> Failure TooShort
                     Just x -> Success x
 
-entireRowLookup :: forall he re . Lookup he re (Vector ByteString)
-entireRowLookup = Lookup (constView id)
+entireRowLookup :: forall he re . ZipView he re (Vector ByteString)
+entireRowLookup = ZipView (constView id)

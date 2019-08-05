@@ -318,8 +318,8 @@ prop_lookupCsvFileStrict_particularColumns =
         lookupCsvFileStrict fp $
         -------------------
           do
-            date    <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
-            product <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
+            date    <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
+            product <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
             return (date, product)
     )
     ~>
@@ -338,8 +338,8 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error =
         lookupCsvFileStrict fp $
         -------------------
           do
-            date    <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
-            product <- mapLookupError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
+            date    <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Date"    (utf8View @Text))
+            product <- mapZipViewError (:[]) (:[]) (textLookupUtf8 @Text "Product" (utf8View @Text))
             return (date, product)
     )
     ~>
@@ -356,10 +356,10 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error_throw =
         do
           fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
           lookupCsvFileStrictThrowFirstError fp $
-            mapLookupError getFirst getFirst $
+            mapZipViewError getFirst getFirst $
               do
-                date    <- mapLookupError First First (textLookupUtf8 @Text "Date"    (utf8View @Text))
-                product <- mapLookupError First First (textLookupUtf8 @Text "Product" (utf8View @Text))
+                date    <- mapZipViewError First First (textLookupUtf8 @Text "Date"    (utf8View @Text))
+                product <- mapZipViewError First First (textLookupUtf8 @Text "Product" (utf8View @Text))
                 return (date, product)
     )
     ~>

@@ -31,7 +31,7 @@ lookupDsvFileStrict ::
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
         -- ^ The path of a DSV file to read
-    -> Lookup headerError rowError row
+    -> ZipView headerError rowError row
         -- ^ How to interpret the rows
     -> m (ParseLookupTermination headerError, Vector (Validation rowError row))
 
@@ -63,7 +63,7 @@ lookupDsvFileStrictIgnoringAllErrors ::
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
         -- ^ The path of a DSV file to read
-    -> Lookup headerError rowError row
+    -> ZipView headerError rowError row
         -- ^ How to interpret the rows
     -> m (Vector row)
 
@@ -85,7 +85,7 @@ lookupDsvFileStrictThrowFirstError ::
         -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> FilePath
         -- ^ The path of a DSV file to read
-    -> Lookup headerError rowError row
+    -> ZipView headerError rowError row
         -- ^ How to interpret the rows
     -> m (Vector row)
 

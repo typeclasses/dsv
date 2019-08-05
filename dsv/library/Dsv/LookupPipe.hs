@@ -23,10 +23,10 @@ import qualified Pipes.Prelude as P
 lookupPipe ::
     forall m headerError rowError row .
     Monad m
-    => Lookup headerError rowError row
+    => ZipView headerError rowError row
     -> Pipe (Vector ByteString) (Validation rowError row) m headerError
 
-lookupPipe (Lookup (View f)) =
+lookupPipe (ZipView (View f)) =
   do
     header <- await
     case (f header) of
@@ -36,10 +36,10 @@ lookupPipe (Lookup (View f)) =
 lookupPipeIgnoringAllErrors ::
     forall m headerError rowError row .
     Monad m
-    => Lookup headerError rowError row
+    => ZipView headerError rowError row
     -> Pipe (Vector ByteString) row m ()
 
-lookupPipeIgnoringAllErrors (Lookup (View f)) =
+lookupPipeIgnoringAllErrors (ZipView (View f)) =
   do
     header <- await
     case (f header) of
@@ -52,10 +52,10 @@ lookupPipeThrowFirstError ::
     , Exception headerError
     , Show rowError, Typeable rowError
     )
-    => Lookup headerError rowError row
+    => ZipView headerError rowError row
     -> Pipe (Vector ByteString) row m r
 
-lookupPipeThrowFirstError (Lookup (View f)) =
+lookupPipeThrowFirstError (ZipView (View f)) =
   do
     header <- await
     case (f header) of

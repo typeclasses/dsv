@@ -60,9 +60,9 @@ module Dsv
   -- todo: rethink these names in light of the new Lookup stuff
   , nthColumn, columnName
 
-  -- * The Lookup type
-  , Lookup (..)
-  , mapLookupError, overHeaderError, mapRowError
+  -- * The ZipView type
+  , ZipView (..)
+  , mapZipViewError, overHeaderError, mapRowError
 
   -- * Converting lookups to pipes
   , lookupPipe
@@ -78,8 +78,8 @@ module Dsv
   -- * Some views
   , constView, utf8View, byteStringNatView, textNatView
 
-  -- * Lookup + View
-  , refineLookup
+  -- * ZipView + View
+  , refineZipView
 
   -- * Lookup errors
   -- $lookupErrors

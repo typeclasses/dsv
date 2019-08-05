@@ -6,7 +6,7 @@
 module Dsv.English
   ( EnglishText (..)
   , ToEnglishText (..)
-  , englishLookupError
+  , englishZipViewError
   ) where
 
 import Dsv.IO
@@ -28,12 +28,12 @@ class ToEnglishText a
   where
     toEnglishText :: a -> EnglishText
 
-englishLookupError ::
+englishZipViewError ::
     (ToEnglishText he, ToEnglishText re) =>
-    Lookup he re a -> Lookup EnglishText EnglishText a
+    ZipView he re a -> ZipView EnglishText EnglishText a
 
-englishLookupError =
-  mapLookupError toEnglishText toEnglishText
+englishZipViewError =
+  mapZipViewError toEnglishText toEnglishText
 
 instance ToEnglishText TooShort
   where

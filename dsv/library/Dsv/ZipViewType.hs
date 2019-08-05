@@ -3,7 +3,7 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia #-}
 
 module Dsv.ZipViewType
-  ( Lookup (..), refineLookup, overHeaderError, mapRowError, mapLookupError
+  ( ZipView (..), refineZipView, overHeaderError, mapRowError, mapZipViewError
   ) where
 
 import Dsv.ByteString
@@ -14,8 +14,8 @@ import Dsv.Vector
 -- base
 import Data.Functor.Compose (Compose (Compose))
 
-newtype Lookup he re a =
-  Lookup
+newtype ZipView he re a =
+  ZipView
     (View he (Vector ByteString)
       (View re (Vector ByteString) a))
   deriving stock Functor
@@ -25,39 +25,39 @@ newtype Lookup he re a =
         (View he (Vector ByteString))
         (View re (Vector ByteString))
 
-refineLookup ::
+refineZipView ::
     forall he re a b .
-    Lookup he re a
+    ZipView he re a
     -> View re a b
-    -> Lookup he re b
+    -> ZipView he re b
 
-refineLookup (Lookup (View f)) r2 =
-  Lookup $
+refineZipView (ZipView (View f)) r2 =
+  ZipView $
     View $
       fmap (r2 .) . f
 
 overHeaderError ::
     (he1 -> he2) ->
-    Lookup he1 re a ->
-    Lookup he2 re a
+    ZipView he1 re a ->
+    ZipView he2 re a
 
-overHeaderError f (Lookup v) =
-    Lookup (overViewError f v)
+overHeaderError f (ZipView v) =
+    ZipView (overViewError f v)
 
 mapRowError ::
     (re1 -> re2) ->
-    Lookup he re1 a ->
-    Lookup he re2 a
+    ZipView he re1 a ->
+    ZipView he re2 a
 
-mapRowError f (Lookup v) =
-    Lookup (fmap (overViewError f) v)
+mapRowError f (ZipView v) =
+    ZipView (fmap (overViewError f) v)
 
-mapLookupError
+mapZipViewError
     :: (he1 -> he)
     -> (re1 -> re2)
-    -> Lookup he1 re1 a
-    -> Lookup he re2 a
+    -> ZipView he1 re1 a
+    -> ZipView he re2 a
 
-mapLookupError f g =
+mapZipViewError f g =
     mapRowError g .
     overHeaderError f

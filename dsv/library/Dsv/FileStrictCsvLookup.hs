@@ -103,7 +103,7 @@ lookupCsvFileStrict ::
     MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
-    -> Lookup headerError rowError row
+    -> ZipView headerError rowError row
         -- ^ How to interpret the rows
     -> m (ParseLookupTermination headerError, Vector (Validation rowError row))
 
@@ -115,7 +115,7 @@ lookupCsvFileStrictIgnoringAllErrors ::
     MonadIO m
     => FilePath
         -- ^ The path of a CSV file to read
-    -> Lookup headerError rowError row
+    -> ZipView headerError rowError row
         -- ^ How to interpret the rows
     -> m (Vector row)
 
@@ -130,7 +130,7 @@ lookupCsvFileStrictThrowFirstError ::
     )
     => FilePath
         -- ^ The path of a CSV file to read
-    -> Lookup headerError rowError row
+    -> ZipView headerError rowError row
         -- ^ How to interpret the rows
     -> m (Vector row)
 
