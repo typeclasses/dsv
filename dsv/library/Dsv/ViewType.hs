@@ -1,5 +1,5 @@
 {-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia #-}
+{-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module Dsv.ViewType
   ( View (..), overViewError, applyView
@@ -12,15 +12,11 @@ import Dsv.Validation
 import Control.Arrow
 import Control.Category
 
-newtype View e a b =
-  View
-    (a -> Validation e b)
-  deriving stock Functor
-  deriving Applicative
-    via
-      Compose
-        ((->) a)
-        (Validation e)
+newtype View e a b = View (a -> Validation e b)
+    deriving stock Functor
+
+deriving via Compose ((->) a) (Validation e)
+    instance Semigroup e => Applicative (View e a)
 
 applyView :: View e a b -> a -> Validation e b
 applyView (View f) x = f x
