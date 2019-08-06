@@ -1,6 +1,6 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia #-}
+{-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module DSV.ZipViewType
   ( ZipView (..), refineZipView, overHeaderError, overRowError, overZipViewError
@@ -19,11 +19,14 @@ newtype ZipView he re a =
     (View he (Vector ByteString)
       (View re (Vector ByteString) a))
   deriving stock Functor
-  deriving Applicative
-    via
-      Compose
-        (View he (Vector ByteString))
-        (View re (Vector ByteString))
+
+deriving via
+  Compose
+    (View headerError (Vector ByteString))
+    (View rowError (Vector ByteString))
+  instance
+    (Semigroup headerError, Semigroup rowError) =>
+    Applicative (ZipView headerError rowError)
 
 refineZipView ::
     forall he re a b .
