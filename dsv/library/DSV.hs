@@ -58,7 +58,10 @@ module DSV
 
   -- * Locating a column in a row
   -- todo: rethink these names in light of the new Lookup stuff
-  , nthColumn, columnName
+  , columnName
+
+  -- * Vectors
+  , Vector, nthVectorElement
 
   -- * The ZipView type
   , ZipView (..)

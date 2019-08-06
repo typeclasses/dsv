@@ -196,7 +196,7 @@ prop_readCsvFileStrictIgnoringHeader_doc =
 sumPricesWithoutHeader :: L.Fold (Vector ByteString) Rational
 sumPricesWithoutHeader =
     L.premap
-        (fromMaybe 0 . (nthColumn 3 >=> byteStringDollarsMaybe))
+        (fromMaybe 0 . (nthVectorElement 3 >=> byteStringDollarsMaybe))
         L.sum
 
 sumPricesWithZippedHeader :: L.Fold (Vector (ByteString, ByteString)) Rational
@@ -207,7 +207,7 @@ sumPricesWithZippedHeader =
 
 writeNamesAndCountWithoutHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector ByteString) Int
 writeNamesAndCountWithoutHeader r =
-    L.mapM_ (traverse_ write . nthColumn 4) *>
+    L.mapM_ (traverse_ write . nthVectorElement 4) *>
     L.generalize L.length
   where
     write x = modifyIORef r (<> Seq.singleton x)

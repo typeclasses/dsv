@@ -5,7 +5,7 @@
 -- | Miscellania
 
 module DSV.Misc
-  ( nthColumn, columnName
+  ( columnName
   , byteStringTextUtf8Maybe
   , byteStringDecimalRationalMaybe
   , textDecimalRationalMaybe
@@ -23,21 +23,6 @@ import Control.Monad ((>=>))
 
 -- vector
 import qualified Data.Vector as Vector
-
-{- |
-
-=== Examples
-
-  * @nthColumn 0 ["a", "b", "c"] = Nothing@
-  * @nthColumn 1 ["a", "b", "c"] = Just "a"@
-  * @nthColumn 2 ["a", "b", "c"] = Just "b"@
-  * @nthColumn 3 ["a", "b", "c"] = Just "c"@
-  * @nthColumn 4 ["a", "b", "c"] = Nothing@
-
--}
-
-nthColumn :: forall a . Integer -> Vector a -> Maybe a
-nthColumn n xs = vectorIndexInteger xs (n - 1)
 
 columnName ::
     forall name value .

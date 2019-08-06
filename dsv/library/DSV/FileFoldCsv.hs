@@ -41,7 +41,7 @@ CSV file:
 Fold:
 
 @
-'L.premap' ('fromMaybe' 0 . ('nthColumn' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
+'L.premap' ('fromMaybe' 0 . ('nthVectorElement' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
 @
 
 Result:
@@ -76,7 +76,7 @@ CSV file:
 Fold:
 
 @
-'L.mapM_' ('traverse_' 'BS.putStrLn' . 'nthColumn' 4) *> 'L.generalize' 'L.length'
+'L.mapM_' ('traverse_' 'BS.putStrLn' . 'nthVectorElement' 4) *> 'L.generalize' 'L.length'
 @
 
 Output printed to the terminal:
@@ -117,7 +117,7 @@ CSV file:
 Fold:
 
 @
-'L.premap' ('fromMaybe' 0 . ('nthColumn' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
+'L.premap' ('fromMaybe' 0 . ('nthVectorElement' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
 @
 
 Result:
@@ -153,7 +153,7 @@ CSV file:
 Fold:
 
 @
-'L.mapM_' ('traverse_' 'BS.putStrLn' . 'nthColumn' 4) *> 'L.generalize' 'L.length'
+'L.mapM_' ('traverse_' 'BS.putStrLn' . 'nthVectorElement' 4) *> 'L.generalize' 'L.length'
 @
 
 Output printed to the terminal:

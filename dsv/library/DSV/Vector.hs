@@ -3,7 +3,7 @@
 
 module DSV.Vector
   ( Vector
-  , vectorIndexInt, vectorIndexNat, vectorIndexInteger
+  , vectorIndexInt, vectorIndexNat, vectorIndexInteger, nthVectorElement
   , vectorZip, vectorZipWith
   ) where
 
@@ -41,3 +41,18 @@ vectorZipWith ::
     (a -> b -> c) -> Vector a -> Vector b -> Vector c
 
 vectorZipWith = Vector.zipWith
+
+{- |
+
+=== Examples
+
+  * @nthVectorElement 0 ["a", "b", "c"] = Nothing@
+  * @nthVectorElement 1 ["a", "b", "c"] = Just "a"@
+  * @nthVectorElement 2 ["a", "b", "c"] = Just "b"@
+  * @nthVectorElement 3 ["a", "b", "c"] = Just "c"@
+  * @nthVectorElement 4 ["a", "b", "c"] = Nothing@
+
+-}
+
+nthVectorElement :: forall a . Integer -> Vector a -> Maybe a
+nthVectorElement n xs = vectorIndexInteger xs (n - 1)
