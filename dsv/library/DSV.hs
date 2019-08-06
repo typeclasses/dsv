@@ -75,7 +75,7 @@ module DSV
   , View (..)
 
   -- * Some views
-  , constView, utf8View, byteStringNatView, textNatView
+  , constView, utf8View, byteStringNatView, textNatView, columnNumberView, lookupView
 
   -- * ZipView + View
   , refineZipView
@@ -159,6 +159,7 @@ import DSV.Parsing
 import DSV.Position
 import DSV.Validation
 import DSV.Vector
+import DSV.VectorViews
 import DSV.ViewType
 import DSV.ZipViewPipe
 import DSV.ZipViewStop

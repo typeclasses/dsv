@@ -8,7 +8,7 @@ module DSV.Numbers
   ( fromIntegerMaybe
   , Natural
   , ArithException (..)
-  , Positive (..), natPositive, positiveNat
+  , Positive (..), natPositive, positiveNat, positiveInt
   ) where
 
 import DSV.IO
@@ -39,6 +39,9 @@ natPositive =
 
 positiveNat :: Positive -> Natural
 positiveNat (Positive n) = n
+
+positiveInt :: Positive -> Int
+positiveInt (Positive n) = fromIntegral n
 
 instance Num Positive
   where

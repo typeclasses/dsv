@@ -8,7 +8,6 @@ module DSV.Vector
   , vectorZip, vectorZipWith
   ) where
 
-import DSV.LookupError
 import DSV.Numbers
 import DSV.Prelude
 
