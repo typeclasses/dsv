@@ -3,7 +3,8 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module DSV.ZipViewType
-  ( ZipView (..), refineZipView, overHeaderError, overRowError, overZipViewError
+  ( ZipView (..), refineZipView
+  , overHeaderError, overRowError, overZipViewError
   ) where
 
 import DSV.ByteString
