@@ -28,19 +28,17 @@ byteStringZipView
     -> ZipView LookupError TooShort ByteString
 
 byteStringZipView name =
-  ZipView $
-    View $
-      \header ->
-          case List.findIndices (== name) (toList header) of
-              []  -> Failure LookupError_Missing
-              [i] ->
-                  Success $
-                    View $
-                      \row ->
-                          case vectorIndexInt row i of
-                              Nothing -> Failure TooShort
-                              Just x -> Success x
-              _   -> Failure LookupError_Duplicate
+    (ZipView . View) $ \header ->
+    case List.findIndices (== name) (toList header) of
+        []  -> Failure LookupError_Missing
+        [i] -> withI i
+        _   -> Failure LookupError_Duplicate
+  where
+    withI i =
+        (Success . View) $ \row ->
+        case vectorIndexInt row i of
+            Nothing -> Failure TooShort
+            Just x  -> Success x
 
 textZipViewUtf8 ::
     forall txt e a .
@@ -53,18 +51,19 @@ textZipViewUtf8 ::
         a
 
 textZipViewUtf8 name fieldView =
-  overZipViewError (At (ColumnName name)) (At (ColumnName name)) $
-    ZipView $ View $ \header ->
-      case List.findIndices (== encodeUtf8 name) (toList header) of
-          []  -> Failure LookupError_Missing
-          [i] -> withI i
-          _   -> Failure LookupError_Duplicate
+    (overZipViewError at at . ZipView . View) $ \header ->
+    case List.findIndices (== encodeUtf8 name) (toList header) of
+        []  -> Failure LookupError_Missing
+        [i] -> withI i
+        _   -> Failure LookupError_Duplicate
 
   where
-    withI i = Success $ View $ \row ->
-      case vectorIndexInt row i of
-        Nothing -> Failure IndexError_TooShort
-        Just x -> applyView (overViewError IndexError_FieldError fieldView) x
+    at = At (ColumnName name)
+    withI i =
+        (Success . View) $ \row ->
+        case vectorIndexInt row i of
+            Nothing -> Failure IndexError_TooShort
+            Just x -> applyView (overViewError IndexError_FieldError fieldView) x
 
 textZipViewUtf8' ::
     forall txt .
@@ -76,17 +75,18 @@ textZipViewUtf8' ::
         ByteString
 
 textZipViewUtf8' name =
-  overZipViewError (At (ColumnName name)) (At (ColumnName name)) $
-    ZipView $ View $ \header ->
-      case List.findIndices (== encodeUtf8 name) (toList header) of
-          []  -> Failure LookupError_Missing
-          [i] -> withI i
-          _   -> Failure LookupError_Duplicate
+    (overZipViewError at at . ZipView . View) $ \header ->
+    case List.findIndices (== encodeUtf8 name) (toList header) of
+        []  -> Failure LookupError_Missing
+        [i] -> withI i
+        _   -> Failure LookupError_Duplicate
   where
-    withI i = Success $ View $ \row ->
+    at = At (ColumnName name)
+    withI i =
+        (Success . View) $ \row ->
         case vectorIndexInt row i of
             Nothing -> Failure TooShort
-            Just x -> Success x
+            Just x  -> Success x
 
 byteStringZipViewPosition ::
     forall headerError .
@@ -94,15 +94,11 @@ byteStringZipViewPosition ::
     -> ZipView headerError TooShort ByteString
 
 byteStringZipViewPosition (ColumnNumber (Positive n)) =
-  ZipView $
-    View $
-      \_header ->
-        Success $
-          View $
-            \row ->
-                case vectorIndexNat row (n - 1) of
-                    Nothing -> Failure TooShort
-                    Just x -> Success x
+    (ZipView . View) $ \_header ->
+    (Success . View) $ \row     ->
+    case vectorIndexNat row (n - 1) of
+        Nothing -> Failure TooShort
+        Just x  -> Success x
 
 entireRowZipView :: forall he re . ZipView he re (Vector ByteString)
 entireRowZipView = ZipView (constView id)
