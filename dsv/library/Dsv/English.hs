@@ -33,7 +33,7 @@ englishZipViewError ::
     ZipView he re a -> ZipView EnglishText EnglishText a
 
 englishZipViewError =
-  mapZipViewError toEnglishText toEnglishText
+  overZipViewError toEnglishText toEnglishText
 
 instance ToEnglishText TooShort
   where

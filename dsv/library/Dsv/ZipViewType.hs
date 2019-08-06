@@ -3,7 +3,7 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia #-}
 
 module Dsv.ZipViewType
-  ( ZipView (..), refineZipView, overHeaderError, mapRowError, mapZipViewError
+  ( ZipView (..), refineZipView, overHeaderError, overRowError, overZipViewError
   ) where
 
 import Dsv.ByteString
@@ -44,20 +44,20 @@ overHeaderError ::
 overHeaderError f (ZipView v) =
     ZipView (overViewError f v)
 
-mapRowError ::
+overRowError ::
     (re1 -> re2) ->
     ZipView he re1 a ->
     ZipView he re2 a
 
-mapRowError f (ZipView v) =
+overRowError f (ZipView v) =
     ZipView (fmap (overViewError f) v)
 
-mapZipViewError
+overZipViewError
     :: (he1 -> he)
     -> (re1 -> re2)
     -> ZipView he1 re1 a
     -> ZipView he re2 a
 
-mapZipViewError f g =
-    mapRowError g .
+overZipViewError f g =
+    overRowError g .
     overHeaderError f

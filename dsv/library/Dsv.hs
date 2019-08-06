@@ -62,7 +62,7 @@ module Dsv
 
   -- * The ZipView type
   , ZipView (..)
-  , mapZipViewError, overHeaderError, mapRowError
+  , overZipViewError, overHeaderError, overRowError
 
   -- * Converting zip views to pipes
   , zipViewPipe

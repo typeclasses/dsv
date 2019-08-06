@@ -318,8 +318,8 @@ prop_zipViewCsvFileStrict_particularColumns =
         zipViewCsvFileStrict fp $
         --------------------
           do
-            date    <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
-            product <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
+            date    <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
+            product <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
             return (date, product)
     )
     ~>
@@ -338,8 +338,8 @@ prop_zipViewCsvFileStrict_particularColumns_utf8Error =
         zipViewCsvFileStrict fp $
         --------------------
           do
-            date    <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
-            product <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
+            date    <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
+            product <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
             return (date, product)
     )
     ~>
@@ -356,10 +356,10 @@ prop_zipViewCsvFileStrict_particularColumns_utf8Error_throw =
         do
           fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
           zipViewCsvFileStrictThrowFirstError fp $
-            mapZipViewError getFirst getFirst $
+            overZipViewError getFirst getFirst $
               do
-                date    <- mapZipViewError First First (textZipViewUtf8 @Text "Date"    (utf8View @Text))
-                product <- mapZipViewError First First (textZipViewUtf8 @Text "Product" (utf8View @Text))
+                date    <- overZipViewError First First (textZipViewUtf8 @Text "Date"    (utf8View @Text))
+                product <- overZipViewError First First (textZipViewUtf8 @Text "Product" (utf8View @Text))
                 return (date, product)
     )
     ~>

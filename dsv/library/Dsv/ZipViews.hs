@@ -54,7 +54,7 @@ textZipViewUtf8 ::
         a
 
 textZipViewUtf8 name fieldView =
-  mapZipViewError (At (ColumnName name)) (At (ColumnName name)) $
+  overZipViewError (At (ColumnName name)) (At (ColumnName name)) $
     ZipView $ View $ \header ->
       case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
           []  -> Failure LookupError_Missing
@@ -77,7 +77,7 @@ textZipViewUtf8' ::
         ByteString
 
 textZipViewUtf8' name =
-  mapZipViewError (At (ColumnName name)) (At (ColumnName name)) $
+  overZipViewError (At (ColumnName name)) (At (ColumnName name)) $
     ZipView $ View $ \header ->
       case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
           []  -> Failure LookupError_Missing
