@@ -3,15 +3,15 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Dsv.FileStrictCsvLookup
-  ( lookupCsvFileStrict
-  , lookupCsvFileStrictIgnoringAllErrors
-  , lookupCsvFileStrictThrowFirstError
+module Dsv.FileStrictCsvZipView
+  ( zipViewCsvFileStrict
+  , zipViewCsvFileStrictIgnoringAllErrors
+  , zipViewCsvFileStrictThrowFirstError
   ) where
 
 import Dsv.CommonDelimiters
 import Dsv.English
-import Dsv.FileStrictLookup
+import Dsv.FileStrictZipView
 import Dsv.IO
 import Dsv.ZipViewStop
 import Dsv.Prelude
@@ -31,10 +31,10 @@ CSV file:
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 
-Lookup:
+View:
 
 @
-'entireRowLookup'
+'entireRowZipView'
 @
 
 Result:
@@ -53,11 +53,11 @@ CSV file:
 > 2019-03-24,Acme Co,$599.89,Dehydrated boulders
 > 2019-04-18,Acme Co,$24.95,Earthquake pills
 
-Lookup:
+View:
 
 @
-((,) \<$> 'textLookupUtf8' \"Date" \<*> 'textLookupUtf8' \"Product")
-    :: 'Lookup' 'EnglishText' 'EnglishText' ('Text', 'Text')
+((,) \<$> 'textZipViewUtf8' \"Date" \<*> 'textZipViewUtf8' \"Product")
+    :: 'ZipView' 'EnglishText' 'EnglishText' ('Text', 'Text')
 @
 
 Result:
@@ -78,11 +78,11 @@ CSV file:
 
 In this example, @\\xc3\\x28@ represents two bytes which constitute an invalid sequence in UTF-8. Notice that there is a UTF-8 error on each of the last two lines.
 
-Lookup:
+View:
 
 @
-((,) \<$> 'textLookupUtf8' \"Date" \<*> 'textLookupUtf8' \"Product")
-    :: 'Lookup' 'EnglishText' 'EnglishText' ('Text', 'Text')
+((,) \<$> 'textZipViewUtf8' \"Date" \<*> 'textZipViewUtf8' \"Product")
+    :: 'ZipView' 'EnglishText' 'EnglishText' ('Text', 'Text')
 @
 
 Result:
@@ -98,7 +98,7 @@ The first item in the result is a 'Failure', because we tried to decode the valu
 
 -}
 
-lookupCsvFileStrict ::
+zipViewCsvFileStrict ::
     forall m headerError rowError row .
     MonadIO m
     => FilePath
@@ -107,10 +107,10 @@ lookupCsvFileStrict ::
         -- ^ How to interpret the rows
     -> m (ZipViewStop headerError, Vector (Validation rowError row))
 
-lookupCsvFileStrict fp lu =
-    lookupDsvFileStrict comma fp lu
+zipViewCsvFileStrict fp lu =
+    zipViewDsvFileStrict comma fp lu
 
-lookupCsvFileStrictIgnoringAllErrors ::
+zipViewCsvFileStrictIgnoringAllErrors ::
     forall m headerError rowError row .
     MonadIO m
     => FilePath
@@ -119,10 +119,10 @@ lookupCsvFileStrictIgnoringAllErrors ::
         -- ^ How to interpret the rows
     -> m (Vector row)
 
-lookupCsvFileStrictIgnoringAllErrors fp lu =
-    lookupDsvFileStrictIgnoringAllErrors comma fp lu
+zipViewCsvFileStrictIgnoringAllErrors fp lu =
+    zipViewDsvFileStrictIgnoringAllErrors comma fp lu
 
-lookupCsvFileStrictThrowFirstError ::
+zipViewCsvFileStrictThrowFirstError ::
     forall m headerError rowError row .
     ( MonadIO m
     , Exception headerError
@@ -134,5 +134,5 @@ lookupCsvFileStrictThrowFirstError ::
         -- ^ How to interpret the rows
     -> m (Vector row)
 
-lookupCsvFileStrictThrowFirstError fp lu =
-    lookupDsvFileStrictThrowFirstError comma fp lu
+zipViewCsvFileStrictThrowFirstError fp lu =
+    zipViewDsvFileStrictThrowFirstError comma fp lu

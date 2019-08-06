@@ -57,12 +57,12 @@ library
       , Dsv.English
       , Dsv.FileFold
       , Dsv.FileFoldCsv
-      , Dsv.FileStrictCsvLookup
       , Dsv.FileStrictCsvMap
       , Dsv.FileStrictCsvRead
-      , Dsv.FileStrictLookup
+      , Dsv.FileStrictCsvZipView
       , Dsv.FileStrictMap
       , Dsv.FileStrictRead
+      , Dsv.FileStrictZipView
       , Dsv.Fold
       , Dsv.Header
       , Dsv.IO

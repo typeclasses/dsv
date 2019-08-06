@@ -294,13 +294,13 @@ prop_foldPriceM_withZippedHeader_doc =
     ~>
     (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
 
--- | This is an example in the documentation for 'lookupCsvFileStrict'.
-prop_lookupCsvFileStrict_entireRow =
+-- | This is an example in the documentation for 'zipViewCsvFileStrict'.
+prop_zipViewCsvFileStrict_entireRow =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        lookupCsvFileStrict fp (entireRowZipView @Void @Void)
-        -------------------
+        zipViewCsvFileStrict fp (entireRowZipView @Void @Void)
+        --------------------
     )
     ~>
     ( ZipViewComplete
@@ -310,13 +310,13 @@ prop_lookupCsvFileStrict_entireRow =
         ]
     )
 
--- | This is an example in the documentation for 'lookupCsvFileStrict'.
-prop_lookupCsvFileStrict_particularColumns =
+-- | This is an example in the documentation for 'zipViewCsvFileStrict'.
+prop_zipViewCsvFileStrict_particularColumns =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        lookupCsvFileStrict fp $
-        -------------------
+        zipViewCsvFileStrict fp $
+        --------------------
           do
             date    <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
             product <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
@@ -330,13 +330,13 @@ prop_lookupCsvFileStrict_particularColumns =
         ]
     )
 
--- | This is an example in the documentation for 'lookupCsvFileStrict'.
-prop_lookupCsvFileStrict_particularColumns_utf8Error =
+-- | This is an example in the documentation for 'zipViewCsvFileStrict'.
+prop_zipViewCsvFileStrict_particularColumns_utf8Error =
     (
       do
         fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
-        lookupCsvFileStrict fp $
-        -------------------
+        zipViewCsvFileStrict fp $
+        --------------------
           do
             date    <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
             product <- mapZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
@@ -350,12 +350,12 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error =
         ]
     )
 
-prop_lookupCsvFileStrict_particularColumns_utf8Error_throw =
+prop_zipViewCsvFileStrict_particularColumns_utf8Error_throw =
     (
       try $
         do
           fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
-          lookupCsvFileStrictThrowFirstError fp $
+          zipViewCsvFileStrictThrowFirstError fp $
             mapZipViewError getFirst getFirst $
               do
                 date    <- mapZipViewError First First (textZipViewUtf8 @Text "Date"    (utf8View @Text))
@@ -365,11 +365,11 @@ prop_lookupCsvFileStrict_particularColumns_utf8Error_throw =
     ~>
     Left (At (RowNumber 1) (At (ColumnName @Text "Product") (IndexError_FieldError InvalidUtf8)))
 
-prop_lookupCsvFileStrict_empty =
+prop_zipViewCsvFileStrict_empty =
     (
       do
         fp <- getDataFileName "test-data/empty.csv"
-        lookupCsvFileStrict fp (entireRowZipView @() @())
+        zipViewCsvFileStrict fp (entireRowZipView @() @())
     )
     ~>
     (ZipViewEmpty, Vector.empty)
@@ -378,7 +378,7 @@ prop_tweetIds =
     (
       do
         fp <- getDataFileName "test-data/tweets.csv"
-        lookupCsvFileStrictThrowFirstError fp
+        zipViewCsvFileStrictThrowFirstError fp
             (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
     )
     ~>

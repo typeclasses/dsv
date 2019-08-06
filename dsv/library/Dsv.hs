@@ -94,15 +94,15 @@ module Dsv
   -- * English
   , EnglishText (..)
 
-  -- * Reading strictly from CSV files using Lookup
-  , lookupCsvFileStrict
-  , lookupCsvFileStrictIgnoringAllErrors
-  , lookupCsvFileStrictThrowFirstError
+  -- * Reading strictly from CSV files using ZipView
+  , zipViewCsvFileStrict
+  , zipViewCsvFileStrictIgnoringAllErrors
+  , zipViewCsvFileStrictThrowFirstError
 
-  -- * Reading strictly from DSV files using Lookup
-  , lookupDsvFileStrict
-  , lookupDsvFileStrictIgnoringAllErrors
-  , lookupDsvFileStrictThrowFirstError
+  -- * Reading strictly from DSV files using ZipView
+  , zipViewDsvFileStrict
+  , zipViewDsvFileStrictIgnoringAllErrors
+  , zipViewDsvFileStrictThrowFirstError
 
   -- * Termination types
   , ParseTermination (..), ZipViewStop (..)
@@ -138,12 +138,12 @@ import Dsv.Encoding
 import Dsv.English
 import Dsv.FileFold
 import Dsv.FileFoldCsv
-import Dsv.FileStrictCsvLookup
 import Dsv.FileStrictCsvMap
 import Dsv.FileStrictCsvRead
-import Dsv.FileStrictLookup
+import Dsv.FileStrictCsvZipView
 import Dsv.FileStrictMap
 import Dsv.FileStrictRead
+import Dsv.FileStrictZipView
 import Dsv.Header
 import Dsv.LookupErrors
 import Dsv.ZipViews

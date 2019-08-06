@@ -2,29 +2,29 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE LambdaCase #-}
 
-module Dsv.FileStrictLookup
-  ( lookupDsvFileStrict
-  , lookupDsvFileStrictIgnoringAllErrors
-  , lookupDsvFileStrictThrowFirstError
+module Dsv.FileStrictZipView
+  ( zipViewDsvFileStrict
+  , zipViewDsvFileStrictIgnoringAllErrors
+  , zipViewDsvFileStrictThrowFirstError
   ) where
 
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.IO
-import Dsv.ZipViewPipe
 import Dsv.ParseTermination
-import Dsv.ZipViewStop
 import Dsv.Parsing
 import Dsv.Pipes
 import Dsv.Prelude
 import Dsv.Validation
 import Dsv.Vector
+import Dsv.ZipViewPipe
+import Dsv.ZipViewStop
 import Dsv.ZipViewType
 
 -- pipes
 import Pipes
 
-lookupDsvFileStrict ::
+zipViewDsvFileStrict ::
     forall m headerError rowError row .
     MonadIO m
     => Delimiter
@@ -35,7 +35,7 @@ lookupDsvFileStrict ::
         -- ^ How to interpret the rows
     -> m (ZipViewStop headerError, Vector (Validation rowError row))
 
-lookupDsvFileStrict d fp lu =
+zipViewDsvFileStrict d fp lu =
     liftIO $ runSafeT $
       do
         foldProducerM foldVectorM $
@@ -56,7 +56,7 @@ lookupDsvFileStrict d fp lu =
     interpretRows =
       fmap ZipViewHeaderError (zipViewPipe lu)
 
-lookupDsvFileStrictIgnoringAllErrors ::
+zipViewDsvFileStrictIgnoringAllErrors ::
     forall m headerError rowError row .
     MonadIO m
     => Delimiter
@@ -67,7 +67,7 @@ lookupDsvFileStrictIgnoringAllErrors ::
         -- ^ How to interpret the rows
     -> m (Vector row)
 
-lookupDsvFileStrictIgnoringAllErrors d fp lu =
+zipViewDsvFileStrictIgnoringAllErrors d fp lu =
     fmap snd $ liftIO $ runSafeT $
       do
         foldProducerM foldVectorM $
@@ -75,7 +75,7 @@ lookupDsvFileStrictIgnoringAllErrors d fp lu =
                 void (handleDsvRowProducer d h) >->
                 zipViewPipeIgnoringAllErrors lu
 
-lookupDsvFileStrictThrowFirstError ::
+zipViewDsvFileStrictThrowFirstError ::
     forall m headerError rowError row .
     ( MonadIO m
     , Exception headerError
@@ -89,7 +89,7 @@ lookupDsvFileStrictThrowFirstError ::
         -- ^ How to interpret the rows
     -> m (Vector row)
 
-lookupDsvFileStrictThrowFirstError d fp lu =
+zipViewDsvFileStrictThrowFirstError d fp lu =
     fmap snd $ liftIO $ runSafeT $
       do
         foldProducerM foldVectorM $
