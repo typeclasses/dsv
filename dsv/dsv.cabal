@@ -39,54 +39,54 @@ library
         -fdefer-typed-holes
 
     exposed-modules:
-        Dsv
+        DSV
 
     autogen-modules:
         Paths_dsv
 
     other-modules:
         Paths_dsv
-      , Dsv.AttoParser
-      , Dsv.AttoPipe
-      , Dsv.AttoView
-      , Dsv.ByteString
-      , Dsv.CommonDelimiters
-      , Dsv.DelimiterSplice
-      , Dsv.DelimiterType
-      , Dsv.Encoding
-      , Dsv.English
-      , Dsv.FileFold
-      , Dsv.FileFoldCsv
-      , Dsv.FileStrictCsvMap
-      , Dsv.FileStrictCsvRead
-      , Dsv.FileStrictCsvZipView
-      , Dsv.FileStrictMap
-      , Dsv.FileStrictRead
-      , Dsv.FileStrictZipView
-      , Dsv.Fold
-      , Dsv.Header
-      , Dsv.IndexError
-      , Dsv.IO
-      , Dsv.Lens
-      , Dsv.LookupError
-      , Dsv.Misc
-      , Dsv.Numbers
-      , Dsv.NumberViews
-      , Dsv.ParseError
-      , Dsv.ParseStop
-      , Dsv.Parsing
-      , Dsv.Pipes
-      , Dsv.Position
-      , Dsv.Prelude
-      , Dsv.Text
-      , Dsv.TextReaderView
-      , Dsv.Validation
-      , Dsv.Vector
-      , Dsv.ViewType
-      , Dsv.ZipViewType
-      , Dsv.ZipViews
-      , Dsv.ZipViewPipe
-      , Dsv.ZipViewStop
+      , DSV.AttoParser
+      , DSV.AttoPipe
+      , DSV.AttoView
+      , DSV.ByteString
+      , DSV.CommonDelimiters
+      , DSV.DelimiterSplice
+      , DSV.DelimiterType
+      , DSV.Encoding
+      , DSV.English
+      , DSV.FileFold
+      , DSV.FileFoldCsv
+      , DSV.FileStrictCsvMap
+      , DSV.FileStrictCsvRead
+      , DSV.FileStrictCsvZipView
+      , DSV.FileStrictMap
+      , DSV.FileStrictRead
+      , DSV.FileStrictZipView
+      , DSV.Fold
+      , DSV.Header
+      , DSV.IndexError
+      , DSV.IO
+      , DSV.Lens
+      , DSV.LookupError
+      , DSV.Misc
+      , DSV.Numbers
+      , DSV.NumberViews
+      , DSV.ParseError
+      , DSV.ParseStop
+      , DSV.Parsing
+      , DSV.Pipes
+      , DSV.Position
+      , DSV.Prelude
+      , DSV.Text
+      , DSV.TextReaderView
+      , DSV.Validation
+      , DSV.Vector
+      , DSV.ViewType
+      , DSV.ZipViewType
+      , DSV.ZipViews
+      , DSV.ZipViewPipe
+      , DSV.ZipViewStop
 
     build-depends:
         attoparsec ^>= 0.13.2.2

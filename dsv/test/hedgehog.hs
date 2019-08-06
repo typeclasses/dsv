@@ -2,7 +2,7 @@
 
 -- Some tests are roughly equivalent to examples given in the library documentation. If this is the case, it is noted in a comment next to the test. Please be sure to keep these tests consistent with the documentation when either changes.
 
-import Dsv
+import DSV
 import Paths_dsv
 
 import Hedgehog
