@@ -67,7 +67,6 @@ library
       , DSV.Header
       , DSV.IndexError
       , DSV.IO
-      , DSV.Lens
       , DSV.LookupError
       , DSV.Misc
       , DSV.Numbers
@@ -96,7 +95,6 @@ library
       , cassava ^>= 0.5.1.0
       , containers ^>= 0.6.0.1
       , foldl ^>= 1.4.5
-      , lens ^>= 4.17.1
       , mtl ^>= 2.2.2
       , pipes ^>= 4.3.10
       , pipes-bytestring ^>= 2.1.6
