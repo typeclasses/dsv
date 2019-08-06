@@ -81,13 +81,16 @@ module Dsv
   -- * ZipView + View
   , refineZipView
 
-  -- * Lookup errors
-  -- $lookupErrors
+  -- * Miscellaneous errors
   , InvalidUtf8 (..)
   , InvalidNat (..)
+
+  -- * Lookup errors
   , Missing (..)
   , Duplicate (..)
   , LookupError (..)
+
+  -- * Index errors
   , TooShort (..)
   , IndexError (..)
 
@@ -145,7 +148,8 @@ import Dsv.FileStrictMap
 import Dsv.FileStrictRead
 import Dsv.FileStrictZipView
 import Dsv.Header
-import Dsv.LookupErrors
+import Dsv.IndexError
+import Dsv.LookupError
 import Dsv.ZipViews
 import Dsv.Misc
 import Dsv.Numbers
@@ -215,12 +219,6 @@ See the "Control.Foldl" module for much more on what folds are and how to constr
 {- $foldingDsvFiles
 
 This section is the same as the previous, but generalized with a 'Delimiter' parameter.
-
--}
-
-{- $lookupErrors
-
-When you're looking for particular information in DSV data, there is a lot that can go wrong. The columns that you want might not be there, or the strings that you find in the rows may not be correctly formatted.
 
 -}
 

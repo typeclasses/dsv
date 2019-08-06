@@ -10,7 +10,8 @@ module Dsv.English
   ) where
 
 import Dsv.IO
-import Dsv.LookupErrors
+import Dsv.IndexError
+import Dsv.LookupError
 --import Dsv.Position
 import Dsv.Prelude
 import Dsv.Text

@@ -10,7 +10,8 @@ module Dsv.ZipViews
 
 import Dsv.ByteString
 import Dsv.Encoding
-import Dsv.LookupErrors
+import Dsv.IndexError
+import Dsv.LookupError
 import Dsv.Numbers
 import Dsv.Position
 import Dsv.Prelude

@@ -65,9 +65,10 @@ library
       , Dsv.FileStrictZipView
       , Dsv.Fold
       , Dsv.Header
+      , Dsv.IndexError
       , Dsv.IO
       , Dsv.Lens
-      , Dsv.LookupErrors
+      , Dsv.LookupError
       , Dsv.Misc
       , Dsv.Numbers
       , Dsv.NumberViews
