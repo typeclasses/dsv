@@ -1,8 +1,9 @@
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module Dsv.ViewType
-  ( View (..), overViewError, applyView
+  ( View (..), overViewError, applyView, constView
   ) where
 
 import Dsv.Prelude
@@ -17,9 +18,6 @@ newtype View e a b = View (a -> Validation e b)
 
 deriving via Compose ((->) a) (Validation e)
     instance Semigroup e => Applicative (View e a)
-
-applyView :: View e a b -> a -> Validation e b
-applyView (View f) x = f x
 
 instance Category (View e)
   where
@@ -47,7 +45,19 @@ instance Arrow (View e)
           Failure e -> Failure e
           Success z -> Success (x, z)
 
-overViewError :: (e1 -> e2) -> View e1 a b -> View e2 a b
+applyView :: forall e a b.
+    View e a b -> a -> Validation e b
+
+applyView (View f) x = f x
+
+constView :: forall e a b.
+    b -> View e a b
+
+constView x = View (\_ -> Success x)
+
+overViewError :: forall e1 e2 a b.
+    (e1 -> e2) -> View e1 a b -> View e2 a b
+
 overViewError f (View v) =
   View $ \x ->
     case v x of

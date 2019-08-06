@@ -82,7 +82,6 @@ library
       , Dsv.TextReaderView
       , Dsv.Validation
       , Dsv.Vector
-      , Dsv.Views
       , Dsv.ViewType
       , Dsv.ZipViewType
       , Dsv.ZipViews

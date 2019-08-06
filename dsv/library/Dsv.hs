@@ -160,7 +160,6 @@ import Dsv.Parsing
 import Dsv.Position
 import Dsv.Validation
 import Dsv.Vector
-import Dsv.Views
 import Dsv.ViewType
 import Dsv.ZipViewPipe
 import Dsv.ZipViewStop
