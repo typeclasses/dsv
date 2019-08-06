@@ -72,7 +72,7 @@ library
       , Dsv.Numbers
       , Dsv.NumberViews
       , Dsv.ParseError
-      , Dsv.ParseTermination
+      , Dsv.ParseStop
       , Dsv.Parsing
       , Dsv.Pipes
       , Dsv.Position

@@ -105,7 +105,7 @@ module Dsv
   , zipViewDsvFileStrictThrowFirstError
 
   -- * Termination types
-  , ParseTermination (..), ZipViewStop (..)
+  , ParseStop (..), ZipViewStop (..)
 
   -- * Position types
   , Position (..), RowNumber (..), ColumnNumber (..)
@@ -151,7 +151,7 @@ import Dsv.Misc
 import Dsv.Numbers
 import Dsv.NumberViews
 import Dsv.ParseError
-import Dsv.ParseTermination
+import Dsv.ParseStop
 import Dsv.Parsing
 import Dsv.Position
 import Dsv.Validation

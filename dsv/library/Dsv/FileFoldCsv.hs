@@ -15,7 +15,7 @@ import Dsv.FileFold
 import Dsv.Fold
 import Dsv.IO
 import Dsv.Misc
-import Dsv.ParseTermination
+import Dsv.ParseStop
 import Dsv.Prelude
 import Dsv.Vector
 
@@ -59,7 +59,7 @@ foldCsvFileWithoutHeader ::
         -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (ParseTermination, result)
+    -> m (ParseStop, result)
 
 foldCsvFileWithoutHeader fp fld =
     foldDsvFileWithoutHeader comma fp fld
@@ -99,7 +99,7 @@ foldCsvFileWithoutHeaderM ::
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (ParseTermination, result)
+    -> m (ParseStop, result)
 
 foldCsvFileWithoutHeaderM fp fld =
     foldDsvFileWithoutHeaderM comma fp fld
@@ -135,7 +135,7 @@ foldCsvFileIgnoringHeader ::
         -- ^ The path of a CSV file to read
     -> Fold (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (ParseTermination, result)
+    -> m (ParseStop, result)
 
 foldCsvFileIgnoringHeader fp fld =
     foldDsvFileIgnoringHeader comma fp fld
@@ -176,7 +176,7 @@ foldCsvFileIgnoringHeaderM ::
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector ByteString) result
         -- ^ What to do with each row
-    -> m (ParseTermination, result)
+    -> m (ParseStop, result)
 
 foldCsvFileIgnoringHeaderM fp fld =
     foldDsvFileIgnoringHeaderM comma fp fld
@@ -212,7 +212,7 @@ foldCsvFileWithZippedHeader ::
         -- ^ The path of a CSV file to read
     -> Fold (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
-    -> m (ParseTermination, result)
+    -> m (ParseStop, result)
 
 foldCsvFileWithZippedHeader fp fld =
     foldDsvFileWithZippedHeader comma fp fld
@@ -253,7 +253,7 @@ foldCsvFileWithZippedHeaderM ::
         -- ^ The path of a CSV file to read
     -> FoldM m (Vector (ByteString, ByteString)) result
         -- ^ What to do with each row
-    -> m (ParseTermination, result)
+    -> m (ParseStop, result)
 
 foldCsvFileWithZippedHeaderM fp fld =
     foldDsvFileWithZippedHeaderM comma fp fld

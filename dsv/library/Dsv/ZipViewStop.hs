@@ -6,7 +6,7 @@ module Dsv.ZipViewStop
 
 import Dsv.Prelude
 
--- | A description of what prompted the program to stop reading a DSV file with a header. This is similar to 'ParseTermination', but includes some additional header-specific concerns.
+-- | A description of what prompted the program to stop reading a DSV file with a header. This is similar to 'ParseStop', but includes some additional header-specific concerns.
 
 data ZipViewStop headerError =
 

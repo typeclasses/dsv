@@ -13,7 +13,7 @@ import Dsv.ByteString
 import Dsv.CommonDelimiters
 import Dsv.IO
 import Dsv.ParseError
-import Dsv.ParseTermination
+import Dsv.ParseStop
 import Dsv.Prelude
 import Dsv.Vector
 
@@ -56,7 +56,7 @@ handleCsvRowProducer ::
     forall m .
     MonadIO m
     => Handle     -- ^ File handle to read CSV data from
-    -> Producer (Vector ByteString) m ParseTermination
+    -> Producer (Vector ByteString) m ParseStop
 
 handleCsvRowProducer h =
     handleDsvRowProducer comma h
@@ -66,7 +66,7 @@ handleDsvRowProducer ::
     MonadIO m
     => Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'
     -> Handle     -- ^ File handle to read DSV data from
-    -> Producer (Vector ByteString) m ParseTermination
+    -> Producer (Vector ByteString) m ParseStop
 
 handleDsvRowProducer d h =
     handleAttoProducer (dsvRowAtto d) h

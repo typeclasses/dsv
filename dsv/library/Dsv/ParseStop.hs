@@ -1,12 +1,12 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
-module Dsv.ParseTermination
-  ( ParseTermination (..)
+module Dsv.ParseStop
+  ( ParseStop (..)
   ) where
 
 import Dsv.Prelude
 
-data ParseTermination
+data ParseStop
   = ParseComplete
   | ParseIncomplete
   deriving (Eq, Show)

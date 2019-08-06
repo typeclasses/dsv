@@ -11,7 +11,7 @@ module Dsv.FileStrictZipView
 import Dsv.DelimiterType
 import Dsv.Fold
 import Dsv.IO
-import Dsv.ParseTermination
+import Dsv.ParseStop
 import Dsv.Parsing
 import Dsv.Pipes
 import Dsv.Prelude

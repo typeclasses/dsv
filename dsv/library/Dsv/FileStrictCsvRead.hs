@@ -11,7 +11,7 @@ import Dsv.ByteString
 import Dsv.CommonDelimiters
 import Dsv.FileStrictRead
 import Dsv.IO
-import Dsv.ParseTermination
+import Dsv.ParseStop
 import Dsv.Prelude
 import Dsv.Vector
 
@@ -64,7 +64,7 @@ readCsvFileStrictWithZippedHeader ::
     forall m .
     MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
-    -> m (ParseTermination, (Vector (Vector (ByteString, ByteString))))
+    -> m (ParseStop, (Vector (Vector (ByteString, ByteString))))
 
 readCsvFileStrictWithZippedHeader fp = readDsvFileStrictWithZippedHeader comma fp
 
@@ -101,7 +101,7 @@ readCsvFileStrictWithoutHeader ::
     forall m .
     MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
-    -> m (ParseTermination, (Vector (Vector ByteString)))
+    -> m (ParseStop, (Vector (Vector ByteString)))
 
 readCsvFileStrictWithoutHeader fp = readDsvFileStrictWithoutHeader comma fp
 
@@ -127,6 +127,6 @@ readCsvFileStrictIgnoringHeader ::
     forall m .
     MonadIO m
     => FilePath  -- ^ The path of a CSV file to read
-    -> m (ParseTermination, (Vector (Vector ByteString)))
+    -> m (ParseStop, (Vector (Vector ByteString)))
 
 readCsvFileStrictIgnoringHeader fp = readDsvFileStrictIgnoringHeader comma fp

@@ -10,7 +10,7 @@ import Dsv.AttoParser
 import Dsv.ByteString
 import Dsv.IO
 import Dsv.ParseError
-import Dsv.ParseTermination
+import Dsv.ParseStop
 import Dsv.Prelude
 
 -- attoparsec
@@ -51,7 +51,7 @@ handleAttoProducer ::
     MonadIO m
     => AttoParser a
     -> Handle         -- ^ File handle to read parser input from
-    -> Producer a m ParseTermination
+    -> Producer a m ParseStop
 
 handleAttoProducer p h = readBytes >-> parseRows
   where
