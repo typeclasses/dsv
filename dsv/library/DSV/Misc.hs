@@ -15,13 +15,9 @@ module DSV.Misc
 import DSV.ByteString
 import DSV.Prelude
 import DSV.Text
-import DSV.Vector
 
 -- base
 import Control.Monad ((>=>))
-
--- vector
-import qualified Data.Vector as Vector
 
 -- | Decode a byte string as UTF-8 text, failing with 'Nothing' if the decoding fails.
 
