@@ -21,9 +21,6 @@ import DSV.ZipViewPipe
 import DSV.ZipViewStop
 import DSV.ZipViewType
 
--- pipes
-import Pipes
-
 zipViewDsvFileStrict ::
     forall m headerError rowError row .
     MonadIO m

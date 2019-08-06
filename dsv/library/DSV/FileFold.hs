@@ -14,11 +14,9 @@ import DSV.Header
 import DSV.IO
 import DSV.ParseStop
 import DSV.Parsing
+import DSV.Pipes
 import DSV.Prelude
 import DSV.Vector
-
--- pipes
-import Pipes
 
 -- pipes-safe
 import qualified Pipes.Safe.Prelude as P

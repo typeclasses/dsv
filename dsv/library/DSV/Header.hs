@@ -7,11 +7,11 @@ module DSV.Header
   , applyHeaderPipe, applyHeaderPipeM
   ) where
 
+import DSV.Pipes
 import DSV.Prelude
 import DSV.Vector
 
 -- pipes
-import Pipes
 import qualified Pipes.Prelude as P
 
 zipHeader :: forall a . [Vector a] -> [Vector (a, a)]

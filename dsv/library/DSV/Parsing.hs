@@ -14,6 +14,7 @@ import DSV.CommonDelimiters
 import DSV.IO
 import DSV.ParseError
 import DSV.ParseStop
+import DSV.Pipes
 import DSV.Prelude
 import DSV.Vector
 
@@ -22,9 +23,6 @@ import Data.Attoparsec.ByteString.Char8 (endOfLine)
 
 -- cassava
 import qualified Data.Csv.Parser as Cassava
-
--- pipes
-import Pipes
 
 dsvRowAtto ::
     Delimiter  -- ^ What character separates input values, e.g. 'comma' or 'tab'

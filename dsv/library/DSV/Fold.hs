@@ -9,6 +9,7 @@ module DSV.Fold
   ) where
 
 import DSV.Numbers
+import DSV.Pipes
 import DSV.Prelude
 
 -- foldl
@@ -16,7 +17,6 @@ import qualified Control.Foldl as L
 import Control.Foldl (Fold (Fold), FoldM (FoldM))
 
 -- pipes
-import Pipes (Producer)
 import qualified Pipes.Prelude as P
 
 foldDrop ::

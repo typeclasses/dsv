@@ -9,6 +9,7 @@ module DSV.ZipViewPipe
 
 import DSV.ByteString
 import DSV.IO
+import DSV.Pipes
 import DSV.Position
 import DSV.Prelude
 import DSV.Validation
@@ -17,7 +18,6 @@ import DSV.ViewType
 import DSV.ZipViewType
 
 -- pipes
-import Pipes
 import qualified Pipes.Prelude as P
 
 zipViewPipe ::

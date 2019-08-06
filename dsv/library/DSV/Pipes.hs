@@ -3,7 +3,9 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module DSV.Pipes
-  ( count
+  ( Pipe, Producer, Consumer, Effect
+  , yield, await, (>->), lift
+  , count
   ) where
 
 import DSV.Numbers

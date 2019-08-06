@@ -11,13 +11,11 @@ import DSV.ByteString
 import DSV.IO
 import DSV.ParseError
 import DSV.ParseStop
+import DSV.Pipes
 import DSV.Prelude
 
 -- attoparsec
 import qualified Data.Attoparsec.ByteString as Atto
-
--- pipes
-import Pipes
 
 -- pipes-bytestring
 import qualified Pipes.ByteString
