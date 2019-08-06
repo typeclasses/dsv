@@ -202,7 +202,7 @@ sumPricesWithoutHeader =
 sumPricesWithZippedHeader :: L.Fold (Vector (ByteString, ByteString)) Rational
 sumPricesWithZippedHeader =
     L.premap
-        (fromMaybe 0 . (columnName "Price" >=> byteStringDollarsMaybe))
+        (fromMaybe 0 . (vectorLookup (== "Price") >=> byteStringDollarsMaybe))
         L.sum
 
 writeNamesAndCountWithoutHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector ByteString) Int
@@ -214,7 +214,7 @@ writeNamesAndCountWithoutHeader r =
 
 writeNamesAndCountWithZippedHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (ByteString, ByteString)) Int
 writeNamesAndCountWithZippedHeader r =
-    L.mapM_ (traverse_ write . columnName "Product") *>
+    L.mapM_ (traverse_ write . vectorLookup (== "Product")) *>
     L.generalize L.length
   where
     write x = modifyIORef r (<> Seq.singleton x)

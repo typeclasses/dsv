@@ -56,12 +56,8 @@ module DSV
   -- * Attoparsec
   , AttoParser, attoPipe, handleAttoProducer
 
-  -- * Locating a column in a row
-  -- todo: rethink these names in light of the new Lookup stuff
-  , columnName
-
   -- * Vectors
-  , Vector, nthVectorElement
+  , Vector, nthVectorElement, vectorLookup
 
   -- * The ZipView type
   , ZipView (..)

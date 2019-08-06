@@ -5,8 +5,7 @@
 -- | Miscellania
 
 module DSV.Misc
-  ( columnName
-  , byteStringTextUtf8Maybe
+  ( byteStringTextUtf8Maybe
   , byteStringDecimalRationalMaybe
   , textDecimalRationalMaybe
   , byteStringDollarsMaybe
@@ -23,18 +22,6 @@ import Control.Monad ((>=>))
 
 -- vector
 import qualified Data.Vector as Vector
-
-columnName ::
-    forall name value .
-    Eq name
-    => name
-    -> Vector (name, value)
-    -> Maybe value
-
-columnName n xs =
-  do
-    (_, v) <- Vector.find (\(n', _) -> n == n') xs
-    return v
 
 -- | Decode a byte string as UTF-8 text, failing with 'Nothing' if the decoding fails.
 

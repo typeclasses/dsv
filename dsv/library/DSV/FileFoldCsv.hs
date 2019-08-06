@@ -194,7 +194,7 @@ CSV file:
 Fold:
 
 @
-'L.premap' ('fromMaybe' 0 . ('columnName' "Price" >=> 'byteStringDollarsMaybe')) 'L.sum'
+'L.premap' ('fromMaybe' 0 . ('vectorLookup' (== "Price") >=> 'byteStringDollarsMaybe')) 'L.sum'
 @
 
 Result:
@@ -230,7 +230,7 @@ CSV file:
 Fold:
 
 @
-'L.mapM_' ('traverse_' 'BS.putStrLn' . 'columnName' "Product") *> 'L.generalize' 'L.length'
+'L.mapM_' ('traverse_' 'BS.putStrLn' . 'vectorLookup' (== "Product")) *> 'L.generalize' 'L.length'
 @
 
 Output printed to the terminal:

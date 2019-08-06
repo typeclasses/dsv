@@ -21,7 +21,6 @@ import DSV.ViewType
 import DSV.ZipViewType
 
 -- base
-import qualified Data.Foldable as Foldable
 import qualified Data.List as List
 
 byteStringZipView
@@ -32,7 +31,7 @@ byteStringZipView name =
   ZipView $
     View $
       \header ->
-          case List.findIndices (== name) (Foldable.toList header) of
+          case List.findIndices (== name) (toList header) of
               []  -> Failure LookupError_Missing
               [i] ->
                   Success $
@@ -56,7 +55,7 @@ textZipViewUtf8 ::
 textZipViewUtf8 name fieldView =
   overZipViewError (At (ColumnName name)) (At (ColumnName name)) $
     ZipView $ View $ \header ->
-      case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
+      case List.findIndices (== encodeUtf8 name) (toList header) of
           []  -> Failure LookupError_Missing
           [i] -> withI i
           _   -> Failure LookupError_Duplicate
@@ -79,7 +78,7 @@ textZipViewUtf8' ::
 textZipViewUtf8' name =
   overZipViewError (At (ColumnName name)) (At (ColumnName name)) $
     ZipView $ View $ \header ->
-      case List.findIndices (== encodeUtf8 name) (Foldable.toList header) of
+      case List.findIndices (== encodeUtf8 name) (toList header) of
           []  -> Failure LookupError_Missing
           [i] -> withI i
           _   -> Failure LookupError_Duplicate

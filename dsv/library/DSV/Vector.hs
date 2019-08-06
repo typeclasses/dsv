@@ -4,9 +4,11 @@
 module DSV.Vector
   ( Vector
   , vectorIndexInt, vectorIndexNat, vectorIndexInteger, nthVectorElement
+  , vectorLookup
   , vectorZip, vectorZipWith
   ) where
 
+import DSV.LookupError
 import DSV.Numbers
 import DSV.Prelude
 
@@ -56,3 +58,14 @@ vectorZipWith = Vector.zipWith
 
 nthVectorElement :: forall a . Integer -> Vector a -> Maybe a
 nthVectorElement n xs = vectorIndexInteger xs (n - 1)
+
+vectorLookup ::
+    forall name value .
+    (name -> Bool)
+    -> Vector (name, value)
+    -> Maybe value
+
+vectorLookup f xs =
+  case filter (\(n, _) -> f n) (toList xs) of
+    [(_, v)] -> Just v
+    _ -> Nothing
