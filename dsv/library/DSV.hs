@@ -59,6 +59,9 @@ module DSV
   -- * Vectors
   , Vector, nthVectorElement, vectorLookup, listToVector, vectorToList
 
+  -- * Byte strings
+  , ByteString
+
   -- * The ZipView type
   , ZipView (..)
   , overZipViewError, overHeaderError, overRowError
@@ -128,6 +131,9 @@ module DSV
   -- $validation
   , Validation (..)
 
+  -- * Text
+  , Text, stringToText, textToString
+
   -- * Text encoding
   , EncodeUtf8 (..), DecodeUtf8 (..)
 
@@ -160,6 +166,7 @@ import DSV.ParseError
 import DSV.ParseStop
 import DSV.Parsing
 import DSV.Position
+import DSV.Text
 import DSV.Validation
 import DSV.Vector
 import DSV.VectorViews

@@ -3,6 +3,7 @@
 import DSV.TestPrelude
 import DSV.TestData.Tweets
 
+import qualified DSV.Tests.FileFoldCsv
 import qualified DSV.Tests.FileStrictCsvRead
 
 import qualified Hedgehog.Gen as Gen
@@ -10,14 +11,8 @@ import qualified Hedgehog.Range as Range
 
 import Prelude hiding (product)
 
-import Control.Monad ((>=>))
-
 import Control.Exception.Safe (try)
 
-import Data.IORef
-import Data.ByteString (ByteString)
-import Data.Foldable (toList, traverse_)
-import Data.Maybe (fromMaybe)
 import Data.Monoid (Sum (..))
 import Data.Semigroup (First (..))
 import Data.Void
@@ -53,7 +48,8 @@ tests =
       { groupName = "DSV"
       , groupProperties =
           foldMap groupProperties
-            [ DSV.Tests.FileStrictCsvRead.group
+            [ DSV.Tests.FileFoldCsv.group
+            , DSV.Tests.FileStrictCsvRead.group
             , $$(discover)
             ]
       })
@@ -68,107 +64,6 @@ main =
     hSetEncoding stderr utf8
     ok <- tests
     when (not ok) exitFailure
-
-sumPricesWithoutHeader :: L.Fold (Vector ByteString) Rational
-sumPricesWithoutHeader =
-    L.premap
-        (fromMaybe 0 . (nthVectorElement 3 >=> byteStringDollarsMaybe))
-        L.sum
-
-sumPricesWithZippedHeader :: L.Fold (Vector (ByteString, ByteString)) Rational
-sumPricesWithZippedHeader =
-    L.premap
-        (fromMaybe 0 . (vectorLookup (== "Price") >=> byteStringDollarsMaybe))
-        L.sum
-
-writeNamesAndCountWithoutHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector ByteString) Int
-writeNamesAndCountWithoutHeader r =
-    L.mapM_ (traverse_ write . nthVectorElement 4) *>
-    L.generalize L.length
-  where
-    write x = modifyIORef r (<> Seq.singleton x)
-
-writeNamesAndCountWithZippedHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector (ByteString, ByteString)) Int
-writeNamesAndCountWithZippedHeader r =
-    L.mapM_ (traverse_ write . vectorLookup (== "Product")) *>
-    L.generalize L.length
-  where
-    write x = modifyIORef r (<> Seq.singleton x)
-
--- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeader'.
-prop_foldPrice_withoutHeader_doc =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-without-header.csv"
-        foldCsvFileWithoutHeader fp sumPricesWithoutHeader
-        ------------------------
-    )
-    ~>
-    (ParseComplete, 624.84)
-
--- Corresponds to the example in the documentation for 'foldCsvFileWithoutHeaderM'.
-prop_foldPriceM_withoutHeader_doc =
-    (
-      do
-        r <- newIORef Seq.empty
-        fp <- getDataFileName "test-data/doc-example-without-header.csv"
-        (t, n) <- foldCsvFileWithoutHeaderM fp (writeNamesAndCountWithoutHeader r)
-                  -------------------------
-        rs <- readIORef r
-        return (t, toList rs, n)
-    )
-    ~>
-    (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
-
--- Corresponds to the example in the documentation for 'foldCsvFileIgnoringHeader'.
-prop_foldPrice_ignoringHeader_doc =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        foldCsvFileIgnoringHeader fp sumPricesWithoutHeader
-        -------------------------
-    )
-    ~>
-    (ParseComplete, 624.84)
-
--- Corresponds to the example in the documentation for 'foldCsvFileIgnoringHeaderM'.
-prop_foldPriceM_ignoringHeader_doc =
-    (
-      do
-        r <- newIORef Seq.empty
-        fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        (t, n) <- foldCsvFileIgnoringHeaderM fp (writeNamesAndCountWithoutHeader r)
-                  --------------------------
-        rs <- readIORef r
-        return (t, toList rs, n)
-    )
-    ~>
-    (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
-
--- Corresponds to the example in the documentation for 'foldCsvFileWithZippedHeader'.
-prop_foldPrice_withZippedHeader_doc =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        foldCsvFileWithZippedHeader fp sumPricesWithZippedHeader
-        ---------------------------
-    )
-    ~>
-    (ParseComplete, 624.84)
-
--- Corresponds to the example in the documentation for 'foldCsvFileWithZippedHeaderM'.
-prop_foldPriceM_withZippedHeader_doc =
-    (
-      do
-        r <- newIORef Seq.empty
-        fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        (t, n) <- foldCsvFileWithZippedHeaderM fp (writeNamesAndCountWithZippedHeader r)
-                  ----------------------------
-        rs <- readIORef r
-        return (t, toList rs, n)
-    )
-    ~>
-    (ParseComplete, ["Dehydrated boulders", "Earthquake pills"], 2)
 
 -- | This is an example in the documentation for 'zipViewCsvFileStrict'.
 prop_zipViewCsvFileStrict_entireRow =

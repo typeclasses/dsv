@@ -120,6 +120,7 @@ test-suite hedgehog
       Paths_dsv
     , DSV.TestPrelude
     , DSV.TestData.Tweets
+    , DSV.Tests.FileFoldCsv
     , DSV.Tests.FileStrictCsvRead
 
   build-depends:
