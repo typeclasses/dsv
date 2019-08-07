@@ -57,7 +57,7 @@ module DSV
   , AttoParser, attoPipe, handleAttoProducer
 
   -- * Vectors
-  , Vector, nthVectorElement, vectorLookup, listToVector, vectorToList
+  , Vector, nthVectorElement, vectorLookup, listToVector, vectorToList, emptyVector
 
   -- * Byte strings
   , ByteString

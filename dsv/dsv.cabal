@@ -113,7 +113,6 @@ test-suite hedgehog
 
   ghc-options:
       -Wall
-      -fno-warn-unused-imports
       -fno-warn-missing-signatures
 
   other-modules:
@@ -122,6 +121,7 @@ test-suite hedgehog
     , DSV.TestData.Tweets
     , DSV.Tests.FileFoldCsv
     , DSV.Tests.FileStrictCsvRead
+    , DSV.Tests.FileStrictCsvZipView
 
   build-depends:
       dsv

@@ -7,6 +7,7 @@ module DSV.Vector
   , vectorLookup
   , vectorZip, vectorZipWith
   , listToVector, vectorToList
+  , emptyVector
   ) where
 
 import DSV.Numbers
@@ -70,8 +71,11 @@ vectorLookup f xs =
     [(_, v)] -> Just v
     _ -> Nothing
 
-listToVector :: [a] -> Vector a
+listToVector :: forall a . [a] -> Vector a
 listToVector = Vector.fromList
 
-vectorToList :: Vector a -> [a]
+vectorToList :: forall a . Vector a -> [a]
 vectorToList = toList
+
+emptyVector :: forall a . Vector a
+emptyVector = Vector.empty

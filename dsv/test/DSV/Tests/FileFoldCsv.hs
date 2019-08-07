@@ -1,10 +1,10 @@
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module DSV.Tests.FileFoldCsv where
 
 import DSV.TestPrelude
-import DSV.TestData.Tweets
 
 import qualified Control.Foldl as L
 
@@ -81,7 +81,6 @@ prop_foldPriceM_ignoringHeader_doc = example $
         r <- newIORef Seq.empty
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
         (t, n) <- foldCsvFileIgnoringHeaderM fp (writeNamesAndCountWithoutHeader r)
-                  --------------------------
         rs <- readIORef r
         return (t, toList rs, n)
 
@@ -105,7 +104,6 @@ prop_foldPriceM_withZippedHeader_doc = example $
         r <- newIORef Seq.empty
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
         (t, n) <- foldCsvFileWithZippedHeaderM fp (writeNamesAndCountWithZippedHeader r)
-                  ----------------------------
         rs <- readIORef r
         return (t, toList rs, n)
 
