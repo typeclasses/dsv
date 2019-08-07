@@ -1,12 +1,10 @@
 {-# LANGUAGE ApplicativeDo, OverloadedStrings, TemplateHaskell, TypeApplications #-}
 
--- Some tests are roughly equivalent to examples given in the library documentation. If this is the case, it is noted in a comment next to the test. Please be sure to keep these tests consistent with the documentation when either changes.
-
-import DSV
-import Paths_dsv
+import DSV.TestPrelude
 import DSV.TestData.Tweets
 
-import Hedgehog
+import qualified DSV.Tests.FileStrictCsvRead
+
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
@@ -17,7 +15,6 @@ import Control.Monad ((>=>))
 import Control.Exception.Safe (try)
 
 import Data.IORef
-import Data.Bifunctor
 import Data.ByteString (ByteString)
 import Data.Foldable (toList, traverse_)
 import Data.Maybe (fromMaybe)
@@ -44,7 +41,6 @@ import Data.Vector (Vector)
 
 import qualified Control.Foldl as L
 
-
 import Control.Foldl (Fold (Fold))
 
 import Data.Sequence (Seq)
@@ -52,10 +48,15 @@ import qualified Data.Sequence as Seq
 
 tests :: IO Bool
 tests =
-  checkParallel $$(discover)
-
-example =
-    withTests 1 . property
+  checkParallel
+    (Group
+      { groupName = "DSV"
+      , groupProperties =
+          foldMap groupProperties
+            [ DSV.Tests.FileStrictCsvRead.group
+            , $$(discover)
+            ]
+      })
 
 x ~> y =
     example (liftIO x >>= (=== y))
@@ -67,134 +68,6 @@ main =
     hSetEncoding stderr utf8
     ok <- tests
     when (not ok) exitFailure
-
-prop_readCsvFileStrictWithoutHeader_tweets =
-    (
-      do
-        fp <- getDataFileName "test-data/tweets.csv"
-        readCsvFileStrictWithoutHeader fp
-    )
-    ~>
-    ( ParseComplete
-    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
-          [tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5]
-    )
-
--- Corresponds to the example in the documentation for 'readCsvFileStrictWithoutHeader'.
-prop_readCsvFileStrictWithoutHeader_doc =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-without-header.csv"
-        readCsvFileStrictWithoutHeader fp
-        ------------------------------
-    )
-    ~>
-    ( ParseComplete
-    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
-        [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
-        , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
-        ]
-    )
-
--- Corresponds to the second example in the documentation for 'readCsvFileStrictWithoutHeader'.
-prop_readCsvFileStrictWithoutHeader_doc_error =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-malformed-without-header.csv"
-        readCsvFileStrictWithoutHeader fp
-        ------------------------------
-    )
-    ~>
-    ( ParseIncomplete
-    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
-        [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
-        ]
-    )
-
-prop_readCsvFileStrictWithZippedHeader_tweets =
-    (
-      do
-        fp <- getDataFileName "test-data/tweets.csv"
-        readCsvFileStrictWithZippedHeader fp
-    )
-    ~>
-    ( ParseComplete
-    , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
-          [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
-    )
-
--- Corresponds to the example in the documentation for 'readCsvFileStrictWithZippedHeader'.
-prop_readCsvFileStrictWithZippedHeader_doc =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        readCsvFileStrictWithZippedHeader fp
-        ---------------------------------
-    )
-    ~>
-    ( ParseComplete
-    , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
-        [ [ ("Date", "2019-03-24")
-          , ("Vendor", "Acme Co")
-          , ("Price", "$599.89")
-          , ("Product", "Dehydrated boulders")
-          ]
-        , [ ("Date", "2019-04-18")
-          , ("Vendor", "Acme Co")
-          , ("Price", "$24.95")
-          , ("Product", "Earthquake pills")
-          ]
-        ]
-
-    )
-
--- Corresponds to the second example in the documentation for 'readCsvFileStrictWithZippedHeader'.
-prop_readCsvFileStrictWithZippedHeader_doc_error =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-malformed-with-header.csv"
-        readCsvFileStrictWithZippedHeader fp
-        ---------------------------------
-    )
-    ~>
-    ( ParseIncomplete
-    , Vector.fromList $ map (Vector.fromList . map (bimap Text.encodeUtf8 Text.encodeUtf8))
-        [ [ ("Date", "2019-03-24")
-          , ("Vendor", "Acme Co")
-          , ("Price", "$599.89")
-          , ("Product", "Dehydrated boulders")
-          ]
-        ]
-
-    )
-
-prop_readCsvFileStrictIgnoringHeader_tweets =
-    (
-      do
-        fp <- getDataFileName "test-data/tweets.csv"
-        readCsvFileStrictIgnoringHeader fp
-    )
-    ~>
-    ( ParseComplete
-    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
-          [tweet1, tweet2, tweet3, tweet4, tweet5]
-    )
-
--- Corresponds to the example in the documentation for 'readCsvFileStrictIgnoringHeader'.
-prop_readCsvFileStrictIgnoringHeader_doc =
-    (
-      do
-        fp <- getDataFileName "test-data/doc-example-with-header.csv"
-        readCsvFileStrictIgnoringHeader fp
-        -------------------------------
-    )
-    ~>
-    ( ParseComplete
-    , Vector.fromList $ map (Vector.fromList . map Text.encodeUtf8)
-        [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
-        , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
-        ]
-    )
 
 sumPricesWithoutHeader :: L.Fold (Vector ByteString) Rational
 sumPricesWithoutHeader =

@@ -6,6 +6,7 @@ module DSV.Vector
   , vectorIndexInt, vectorIndexNat, vectorIndexInteger, nthVectorElement
   , vectorLookup
   , vectorZip, vectorZipWith
+  , listToVector, vectorToList
   ) where
 
 import DSV.Numbers
@@ -68,3 +69,9 @@ vectorLookup f xs =
   case filter (\(n, _) -> f n) (toList xs) of
     [(_, v)] -> Just v
     _ -> Nothing
+
+listToVector :: [a] -> Vector a
+listToVector = Vector.fromList
+
+vectorToList :: Vector a -> [a]
+vectorToList = toList

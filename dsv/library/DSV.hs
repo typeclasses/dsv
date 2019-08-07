@@ -57,7 +57,7 @@ module DSV
   , AttoParser, attoPipe, handleAttoProducer
 
   -- * Vectors
-  , Vector, nthVectorElement, vectorLookup
+  , Vector, nthVectorElement, vectorLookup, listToVector, vectorToList
 
   -- * The ZipView type
   , ZipView (..)

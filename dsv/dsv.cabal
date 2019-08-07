@@ -118,7 +118,9 @@ test-suite hedgehog
 
   other-modules:
       Paths_dsv
+    , DSV.TestPrelude
     , DSV.TestData.Tweets
+    , DSV.Tests.FileStrictCsvRead
 
   build-depends:
       dsv
