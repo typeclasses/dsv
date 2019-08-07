@@ -81,7 +81,7 @@ module DSV
   , refineZipView
 
   -- * ZipView + Fold
-  , zipViewFold, ZipViewError (..)
+  , zipViewFold, zipViewFoldM, ZipViewError (..)
 
   -- * Miscellaneous errors
   , InvalidUtf8 (..)
