@@ -80,6 +80,9 @@ module DSV
   -- * ZipView + View
   , refineZipView
 
+  -- * ZipView + Fold
+  , zipViewFold, ZipViewError (..)
+
   -- * Miscellaneous errors
   , InvalidUtf8 (..)
   , InvalidNat (..)
@@ -161,6 +164,8 @@ import DSV.Validation
 import DSV.Vector
 import DSV.VectorViews
 import DSV.ViewType
+import DSV.ZipViewError
+import DSV.ZipViewFold
 import DSV.ZipViewPipe
 import DSV.ZipViewStop
 import DSV.ZipViewType

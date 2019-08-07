@@ -2,7 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module DSV.Fold
-  ( Fold, FoldM
+  ( Fold (Fold), FoldM (FoldM)
   , foldDrop, foldDropM
   , foldProducer, foldProducerM
   , foldVectorM
