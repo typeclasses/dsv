@@ -118,6 +118,7 @@ test-suite hedgehog
 
   other-modules:
       Paths_dsv
+    , DSV.TestData.Tweets
 
   build-depends:
       dsv
