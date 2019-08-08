@@ -110,3 +110,79 @@ prop_tweetIds = example $
           , 1143630783963389954
           , 1143602240722210823
           ]
+
+prop_tweetIdAndTimestamp = example $
+  do
+    result <- liftIO $
+      do
+        fp <- getDataFileName "test-data/tweets.csv"
+        zipViewCsvFileStrict fp $
+          do
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "timestamp" (utf8View @Text))
+            return (tweetId, tweetTime)
+
+    result ===
+        ( ZipViewComplete
+        , listToVector $
+            [ Success (1145722305135423488, "2019-07-01 15:54:18 +0000")
+            , Success (1144834283204415488, "2019-06-29 05:05:37 +0000")
+            , Success (1144470003963420672, "2019-06-28 04:58:06 +0000")
+            , Success (1143630783963389954, "2019-06-25 21:23:21 +0000")
+            , Success (1143602240722210823, "2019-06-25 19:29:55 +0000")
+            ]
+        )
+
+prop_tweetIdAndTimestamp_rowError = example $
+  do
+    result <- liftIO $
+      do
+        fp <- getDataFileName "test-data/tweets-with-id-error.csv"
+        zipViewCsvFileStrict fp $
+          do
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "timestamp" (utf8View @Text))
+            return (tweetId, tweetTime)
+
+    result ===
+        ( ZipViewComplete
+        , listToVector $
+            [ Success (1145722305135423488, "2019-07-01 15:54:18 +0000")
+            , Success (1144834283204415488, "2019-06-29 05:05:37 +0000")
+            , Failure ()
+            , Success (1143630783963389954, "2019-06-25 21:23:21 +0000")
+            , Success (1143602240722210823, "2019-06-25 19:29:55 +0000")
+            ]
+        )
+
+prop_tweetIdAndTimestamp_missingHeader = example $
+  do
+    result <- liftIO $
+      do
+        fp <- getDataFileName "test-data/tweets.csv"
+        zipViewCsvFileStrict fp $
+          do
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "color" (utf8View @Text))
+            return (tweetId, tweetTime)
+
+    result ===
+        ( ZipViewHeaderError [ At (ColumnName "color") LookupError_Missing ]
+        , emptyVector
+        )
+
+prop_tweetIdAndTimestamp_duplicateHeader = example $
+  do
+    result <- liftIO $
+      do
+        fp <- getDataFileName "test-data/tweets-with-duplicate-header.csv"
+        zipViewCsvFileStrict fp $
+          do
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "timestamp" (utf8View @Text))
+            return (tweetId, tweetTime)
+
+    result ===
+        ( ZipViewHeaderError [ At (ColumnName "timestamp") LookupError_Duplicate ]
+        , emptyVector
+        )

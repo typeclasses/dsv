@@ -13,6 +13,8 @@ tested-with: GHC==8.6.5
 extra-source-files: changelog.md
 data-files:
     test-data/tweets.csv
+  , test-data/tweets-with-id-error.csv
+  , test-data/tweets-with-duplicate-header.csv
   , test-data/doc-example-with-header.csv
   , test-data/doc-example-without-header.csv
   , test-data/doc-example-malformed-with-header.csv
