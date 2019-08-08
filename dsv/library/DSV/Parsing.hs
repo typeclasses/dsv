@@ -31,6 +31,8 @@ dsvRowAtto ::
 dsvRowAtto d =
     Cassava.record (delimiterWord8 d) <* endOfLine
 
+-- | Like 'csvRowPipe', but allows customizing the delimiter.
+
 dsvRowPipe ::
     forall m .
     Monad m
@@ -40,7 +42,7 @@ dsvRowPipe ::
 dsvRowPipe d =
     attoPipe (dsvRowAtto d)
 
--- | This pipe 'await's @ByteString@ input read from a CSV file, parses the input, and 'yield's a @Vector ByteString@ for each row in the CSV file. If this pipe reaches some portion of the input that is not formatted correctly and cannot parse any further, the pipe terminates and 'return's an @ParseError@.
+-- | This pipe 'await's @ByteString@ input read from a CSV file, parses the input, and 'yield's a @'Vector' 'ByteString'@ for each row in the CSV file. If this pipe reaches some portion of the input that is not formatted correctly and cannot parse any further, the pipe terminates and 'return's a 'ParseError'.
 
 csvRowPipe ::
     forall m .
