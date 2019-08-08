@@ -17,8 +17,9 @@ import DSV.Prelude
 import Control.Monad ((>=>))
 
 -- vector
-import Data.Vector (Vector)
 import qualified Data.Vector as Vector
+
+type Vector = Vector.Vector
 
 vectorIndexInt :: forall a . Vector a -> Int -> Maybe a
 vectorIndexInt = (Vector.!?)

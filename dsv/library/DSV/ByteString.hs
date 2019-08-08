@@ -4,4 +4,6 @@ module DSV.ByteString
   ( ByteString
   ) where
 
-import Data.ByteString (ByteString)
+import qualified Data.ByteString as BS
+
+type ByteString = BS.ByteString

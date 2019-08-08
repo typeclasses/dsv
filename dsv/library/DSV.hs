@@ -1,42 +1,88 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
+{- |
+
+DSV ("delimiter-separated values") is a simple file format used to save tabular data such as you might see in a spreadsheet. Each row is separated by a newline character, and the fields within each row are separated by the /delimiter/ (such as a comma, tab, etc.) Most often, the delimiter is a comma, in which case we call the file a CSV file ("comma-separated values").
+
+For example, a CSV file might contain a list of expenses. We will use variations of the following example CSV file throughout the documentation:
+
+> Date,Vendor,Price,Product
+> 2019-03-24,Acme Co,$599.89,Dehydrated boulders
+> 2019-04-18,Acme Co,$24.95,Earthquake pills
+
+-}
+
 module DSV
   (
-  -- * Reading CSV files strictly
+  -- * Reading a CSV file as a Vector
+  -- ** @readCsvFileStrict@...
   -- $readingCsvFilesStrictly
-    readCsvFileStrictWithZippedHeader
-  , readCsvFileStrictWithoutHeader
-  , readCsvFileStrictIgnoringHeader
+    readCsvFileStrictWithZippedHeader, readCsvFileStrictWithoutHeader, readCsvFileStrictIgnoringHeader
+  -- ** What is a Vector
+  , Vector, nthVectorElement, vectorLookup, listToVector, vectorToList, emptyVector
+  -- ** What is a ByteString
+  , ByteString
+  -- ** A read ends with a ParseStop
+  , ParseStop (..)
 
-  -- * Reading DSV files strictly
+  -- * Other delimiters
+  -- ** @readDsvFileStrict@...
   -- $readingDsvFilesStrictly
-  , readDsvFileStrictWithZippedHeader
-  , readDsvFileStrictWithoutHeader
-  , readDsvFileStrictIgnoringHeader
+  , readDsvFileStrictWithZippedHeader, readDsvFileStrictWithoutHeader, readDsvFileStrictIgnoringHeader
+  -- ** What is a Delimiter
+  , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
 
-  -- * Reading CSV files strictly with any row type
+  -- * Reading with a custom row type
+  -- ** @mapCsvFileStrict@...
   -- $readingCsvFilesStrictlyWithAnyRowType
-  , mapCsvFileStrictWithoutHeader
-  , mapCsvFileStrictIgnoringHeader
-  , mapCsvFileStrictUsingHeader
-
-  -- * Reading DSV files strictly with any row type
+  , mapCsvFileStrictWithoutHeader, mapCsvFileStrictIgnoringHeader, mapCsvFileStrictUsingHeader
+  -- ** Using other delimiters
   -- $readingDsvFilesStrictlyWithAnyRowType
-  , mapDsvFileStrictWithoutHeader
-  , mapDsvFileStrictIgnoringHeader
-  , mapDsvFileStrictUsingHeader
+  , mapDsvFileStrictWithoutHeader, mapDsvFileStrictIgnoringHeader, mapDsvFileStrictUsingHeader
 
-  -- * Folding CSV files
+  -- * Iterating over a file with a Fold
+  -- ** @foldCsvFile@...
   -- $foldingCsvFiles
   , foldCsvFileWithZippedHeader, foldCsvFileWithZippedHeaderM
   , foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
-
-  -- * Folding DSV files
+  -- ** What is a Fold
+  , Fold (..), FoldM (..)
+  -- ** Using other delimiters
   -- $foldingDsvFiles
   , foldDsvFileWithZippedHeader, foldDsvFileWithZippedHeaderM
   , foldDsvFileWithoutHeader, foldDsvFileWithoutHeaderM
   , foldDsvFileIgnoringHeader, foldDsvFileIgnoringHeaderM
+
+  -- * Functions that can fail
+  -- ** What is a View
+  , View (..)
+  -- ** Some views
+  , constView, byteStringNatView, textNatView, columnNumberView, lookupView
+
+  -- * Header-and-row views
+  -- ** What is a ZipView
+  , ZipView (..)
+  -- ** Basic zip view operations
+  , overZipViewError, overHeaderError, overRowError
+  -- ** Converting a ZipView to a Pipe
+  , zipViewPipe, zipViewPipeIgnoringAllErrors, zipViewPipeThrowFirstError
+  -- ** Some zip views
+  , byteStringZipView, textZipViewUtf8, textZipViewUtf8', byteStringZipViewPosition, entireRowZipView
+  -- ** Refining a ZipView with a View
+  , refineZipView
+  -- ** Combining a ZipView with a Fold
+  , zipViewFold, zipViewFoldM, ZipViewError (..)
+  -- ** Reading strictly from CSV files using ZipView
+  , zipViewCsvFileStrict
+  , zipViewCsvFileStrictIgnoringAllErrors
+  , zipViewCsvFileStrictThrowFirstError
+  -- ** A read ends with a ZipViewStop
+  , ZipViewStop (..)
+  -- ** Using other delimiters
+  , zipViewDsvFileStrict
+  , zipViewDsvFileStrictIgnoringAllErrors
+  , zipViewDsvFileStrictThrowFirstError
 
   -- * Pipes that parse
   , csvRowPipe, dsvRowPipe
@@ -49,44 +95,11 @@ module DSV
   , zipHeaderWith, zipHeaderWith', zipHeaderWithPipe
   , applyHeaderPipe, applyHeaderPipeM
 
-  -- * Delimiters
-  , Delimiter (..), comma, tab, delimiterWord8, charDelimiter
-
   -- * Parsing-related types
   , ParseError (..)
 
   -- * Attoparsec
   , AttoParser, attoPipe, handleAttoProducer
-
-  -- * Vectors
-  , Vector, nthVectorElement, vectorLookup, listToVector, vectorToList, emptyVector
-
-  -- * Byte strings
-  , ByteString
-
-  -- * The ZipView type
-  , ZipView (..)
-  , overZipViewError, overHeaderError, overRowError
-
-  -- * Converting zip views to pipes
-  , zipViewPipe
-  , zipViewPipeIgnoringAllErrors
-  , zipViewPipeThrowFirstError
-
-  -- * Some zip views
-  , byteStringZipView, textZipViewUtf8, textZipViewUtf8', byteStringZipViewPosition, entireRowZipView
-
-  -- * The View type
-  , View (..)
-
-  -- * Some views
-  , constView, byteStringNatView, textNatView, columnNumberView, lookupView
-
-  -- * ZipView + View
-  , refineZipView
-
-  -- * ZipView + Fold
-  , zipViewFold, zipViewFoldM, ZipViewError (..)
 
   -- * Miscellaneous errors
   , InvalidUtf8 (..)
@@ -103,19 +116,6 @@ module DSV
 
   -- * English
   , EnglishText (..)
-
-  -- * Reading strictly from CSV files using ZipView
-  , zipViewCsvFileStrict
-  , zipViewCsvFileStrictIgnoringAllErrors
-  , zipViewCsvFileStrictThrowFirstError
-
-  -- * Reading strictly from DSV files using ZipView
-  , zipViewDsvFileStrict
-  , zipViewDsvFileStrictIgnoringAllErrors
-  , zipViewDsvFileStrictThrowFirstError
-
-  -- * Termination types
-  , ParseStop (..), ZipViewStop (..)
 
   -- * Position types
   , Position (..), RowNumber (..), ColumnNumber (..)
@@ -153,6 +153,7 @@ import DSV.FileStrictCsvZipView
 import DSV.FileStrictMap
 import DSV.FileStrictRead
 import DSV.FileStrictZipView
+import DSV.Fold
 import DSV.Header
 import DSV.IndexError
 import DSV.LookupError
