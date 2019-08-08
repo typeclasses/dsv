@@ -78,7 +78,7 @@ module DSV
   , View (..)
 
   -- * Some views
-  , constView, utf8View, byteStringNatView, textNatView, columnNumberView, lookupView
+  , constView, byteStringNatView, textNatView, columnNumberView, lookupView
 
   -- * ZipView + View
   , refineZipView
@@ -121,7 +121,6 @@ module DSV
 
   -- * Miscellania
   -- $miscellania
-  , byteStringTextUtf8Maybe
   , byteStringDecimalRationalMaybe
   , textDecimalRationalMaybe
   , byteStringDollarsMaybe
@@ -132,10 +131,7 @@ module DSV
   , Validation (..)
 
   -- * Text
-  , Text, stringToText, textToString
-
-  -- * Text encoding
-  , EncodeUtf8 (..), DecodeUtf8 (..)
+  , Text, stringToText, textToString, encodeTextUtf8, utf8TextView
 
   ) where
 
@@ -145,7 +141,7 @@ import DSV.ByteString
 import DSV.CommonDelimiters
 import DSV.DelimiterSplice
 import DSV.DelimiterType
-import DSV.Encoding
+import DSV.UTF8
 import DSV.English
 import DSV.FileFold
 import DSV.FileFoldCsv

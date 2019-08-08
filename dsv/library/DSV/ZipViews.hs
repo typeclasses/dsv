@@ -9,12 +9,13 @@ module DSV.ZipViews
   ) where
 
 import DSV.ByteString
-import DSV.Encoding
 import DSV.IndexError
 import DSV.LookupError
 import DSV.Numbers
 import DSV.Position
 import DSV.Prelude
+import DSV.Text
+import DSV.UTF8
 import DSV.Validation
 import DSV.Vector
 import DSV.ViewType
@@ -41,13 +42,12 @@ byteStringZipView name =
             Just x  -> Success x
 
 textZipViewUtf8 ::
-    forall txt e a .
-    EncodeUtf8 txt
-    => txt
+    forall e a .
+    Text
     -> View e ByteString a
     -> ZipView
-        (At (ColumnName txt) LookupError)
-        (At (ColumnName txt) (IndexError e))
+        (At (ColumnName Text) LookupError)
+        (At (ColumnName Text) (IndexError e))
         a
 
 textZipViewUtf8 name fieldView =
@@ -66,12 +66,10 @@ textZipViewUtf8 name fieldView =
             Just x -> applyView (overViewError IndexError_FieldError fieldView) x
 
 textZipViewUtf8' ::
-    forall txt .
-    EncodeUtf8 txt
-    => txt
+    Text
     -> ZipView
-        (At (ColumnName txt) LookupError)
-        (At (ColumnName txt) TooShort)
+        (At (ColumnName Text) LookupError)
+        (At (ColumnName Text) TooShort)
         ByteString
 
 textZipViewUtf8' name =

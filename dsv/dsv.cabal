@@ -55,7 +55,6 @@ library
       , DSV.CommonDelimiters
       , DSV.DelimiterSplice
       , DSV.DelimiterType
-      , DSV.Encoding
       , DSV.English
       , DSV.FileFold
       , DSV.FileFoldCsv
@@ -81,6 +80,7 @@ library
       , DSV.Prelude
       , DSV.Text
       , DSV.TextReaderView
+      , DSV.UTF8
       , DSV.Validation
       , DSV.Vector
       , DSV.VectorViews

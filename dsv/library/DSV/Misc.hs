@@ -5,8 +5,7 @@
 -- | Miscellania
 
 module DSV.Misc
-  ( byteStringTextUtf8Maybe
-  , byteStringDecimalRationalMaybe
+  ( byteStringDecimalRationalMaybe
   , textDecimalRationalMaybe
   , byteStringDollarsMaybe
   , textDollarsMaybe
@@ -15,14 +14,10 @@ module DSV.Misc
 import DSV.ByteString
 import DSV.Prelude
 import DSV.Text
+import DSV.UTF8
 
 -- base
 import Control.Monad ((>=>))
-
--- | Decode a byte string as UTF-8 text, failing with 'Nothing' if the decoding fails.
-
-byteStringTextUtf8Maybe :: ByteString -> Maybe Text
-byteStringTextUtf8Maybe = textDecodeUtf8Maybe
 
 {- | Read a dollar amount.
 
@@ -35,7 +30,7 @@ byteStringTextUtf8Maybe = textDecodeUtf8Maybe
 
 byteStringDollarsMaybe :: ByteString -> Maybe Rational
 byteStringDollarsMaybe =
-    byteStringTextUtf8Maybe >=> textDollarsMaybe
+    utf8TextMaybe >=> textDollarsMaybe
 
 {- | Read a dollar amount.
 
@@ -80,4 +75,4 @@ Read a rational number written in decimal notation.
 
 byteStringDecimalRationalMaybe :: ByteString -> Maybe Rational
 byteStringDecimalRationalMaybe =
-    byteStringTextUtf8Maybe >=> textDecimalRationalMaybe
+    utf8TextMaybe >=> textDecimalRationalMaybe

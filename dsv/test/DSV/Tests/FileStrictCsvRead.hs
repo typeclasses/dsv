@@ -1,4 +1,5 @@
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 module DSV.Tests.FileStrictCsvRead where
@@ -18,7 +19,7 @@ prop_readCsvFileStrictWithoutHeader_tweets = example $
 
     result ===
         ( ParseComplete
-        , listToVector $ map (listToVector . map encodeUtf8)
+        , listToVector $ map (listToVector . map encodeTextUtf8)
               [tweetsHeader, tweet1, tweet2, tweet3, tweet4, tweet5]
         )
 
@@ -32,7 +33,7 @@ prop_readCsvFileStrictWithoutHeader_doc = example $
 
     result ===
         ( ParseComplete
-        , listToVector $ map (listToVector . map encodeUtf8)
+        , listToVector $ map (listToVector . map encodeTextUtf8)
             [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
             , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
             ]
@@ -48,7 +49,7 @@ prop_readCsvFileStrictWithoutHeader_doc_error = example $
 
     result ===
         ( ParseIncomplete
-        , listToVector $ map (listToVector . map encodeUtf8)
+        , listToVector $ map (listToVector . map encodeTextUtf8)
             [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
             ]
         )
@@ -62,7 +63,7 @@ prop_readCsvFileStrictWithZippedHeader_tweets = example $
 
     result ===
         ( ParseComplete
-        , listToVector $ map (listToVector . map (bimap encodeUtf8 encodeUtf8))
+        , listToVector $ map (listToVector . map (bimap encodeTextUtf8 encodeTextUtf8))
               [tweet1_labeled, tweet2_labeled, tweet3_labeled, tweet4_labeled, tweet5_labeled]
         )
 
@@ -76,7 +77,7 @@ prop_readCsvFileStrictWithZippedHeader_doc = example $
 
     result ===
         ( ParseComplete
-        , listToVector $ map (listToVector . map (bimap encodeUtf8 encodeUtf8))
+        , listToVector $ map (listToVector . map (bimap encodeTextUtf8 encodeTextUtf8))
             [ [ ("Date", "2019-03-24")
               , ("Vendor", "Acme Co")
               , ("Price", "$599.89")
@@ -100,7 +101,7 @@ prop_readCsvFileStrictWithZippedHeader_doc_error = example $
 
     result ===
         ( ParseIncomplete
-        , listToVector $ map (listToVector . map (bimap encodeUtf8 encodeUtf8))
+        , listToVector $ map (listToVector . map (bimap encodeTextUtf8 encodeTextUtf8))
             [ [ ("Date", "2019-03-24")
               , ("Vendor", "Acme Co")
               , ("Price", "$599.89")
@@ -119,7 +120,7 @@ prop_readCsvFileStrictIgnoringHeader_tweets = example $
 
     result ===
         ( ParseComplete
-        , listToVector $ map (listToVector . map encodeUtf8)
+        , listToVector $ map (listToVector . map encodeTextUtf8)
               [tweet1, tweet2, tweet3, tweet4, tweet5]
         )
 
@@ -133,7 +134,7 @@ prop_readCsvFileStrictIgnoringHeader_doc = example $
 
     result ===
         ( ParseComplete
-        , listToVector $ map (listToVector . map encodeUtf8)
+        , listToVector $ map (listToVector . map encodeTextUtf8)
             [ ["2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders"]
             , ["2019-04-18", "Acme Co", "$24.95", "Earthquake pills"]
             ]

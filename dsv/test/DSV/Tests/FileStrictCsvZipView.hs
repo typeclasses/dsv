@@ -21,7 +21,7 @@ prop_zipViewCsvFileStrict_entireRow = example $
 
     result ===
         ( ZipViewComplete
-        , listToVector $ map (fmap (listToVector . map (encodeUtf8 @Text))) $
+        , listToVector $ map (fmap (listToVector . map encodeTextUtf8)) $
             [ Success [ "2019-03-24", "Acme Co", "$599.89", "Dehydrated boulders" ]
             , Success [ "2019-04-18", "Acme Co", "$24.95", "Earthquake pills" ]
             ]
@@ -35,8 +35,8 @@ prop_zipViewCsvFileStrict_particularColumns = example $
         fp <- getDataFileName "test-data/doc-example-with-header.csv"
         zipViewCsvFileStrict fp $
           do
-            date    <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
-            product <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
+            date    <- overZipViewError (:[]) (:[]) (textZipViewUtf8 "Date"    utf8TextView)
+            product <- overZipViewError (:[]) (:[]) (textZipViewUtf8 "Product" utf8TextView)
             return (date, product)
 
     result ===
@@ -55,8 +55,8 @@ prop_zipViewCsvFileStrict_particularColumns_utf8Error = example $
         fp <- getDataFileName "test-data/doc-example-with-utf8-errors.csv"
         zipViewCsvFileStrict fp $
           do
-            date    <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Date"    (utf8View @Text))
-            product <- overZipViewError (:[]) (:[]) (textZipViewUtf8 @Text "Product" (utf8View @Text))
+            date    <- overZipViewError (:[]) (:[]) (textZipViewUtf8 "Date"    utf8TextView)
+            product <- overZipViewError (:[]) (:[]) (textZipViewUtf8 "Product" utf8TextView)
             return (date, product)
 
     result ===
@@ -75,8 +75,8 @@ prop_zipViewCsvFileStrict_particularColumns_utf8Error_throw = example $
         zipViewCsvFileStrictThrowFirstError fp $
           overZipViewError getFirst getFirst $
             do
-              date    <- overZipViewError First First (textZipViewUtf8 @Text "Date"    (utf8View @Text))
-              product <- overZipViewError First First (textZipViewUtf8 @Text "Product" (utf8View @Text))
+              date    <- overZipViewError First First (textZipViewUtf8 "Date"    utf8TextView)
+              product <- overZipViewError First First (textZipViewUtf8 "Product" utf8TextView)
               return (date, product)
 
     result ===
@@ -99,8 +99,8 @@ prop_tweetIds = example $
     result <- liftIO $
       do
         fp <- getDataFileName "test-data/tweets.csv"
-        zipViewCsvFileStrictThrowFirstError fp
-            (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
+        zipViewCsvFileStrictThrowFirstError fp $
+            textZipViewUtf8 "tweet_id" byteStringNatView
 
     result ===
         listToVector
@@ -118,8 +118,8 @@ prop_tweetIdAndTimestamp = example $
         fp <- getDataFileName "test-data/tweets.csv"
         zipViewCsvFileStrict fp $
           do
-            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
-            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "timestamp" (utf8View @Text))
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "timestamp" utf8TextView)
             return (tweetId, tweetTime)
 
     result ===
@@ -140,8 +140,8 @@ prop_tweetIdAndTimestamp_rowError = example $
         fp <- getDataFileName "test-data/tweets-with-id-error.csv"
         zipViewCsvFileStrict fp $
           do
-            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
-            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "timestamp" (utf8View @Text))
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "timestamp" utf8TextView)
             return (tweetId, tweetTime)
 
     result ===
@@ -162,8 +162,8 @@ prop_tweetIdAndTimestamp_missingHeader = example $
         fp <- getDataFileName "test-data/tweets.csv"
         zipViewCsvFileStrict fp $
           do
-            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
-            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "color" (utf8View @Text))
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "color" utf8TextView)
             return (tweetId, tweetTime)
 
     result ===
@@ -178,8 +178,8 @@ prop_tweetIdAndTimestamp_duplicateHeader = example $
         fp <- getDataFileName "test-data/tweets-with-duplicate-header.csv"
         zipViewCsvFileStrict fp $
           do
-            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "tweet_id" byteStringNatView)
-            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 @Text "timestamp" (utf8View @Text))
+            tweetId <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "tweet_id" byteStringNatView)
+            tweetTime <- overZipViewError (:[]) (const ()) (textZipViewUtf8 "timestamp" utf8TextView)
             return (tweetId, tweetTime)
 
     result ===
