@@ -14,6 +14,16 @@ import DSV.Vector
 -- pipes
 import qualified Pipes.Prelude as P
 
+{- |
+
+=== Example
+
+>>> :set -XOverloadedLists
+>>> zipHeader [["A","B"],["1","2"],["3","4"]]
+[[("A","1"),("B","2")],[("A","3"),("B","4")]]
+
+-}
+
 zipHeader :: forall a . [Vector a] -> [Vector (a, a)]
 zipHeader [] = []
 zipHeader (names : rows) = zipHeader' names rows
