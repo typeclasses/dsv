@@ -67,6 +67,10 @@ module DSV
   , constView
   -- ** Modifying views
   , overViewError, discardViewError
+  -- ** Composing views
+  -- $composingViews
+  , (>>>), (<<<)
+  , (>>>-), (<<<-)
   -- ** Using views
   , applyView, viewMaybe, viewOr
   -- ** Viewing strings as numbers
@@ -160,6 +164,7 @@ import DSV.ParseStop
 import DSV.Parsing
 import DSV.Pipes
 import DSV.Position
+import DSV.Prelude
 import DSV.Text
 import DSV.Validation
 import DSV.Vector
@@ -272,5 +277,13 @@ See the "Data.Attoparsec.ByteString" module for more on parsing byte strings.
 {- $pipes
 
 See the "Pipes" module for more on pipes.
+
+-}
+
+{- $composingViews
+
+'View' has a 'Category' instance, so you can chain views together using '>>>' and '<<<'. See the "Control.Category" module for more on categories.
+
+The two views being sequenced have to have the same error type, which is often inconvenient. To chain views together while converting their error type to @()@, you can use '>>>-' and '<<<-' instead.
 
 -}

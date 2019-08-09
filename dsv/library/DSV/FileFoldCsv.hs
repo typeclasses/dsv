@@ -28,8 +28,6 @@ import qualified Data.ByteString.Char8 as BS
 -- foldl
 import qualified Control.Foldl as L
 
--- todo: examples are out of date
-
 {- |
 
 === Example
@@ -42,7 +40,7 @@ CSV file:
 Fold:
 
 @
-'L.premap' ('fromMaybe' 0 . ('nthVectorElement' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
+'L.premap' ('viewOr' 0 $ 'byteStringDollarsView' '<<<-' 'columnNumberView' 3) 'L.sum'
 @
 
 Result:
@@ -118,7 +116,7 @@ CSV file:
 Fold:
 
 @
-'L.premap' ('fromMaybe' 0 . ('nthVectorElement' 3 >=> 'byteStringDollarsMaybe')) 'L.sum'
+'L.premap' ('viewOr' 0 $ 'byteStringDollarsView' '<<<-' 'columnNumberView' 3) 'L.sum'
 @
 
 Result:
@@ -195,7 +193,7 @@ CSV file:
 Fold:
 
 @
-'L.premap' ('fromMaybe' 0 . ('vectorLookup' (== \"Price") >=> 'byteStringDollarsMaybe')) 'L.sum'
+'L.premap' ('viewOr' 0 $ 'byteStringDollarsView' '<<<-' 'lookupView' (== \"Price")) 'L.sum'
 @
 
 Result:

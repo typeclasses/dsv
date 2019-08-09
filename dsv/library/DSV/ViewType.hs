@@ -3,7 +3,8 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module DSV.ViewType
-  ( View (..), overViewError, applyView, constView, viewMaybe, viewOr, discardViewError
+  ( View (..), overViewError, applyView, constView, viewMaybe, viewOr
+  , discardViewError, (>>>-), (<<<-)
   ) where
 
 import DSV.Prelude
@@ -83,3 +84,9 @@ overViewError f (View v) =
 discardViewError :: View e a b -> View () a b
 
 discardViewError = overViewError (\_ -> ())
+
+(<<<-) :: View e1 b c -> View e2 a b -> View () a c
+f <<<- g = discardViewError f <<< discardViewError g
+
+(>>>-) :: View e2 a b -> View e1 b c -> View () a c
+f >>>- g = discardViewError f >>> discardViewError g
