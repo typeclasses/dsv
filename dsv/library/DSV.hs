@@ -57,6 +57,9 @@ module DSV
   -- * Functions that can fail
   -- ** What is a View
   , View (..)
+  -- ** What is Validation
+  -- $validation
+  , Validation (..)
   -- ** Some views
   , constView, byteStringNatView, textNatView, columnNumberView, lookupView
 
@@ -123,10 +126,6 @@ module DSV
   , textDecimalRationalMaybe
   , byteStringDollarsMaybe
   , textDollarsMaybe
-
-  -- * Validation
-  -- $validation
-  , Validation (..)
 
   -- * Text
   , Text, stringToText, textToString, encodeTextUtf8, utf8TextView
