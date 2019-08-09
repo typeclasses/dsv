@@ -17,13 +17,19 @@ group = $$(discover)
 sumPricesWithoutHeader :: L.Fold (Vector ByteString) Rational
 sumPricesWithoutHeader =
     L.premap
-        (fromMaybe 0 . (nthVectorElement 3 >=> byteStringDollarsMaybe))
+        (viewOr 0 $
+            discardViewError byteStringDollarsView <<<
+            discardViewError (columnNumberView 3)
+        )
         L.sum
 
 sumPricesWithZippedHeader :: L.Fold (Vector (ByteString, ByteString)) Rational
 sumPricesWithZippedHeader =
     L.premap
-        (fromMaybe 0 . (vectorLookup (== "Price") >=> byteStringDollarsMaybe))
+        (viewOr 0 $
+            discardViewError byteStringDollarsView <<<
+            discardViewError (lookupView (== "Price"))
+        )
         L.sum
 
 writeNamesAndCountWithoutHeader :: IORef (Seq ByteString) -> L.FoldM IO (Vector ByteString) Int

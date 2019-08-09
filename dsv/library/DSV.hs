@@ -65,10 +65,15 @@ module DSV
   , Validation (..)
   -- ** Trivial views
   , constView
+  -- ** Modifying views
+  , overViewError, discardViewError
   -- ** Using views
-  , applyView, viewMaybe
+  , applyView, viewMaybe, viewOr
   -- ** Viewing strings as numbers
   , byteStringNatView, textNatView, InvalidNat (..)
+  , byteStringRationalView, textRationalView, InvalidRational (..)
+  , byteStringDollarsView, textDollarsView, InvalidDollars (..)
+
   -- ** Viewing a position of a vector
   , columnNumberView, TooShort (..), IndexError (..)
   -- ** Finding something in a vector
@@ -126,13 +131,6 @@ module DSV
   -- ** Relationship to Bytestring
   , encodeTextUtf8, utf8TextView, InvalidUtf8 (..)
 
-  -- * Miscellania
-  -- $miscellania
-  , byteStringDecimalRationalMaybe
-  , textDecimalRationalMaybe
-  , byteStringDollarsMaybe
-  , textDollarsMaybe
-
   ) where
 
 import DSV.AttoParser
@@ -155,7 +153,6 @@ import DSV.Header
 import DSV.IndexError
 import DSV.LookupError
 import DSV.ZipViews
-import DSV.Misc
 import DSV.Numbers
 import DSV.NumberViews
 import DSV.ParseError

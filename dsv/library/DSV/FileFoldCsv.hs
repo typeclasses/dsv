@@ -14,7 +14,6 @@ import DSV.CommonDelimiters
 import DSV.FileFold
 import DSV.Fold
 import DSV.IO
-import DSV.Misc
 import DSV.ParseStop
 import DSV.Prelude
 import DSV.Vector
@@ -28,6 +27,8 @@ import qualified Data.ByteString.Char8 as BS
 
 -- foldl
 import qualified Control.Foldl as L
+
+-- todo: examples are out of date
 
 {- |
 

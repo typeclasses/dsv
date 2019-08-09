@@ -15,6 +15,9 @@ import Data.Bifunctor as Prelude
 import Data.IORef as Prelude
 import Hedgehog as Prelude
 
+import Control.Category as Prelude
+    ((>>>), (<<<))
+
 import Control.Exception.Safe as Prelude
     (try)
 

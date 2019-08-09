@@ -68,7 +68,6 @@ library
       , DSV.IndexError
       , DSV.IO
       , DSV.LookupError
-      , DSV.Misc
       , DSV.Numbers
       , DSV.NumberViews
       , DSV.ParseError
