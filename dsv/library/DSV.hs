@@ -113,9 +113,6 @@ module DSV
   , TooShort (..)
   , IndexError (..)
 
-  -- * English
-  , EnglishText (..)
-
   -- * Position types
   , Position (..), RowNumber (..), ColumnNumber (..)
   , ColumnName (..), Positive (..), At (..)
@@ -143,7 +140,6 @@ import DSV.CommonDelimiters
 import DSV.DelimiterSplice
 import DSV.DelimiterType
 import DSV.UTF8
-import DSV.English
 import DSV.FileFold
 import DSV.FileFoldCsv
 import DSV.FileStrictCsvMap

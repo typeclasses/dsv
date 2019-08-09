@@ -55,7 +55,6 @@ library
       , DSV.CommonDelimiters
       , DSV.DelimiterSplice
       , DSV.DelimiterType
-      , DSV.English
       , DSV.FileFold
       , DSV.FileFoldCsv
       , DSV.FileStrictCsvMap

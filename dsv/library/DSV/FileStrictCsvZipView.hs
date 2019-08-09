@@ -10,7 +10,6 @@ module DSV.FileStrictCsvZipView
   ) where
 
 import DSV.CommonDelimiters
-import DSV.English
 import DSV.FileStrictZipView
 import DSV.IndexError
 import DSV.IO
