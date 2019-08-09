@@ -60,8 +60,14 @@ module DSV
   -- ** What is Validation
   -- $validation
   , Validation (..)
-  -- ** Some views
-  , constView, byteStringNatView, textNatView, columnNumberView, lookupView
+  -- ** Trivial views
+  , constView
+  -- ** Viewing strings as numbers
+  , byteStringNatView, textNatView, InvalidNat (..)
+  -- ** Viewing a position of a vector
+  , columnNumberView, TooShort (..), IndexError (..)
+  -- ** Finding something in a vector
+  , lookupView, Duplicate (..), Missing (..), LookupError (..)
 
   -- * Header-and-row views
   -- ** What is a ZipView
@@ -97,28 +103,20 @@ module DSV
   -- ** What are Pipes
   , Pipe, Producer, Consumer, Effect, runEffect, (>->), await, yield
 
-  -- * Parsing-related types
-  , ParseError (..)
-
   -- * Attoparsec
-  , AttoParser, attoPipe, handleAttoProducer
-
-  -- * Miscellaneous errors
-  , InvalidUtf8 (..)
-  , InvalidNat (..)
-
-  -- * Lookup errors
-  , Missing (..)
-  , Duplicate (..)
-  , LookupError (..)
-
-  -- * Index errors
-  , TooShort (..)
-  , IndexError (..)
+  , AttoParser, attoPipe, handleAttoProducer, ParseError (..)
 
   -- * Position types
   , Position (..), RowNumber (..), ColumnNumber (..)
   , ColumnName (..), Positive (..), At (..)
+
+  -- * Text
+  -- ** The Text type
+  , Text
+  -- ** Relationship to String
+  , stringToText, textToString
+  -- ** Relationship to Bytestring
+  , encodeTextUtf8, utf8TextView, InvalidUtf8 (..)
 
   -- * Miscellania
   -- $miscellania
@@ -126,9 +124,6 @@ module DSV
   , textDecimalRationalMaybe
   , byteStringDollarsMaybe
   , textDollarsMaybe
-
-  -- * Text
-  , Text, stringToText, textToString, encodeTextUtf8, utf8TextView
 
   ) where
 
