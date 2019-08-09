@@ -19,8 +19,10 @@ module DSV
   -- $readingCsvFilesStrictly
     readCsvFileStrictWithZippedHeader, readCsvFileStrictWithoutHeader, readCsvFileStrictIgnoringHeader
   -- ** What is a Vector
+  -- $vector
   , Vector, nthVectorElement, vectorLookup, listToVector, vectorToList, emptyVector
   -- ** What is a ByteString
+  -- $bytestring
   , ByteString
   -- ** A read ends with a ParseStop
   , ParseStop (..)
@@ -47,6 +49,7 @@ module DSV
   , foldCsvFileWithoutHeader, foldCsvFileWithoutHeaderM
   , foldCsvFileIgnoringHeader, foldCsvFileIgnoringHeaderM
   -- ** What is a Fold
+  -- $fold
   , Fold (..), FoldM (..)
   -- ** Using other delimiters
   -- $foldingDsvFiles
@@ -101,9 +104,11 @@ module DSV
   -- ** Pipes that combine the header with subsequent rows
   , zipHeaderPipe, zipHeaderWithPipe
   -- ** What are Pipes
+  -- $pipes
   , Pipe, Producer, Consumer, Effect, runEffect, (>->), await, yield
 
   -- * Attoparsec
+  -- $attoparsec
   , AttoParser, attoPipe, handleAttoProducer, ParseError (..)
 
   -- * Position types
@@ -111,7 +116,8 @@ module DSV
   , ColumnName (..), Positive (..), At (..)
 
   -- * Text
-  -- ** The Text type
+  -- ** What is Text
+  -- $text
   , Text
   -- ** Relationship to String
   , stringToText, textToString
@@ -231,5 +237,41 @@ These functions are not directly relevant to this library's primary purpose of c
 {- $validation
 
 See the "Data.Validation" module for more on the 'Validation' type.
+
+-}
+
+{- $vector
+
+See the "Data.Vector" module for more on the 'Vector' type.
+
+-}
+
+{- $bytestring
+
+See the "Data.ByteString" module for more on the 'ByteString' type.
+
+-}
+
+{- $fold
+
+See the "Control.Foldl" module for more on the 'Fold' and 'FoldM' types.
+
+-}
+
+{- $text
+
+See the "Data.Text" module for more on the 'Text' type.
+
+-}
+
+{- $attoparsec
+
+See the "Data.Attoparsec.ByteString" module for more on parsing byte strings.
+
+-}
+
+{- $pipes
+
+See the "Pipes" module for more on pipes.
 
 -}
