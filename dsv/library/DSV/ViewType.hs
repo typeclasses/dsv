@@ -3,7 +3,7 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module DSV.ViewType
-  ( View (..), overViewError, applyView, constView
+  ( View (..), overViewError, applyView, constView, viewMaybe
   ) where
 
 import DSV.Prelude
@@ -45,17 +45,25 @@ instance Arrow (View e)
           Failure e -> Failure e
           Success z -> Success (x, z)
 
-applyView :: forall e a b.
+applyView :: forall e a b .
     View e a b -> a -> Validation e b
 
 applyView (View f) x = f x
 
-constView :: forall e a b.
+viewMaybe :: forall e a b .
+    View e a b -> a -> Maybe b
+
+viewMaybe v x =
+    case applyView v x of
+        Success y -> Just y
+        Failure _ -> Nothing
+
+constView :: forall e a b .
     b -> View e a b
 
 constView x = View (\_ -> Success x)
 
-overViewError :: forall e1 e2 a b.
+overViewError :: forall e1 e2 a b .
     (e1 -> e2) -> View e1 a b -> View e2 a b
 
 overViewError f (View v) =

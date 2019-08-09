@@ -65,6 +65,8 @@ module DSV
   , Validation (..)
   -- ** Trivial views
   , constView
+  -- ** Using views
+  , applyView, viewMaybe
   -- ** Viewing strings as numbers
   , byteStringNatView, textNatView, InvalidNat (..)
   -- ** Viewing a position of a vector
