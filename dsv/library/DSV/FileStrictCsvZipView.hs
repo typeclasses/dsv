@@ -16,6 +16,7 @@ import DSV.IO
 import DSV.ZipViewStop
 import DSV.Prelude
 import DSV.Text
+import DSV.UTF8
 import DSV.Validation
 import DSV.Vector
 import DSV.ZipViews
@@ -34,7 +35,7 @@ CSV file:
 View:
 
 @
-'entireRowZipView'
+'entireRowZipView' @() @()
 @
 
 Result:
@@ -56,8 +57,10 @@ CSV file:
 View:
 
 @
-((,) \<$> 'textZipViewUtf8' \"Date" \<*> 'textZipViewUtf8' \"Product")
-    :: 'ZipView' 'EnglishText' 'EnglishText' ('Text', 'Text')
+do
+  date    <- 'overZipViewError' (:[]) (:[]) ('textZipViewUtf8' \"Date"    'utf8TextView')
+  product <- 'overZipViewError' (:[]) (:[]) ('textZipViewUtf8' \"Product" 'utf8TextView')
+  return (date, product)
 @
 
 Result:
@@ -81,8 +84,10 @@ In this example, @\\xc3\\x28@ represents two bytes which constitute an invalid s
 View:
 
 @
-((,) \<$> 'textZipViewUtf8' \"Date" \<*> 'textZipViewUtf8' \"Product")
-    :: 'ZipView' 'EnglishText' 'EnglishText' ('Text', 'Text')
+do
+  date    <- 'overZipViewError' (:[]) (:[]) ('textZipViewUtf8' \"Date"    'utf8TextView')
+  product <- 'overZipViewError' (:[]) (:[]) ('textZipViewUtf8' \"Product" 'utf8TextView')
+  return (date, product)
 @
 
 Result:
