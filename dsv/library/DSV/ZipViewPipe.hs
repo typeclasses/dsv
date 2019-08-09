@@ -24,7 +24,9 @@ zipViewPipe ::
     forall m headerError rowError row .
     Monad m
     => ZipView headerError rowError row
+      -- ^ A specification of how to interpret the header and rows
     -> Pipe (Vector ByteString) (Validation rowError row) m headerError
+      -- ^ The first vector that this pipe 'await's is the header. If the header is invalid, the pipe closes and 'return's the @headerError@. Otherwise, the pipe continues indefinitely; for each subsequent @'Vector' 'ByteString'@, it 'yield's one @'Validation' rowError row@.
 
 zipViewPipe (ZipView (View f)) =
   do
@@ -37,7 +39,9 @@ zipViewPipeIgnoringAllErrors ::
     forall m headerError rowError row .
     Monad m
     => ZipView headerError rowError row
+      -- ^ A specification of how to interpret the header and rows
     -> Pipe (Vector ByteString) row m ()
+      -- ^ The first vector that this pipe 'await's is the header. If the header is invalid, the pipe closes and 'return's @()@. Otherwise, the pipe continues indefinitely; for each subsequent @'Vector' 'ByteString'@, it 'yield's a @row@ if the row is valid, or otherwise does nothing if the row is malformed.
 
 zipViewPipeIgnoringAllErrors (ZipView (View f)) =
   do
@@ -53,7 +57,9 @@ zipViewPipeThrowFirstError ::
     , Show rowError, Typeable rowError
     )
     => ZipView headerError rowError row
+      -- ^ A specification of how to interpret the header and rows
     -> Pipe (Vector ByteString) row m r
+      -- ^ The first vector that this pipe 'await's is the header. If the header is invalid, the pipe throws the @headerError@ as an exception in @m@. For each subsequent @'Vector' 'ByteString'@, the pipe 'yield's a @row@ if the row is valid, or otherwise throws the @rowError@ as an exception in @m@.
 
 zipViewPipeThrowFirstError (ZipView (View f)) =
   do
