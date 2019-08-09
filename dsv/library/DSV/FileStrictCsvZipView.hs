@@ -12,8 +12,10 @@ module DSV.FileStrictCsvZipView
 import DSV.CommonDelimiters
 import DSV.English
 import DSV.FileStrictZipView
+import DSV.IndexError
 import DSV.IO
 import DSV.ZipViewStop
+import DSV.Position
 import DSV.Prelude
 import DSV.Text
 import DSV.UTF8
@@ -94,7 +96,7 @@ Result:
 
 @
 ( 'ZipViewComplete',
-  [ 'Failure' ('EnglishText' ["The byte string in column named \'Product' is not valid UTF-8."])
+  [ 'Failure' ['At' ('ColumnName' \"Product") ('IndexError_FieldError' 'InvalidUtf8')]
   , 'Success' ("2019-04-18", "Earthquake pills")
   ]
 @
