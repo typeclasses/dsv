@@ -14,9 +14,12 @@ import DSV.CommonDelimiters
 import DSV.FileFold
 import DSV.Fold
 import DSV.IO
+import DSV.NumberViews
 import DSV.ParseStop
 import DSV.Prelude
 import DSV.Vector
+import DSV.VectorViews
+import DSV.ViewType
 
 -- base
 import Data.Foldable (traverse_)
