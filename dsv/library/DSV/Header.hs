@@ -92,11 +92,10 @@ applyHeaderPipeM f =
     applyHeader <- lift (f header)
     P.mapM applyHeader
 
-{- | The pipe equivalent of 'zipHeader'.
+{- |
 
 === Example
 
->>> import Pipes
 >>> import qualified Pipes.Prelude as P
 >>> r1 = listToVector ["A","B"]
 >>> r2 = listToVector ["1","2"]
@@ -115,11 +114,10 @@ zipHeaderPipe ::
 
 zipHeaderPipe = applyHeaderPipe vectorZip
 
-{- | The pipe equivalent of 'zipHeaderWith'.
+{- |
 
 === Example
 
->>> import Pipes
 >>> import qualified Pipes.Prelude as P
 >>> r1 = listToVector ["A","B"]
 >>> r2 = listToVector ["1","2"]

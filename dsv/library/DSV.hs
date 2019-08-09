@@ -84,16 +84,15 @@ module DSV
   , zipViewDsvFileStrictIgnoringAllErrors
   , zipViewDsvFileStrictThrowFirstError
 
-  -- * Pipes that parse
+  -- * Pipes
+  -- ** Pipes that parse DSV rows
   , csvRowPipe, dsvRowPipe
-
-  -- * Producers from file handles
+  -- ** Creating row producers from file handles
   , handleCsvRowProducer, handleDsvRowProducer
-
-  -- * Combining a header with a row
-  , zipHeader, zipHeader', zipHeaderPipe
-  , zipHeaderWith, zipHeaderWith', zipHeaderWithPipe
-  , applyHeaderPipe, applyHeaderPipeM
+  -- ** Pipes that combine the header with subsequent rows
+  , zipHeaderPipe, zipHeaderWithPipe
+  -- ** What are Pipes
+  , Pipe, Producer, Consumer, Effect, runEffect, (>->), await, yield
 
   -- * Parsing-related types
   , ParseError (..)
@@ -164,6 +163,7 @@ import DSV.NumberViews
 import DSV.ParseError
 import DSV.ParseStop
 import DSV.Parsing
+import DSV.Pipes
 import DSV.Position
 import DSV.Text
 import DSV.Validation
