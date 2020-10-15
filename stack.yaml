@@ -1,3 +1,2 @@
-{ "resolver": "nightly-2019-07-04"
-, "packages": ["dsv"]
-}
+resolver: "lts-16.18"
+packages: ["dsv"]
