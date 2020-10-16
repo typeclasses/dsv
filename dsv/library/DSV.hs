@@ -82,6 +82,8 @@ module DSV
   , columnNumberView, TooShort (..), IndexError (..)
   -- ** Finding something in a vector
   , lookupView, Duplicate (..), Missing (..), LookupError (..)
+  -- ** Finding something in a vector of UTF-8 byte strings
+  , lookupTextViewUtf8, lookupStringViewUtf8, LookupErrorUtf8 (..)
 
   -- * Header-and-row views
   -- ** What is a ZipView
@@ -156,6 +158,7 @@ import DSV.Fold
 import DSV.Header
 import DSV.IndexError
 import DSV.LookupError
+import DSV.LookupUtf8
 import DSV.ZipViews
 import DSV.Numbers
 import DSV.NumberViews
