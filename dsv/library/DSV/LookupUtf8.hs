@@ -1,8 +1,8 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module DSV.LookupUtf8
-  ( lookupTextViewUtf8
-  , lookupStringViewUtf8
+  ( lookupTextViewUtf8, lookupStringViewUtf8
+  , lookupTextViewUtf8_, lookupStringViewUtf8_
   , LookupErrorUtf8 (..)
   ) where
 
@@ -19,9 +19,17 @@ lookupTextViewUtf8 :: (Text -> Bool)
     -> View LookupErrorUtf8 (Vector (ByteString, ByteString)) Text
 lookupTextViewUtf8 = lookupViewUtf8
 
+lookupTextViewUtf8_ :: (Text -> Bool)
+    -> View () (Vector (ByteString, ByteString)) Text
+lookupTextViewUtf8_ x = discardViewError (lookupTextViewUtf8 x)
+
 lookupStringViewUtf8 :: (String -> Bool)
     -> View LookupErrorUtf8 (Vector (ByteString, ByteString)) String
 lookupStringViewUtf8 = lookupViewUtf8
+
+lookupStringViewUtf8_ :: (String -> Bool)
+    -> View () (Vector (ByteString, ByteString)) String
+lookupStringViewUtf8_ x = discardViewError (lookupStringViewUtf8 x)
 
 lookupViewUtf8 :: DecodeUtf8 a => (a -> Bool)
     -> View LookupErrorUtf8 (Vector (ByteString, ByteString)) a

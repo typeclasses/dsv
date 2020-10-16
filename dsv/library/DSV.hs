@@ -75,15 +75,20 @@ module DSV
   , applyView, viewMaybe, viewOr
   -- ** Viewing strings as numbers
   , byteStringNatView, textNatView, InvalidNat (..)
+  , byteStringNatView_, textNatView_
   , byteStringRationalView, textRationalView, InvalidRational (..)
+  , byteStringRationalView_, textRationalView_
   , byteStringDollarsView, textDollarsView, InvalidDollars (..)
+  , byteStringDollarsView_, textDollarsView_
 
   -- ** Viewing a position of a vector
   , columnNumberView, TooShort (..), IndexError (..)
+  , columnNumberView_
   -- ** Finding something in a vector
-  , lookupView, Duplicate (..), Missing (..), LookupError (..)
+  , lookupView, lookupView_, Duplicate (..), Missing (..), LookupError (..)
   -- ** Finding something in a vector of UTF-8 byte strings
   , lookupTextViewUtf8, lookupStringViewUtf8, LookupErrorUtf8 (..)
+  , lookupTextViewUtf8_, lookupStringViewUtf8_
 
   -- * Header-and-row views
   -- ** What is a ZipView

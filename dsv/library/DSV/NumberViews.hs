@@ -4,8 +4,11 @@
 
 module DSV.NumberViews
   ( InvalidNat (..), byteStringNatView, textNatView
+                   , byteStringNatView_, textNatView_
   , InvalidRational (..), byteStringRationalView, textRationalView
+                        , byteStringRationalView_, textRationalView_
   , InvalidDollars (..), byteStringDollarsView, textDollarsView
+                       , byteStringDollarsView_, textDollarsView_
   ) where
 
 import DSV.AttoView
@@ -31,8 +34,14 @@ byteStringNatView = attoByteStringView InvalidNat p
   where
     p = Data.Attoparsec.ByteString.Char8.decimal
 
+byteStringNatView_ :: View () ByteString Natural
+byteStringNatView_ = discardViewError byteStringNatView
+
 textNatView :: View InvalidNat Text Natural
 textNatView = textReaderView InvalidNat textReadDecimal
+
+textNatView_ :: View () Text Natural
+textNatView_ = discardViewError textNatView
 
 data InvalidRational = InvalidRational
   deriving stock (Eq, Show)
@@ -62,6 +71,9 @@ byteStringRationalView =
     textRationalView .
     overViewError (\InvalidUtf8 -> InvalidRational) utf8TextView
 
+byteStringRationalView_ :: View () ByteString Rational
+byteStringRationalView_ = discardViewError byteStringRationalView
+
 {- |
 
 Read a rational number written in decimal notation.
@@ -84,6 +96,9 @@ Failure InvalidRational
 textRationalView :: View InvalidRational Text Rational
 textRationalView = textReaderView InvalidRational textReadRational
 
+textRationalView_ :: View () Text Rational
+textRationalView_ = discardViewError textRationalView
+
 data InvalidDollars = InvalidDollars
   deriving stock (Eq, Show)
   deriving anyclass Exception
@@ -104,6 +119,9 @@ byteStringDollarsView :: View InvalidDollars ByteString Rational
 byteStringDollarsView =
     textDollarsView .
     overViewError (\InvalidUtf8 -> InvalidDollars) utf8TextView
+
+byteStringDollarsView_ :: View () ByteString Rational
+byteStringDollarsView_ = discardViewError byteStringDollarsView
 
 {- | Read a dollar amount.
 
@@ -127,3 +145,6 @@ textDollarsView =
         maybe (Failure InvalidDollars) Success .
         textStripPrefix "$"
     )
+
+textDollarsView_ :: View () Text Rational
+textDollarsView_ = discardViewError textDollarsView

@@ -2,8 +2,8 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module DSV.VectorViews
-  ( columnNumberView
-  , lookupView
+  ( columnNumberView, lookupView
+  , columnNumberView_, lookupView_
   ) where
 
 import DSV.IndexError
@@ -24,6 +24,11 @@ columnNumberView (ColumnNumber n) =
             Nothing -> Failure TooShort
             Just x  -> Success x
 
+columnNumberView_ :: forall a.
+    ColumnNumber -> View () (Vector a) a
+
+columnNumberView_ x = discardViewError (columnNumberView x)
+
 lookupView ::
     (a -> Bool)
     -> View LookupError (Vector (a, b)) b
@@ -34,3 +39,9 @@ lookupView f =
             [] -> Failure LookupError_Missing
             [(_, v)] -> Success v
             _ -> Failure LookupError_Duplicate
+
+lookupView_ ::
+    (a -> Bool)
+    -> View () (Vector (a, b)) b
+
+lookupView_ x = discardViewError (lookupView x)

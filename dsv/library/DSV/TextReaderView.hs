@@ -2,6 +2,7 @@
 
 module DSV.TextReaderView
   ( textReaderView
+  , textReaderView_
   ) where
 
 import DSV.Prelude
@@ -16,3 +17,9 @@ textReaderView e r =
       Nothing -> Failure e
       Just x -> Success x
 
+textReaderView_ :: TextReader a -> View () Text a
+textReaderView_ r =
+  View $ \txt ->
+    case (textReadMaybe r txt) of
+      Nothing -> Failure ()
+      Just x -> Success x
