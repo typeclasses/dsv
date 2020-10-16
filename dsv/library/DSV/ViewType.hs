@@ -3,10 +3,11 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module DSV.ViewType
-  ( View (..), overViewError, applyView, constView, maybeView, viewMaybe, viewOr
+  ( View (..), overViewError, applyView, applyViewThrow, constView, maybeView, viewMaybe, viewOr
   , discardViewError, (>>>-), (<<<-)
   ) where
 
+import DSV.IO
 import DSV.Prelude
 import DSV.Validation
 
@@ -50,6 +51,15 @@ applyView :: forall e a b .
     View e a b -> a -> Validation e b
 
 applyView (View f) x = f x
+
+applyViewThrow :: forall m e a b.
+    (Exception e, MonadThrow m) =>
+    View e a b -> a -> m b
+
+applyViewThrow (View f) x =
+    case f x of
+        Failure e -> throwM e
+        Success y -> pure y
 
 viewMaybe :: forall e a b .
     View e a b -> a -> Maybe b

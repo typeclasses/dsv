@@ -72,7 +72,7 @@ module DSV
   , (>>>), (<<<)
   , (>>>-), (<<<-)
   -- ** Using views
-  , applyView, viewMaybe, viewOr
+  , applyView, applyViewThrow, viewMaybe, viewOr
   -- ** Viewing strings as numbers
   , byteStringNatView, textNatView, InvalidNat (..)
   , byteStringNatView_, textNatView_
