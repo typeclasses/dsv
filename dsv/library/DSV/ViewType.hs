@@ -3,7 +3,7 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module DSV.ViewType
-  ( View (..), overViewError, applyView, applyViewThrow, constView, maybeView, viewMaybe, viewOr
+  ( View (..), overViewError, inputAsViewError, applyView, viewOrThrow, viewOrThrowInput, constView, maybeView, viewMaybe, viewOr, viewOr'
   , discardViewError, (>>>-), (<<<-)
   ) where
 
@@ -52,11 +52,11 @@ applyView :: forall e a b .
 
 applyView (View f) x = f x
 
-applyViewThrow :: forall m e a b.
+viewOrThrow :: forall m e a b.
     (Exception e, MonadThrow m) =>
     View e a b -> a -> m b
 
-applyViewThrow (View f) x =
+viewOrThrow (View f) x =
     case f x of
         Failure e -> throwM e
         Success y -> pure y
@@ -77,6 +77,30 @@ viewOr z v x =
         Success y -> y
         Failure _ -> z
 
+viewOr' :: forall m e a b .
+    Applicative m =>
+    (a -> e -> m b)
+    -> View e a b
+    -> a
+    -> m b
+
+viewOr' f v a =
+    case applyView v a of
+        Failure e -> f a e
+        Success b -> pure b
+
+viewOrThrowInput :: forall m ex e a b .
+    (Exception ex, MonadThrow m) =>
+    (a -> ex)
+    -> View e a b
+    -> a
+    -> m b
+
+viewOrThrowInput f v a =
+    case applyView v a of
+        Failure _ -> throwM (f a)
+        Success b -> pure b
+
 constView :: forall e a b .
     b -> View e a b
 
@@ -96,6 +120,13 @@ overViewError f (View v) =
     case v x of
       Failure e -> Failure (f e)
       Success s -> Success s
+
+inputAsViewError :: forall e a b. View e a b -> View a a b
+inputAsViewError (View v) =
+    View $ \x ->
+      case v x of
+        Failure _ -> Failure x
+        Success s -> Success s
 
 discardViewError :: View e a b -> View () a b
 

@@ -66,13 +66,13 @@ module DSV
   -- ** Constructing views
   , constView, maybeView
   -- ** Modifying views
-  , overViewError, discardViewError
+  , overViewError, inputAsViewError, discardViewError
   -- ** Composing views
   -- $composingViews
   , (>>>), (<<<)
   , (>>>-), (<<<-)
   -- ** Using views
-  , applyView, applyViewThrow, viewMaybe, viewOr
+  , applyView, viewOrThrow, viewOrThrowInput, viewMaybe, viewOr, viewOr'
   -- ** Viewing strings as numbers
   , byteStringNatView, textNatView, InvalidNat (..)
   , byteStringNatView_, textNatView_
