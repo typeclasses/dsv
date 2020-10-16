@@ -1,5 +1,6 @@
 module DSV.RequireCompleteParse
   ( requireCompleteParse
+  , completely
   ) where
 
 import DSV.IO
@@ -11,3 +12,6 @@ requireCompleteParse (s, x) =
     case s of
         ParseComplete -> pure x
         ParseIncomplete -> throwM ParseError
+
+completely :: MonadThrow m => m (ParseStop, a) -> m a
+completely x = x >>= requireCompleteParse

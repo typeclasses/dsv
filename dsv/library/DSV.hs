@@ -25,7 +25,7 @@ module DSV
   -- $bytestring
   , ByteString
   -- ** A read ends with a ParseStop
-  , ParseStop (..), requireCompleteParse
+  , ParseStop (..), requireCompleteParse, completely
 
   -- * Other delimiters
   -- ** @readDsvFileStrict@...
