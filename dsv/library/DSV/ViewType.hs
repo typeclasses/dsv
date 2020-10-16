@@ -3,7 +3,7 @@
 {-# LANGUAGE DerivingStrategies, DeriveFunctor, DerivingVia, StandaloneDeriving #-}
 
 module DSV.ViewType
-  ( View (..), overViewError, applyView, constView, viewMaybe, viewOr
+  ( View (..), overViewError, applyView, constView, maybeView, viewMaybe, viewOr
   , discardViewError, (>>>-), (<<<-)
   ) where
 
@@ -71,6 +71,12 @@ constView :: forall e a b .
     b -> View e a b
 
 constView x = View (\_ -> Success x)
+
+maybeView :: forall a b.
+    (a -> Maybe b)
+    -> View () a b
+
+maybeView f = View (maybe (Failure ()) Success . f)
 
 overViewError :: forall e1 e2 a b .
     (e1 -> e2) -> View e1 a b -> View e2 a b

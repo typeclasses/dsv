@@ -63,8 +63,8 @@ module DSV
   -- ** What is Validation
   -- $validation
   , Validation (..)
-  -- ** Trivial views
-  , constView
+  -- ** Constructing views
+  , constView, maybeView
   -- ** Modifying views
   , overViewError, discardViewError
   -- ** Composing views
