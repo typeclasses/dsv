@@ -78,6 +78,7 @@ library
       , DSV.Pipes
       , DSV.Position
       , DSV.Prelude
+      , DSV.RequireCompleteParse
       , DSV.Text
       , DSV.TextReaderView
       , DSV.UTF8

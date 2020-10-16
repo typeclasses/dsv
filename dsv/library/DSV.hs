@@ -25,7 +25,7 @@ module DSV
   -- $bytestring
   , ByteString
   -- ** A read ends with a ParseStop
-  , ParseStop (..)
+  , ParseStop (..), requireCompleteParse
 
   -- * Other delimiters
   -- ** @readDsvFileStrict@...
@@ -173,6 +173,7 @@ import DSV.Parsing
 import DSV.Pipes
 import DSV.Position
 import DSV.Prelude
+import DSV.RequireCompleteParse
 import DSV.Text
 import DSV.Validation
 import DSV.Vector
