@@ -96,7 +96,7 @@ library
     build-depends:
         attoparsec ^>= 0.13
       , base ^>= 4.12 || ^>= 4.13 || ^>= 4.14 || ^>= 4.15
-      , bytestring ^>= 0.10
+      , bytestring ^>= 0.10 || ^>= 0.11
       , cassava ^>= 0.5
       , containers ^>= 0.6
       , foldl ^>= 1.4.5
@@ -132,7 +132,7 @@ test-suite hedgehog
   build-depends:
       dsv
     , base ^>= 4.12 || ^>= 4.13 || ^>= 4.14 || ^>= 4.15
-    , bytestring ^>= 0.10
+    , bytestring ^>= 0.10 || ^>= 0.11
     , containers ^>= 0.6
     , foldl ^>= 1.4
     , hedgehog ^>= 1.0
