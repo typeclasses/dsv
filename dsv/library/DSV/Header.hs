@@ -14,56 +14,16 @@ import DSV.Vector
 -- pipes
 import qualified Pipes.Prelude as P
 
-{- |
-
-=== Example
-
->>> :set -XOverloadedLists
->>> zipHeader [["A","B"],["1","2"],["3","4"]]
-[[("A","1"),("B","2")],[("A","3"),("B","4")]]
-
--}
-
 zipHeader :: forall a . [Vector a] -> [Vector (a, a)]
 zipHeader [] = []
 zipHeader (names : rows) = zipHeader' names rows
 
-{- |
-
-=== Example
-
->>> :set -XOverloadedLists
->>> zipHeader' ["A","B"] [["1","2"],["3","4"]]
-[[("A","1"),("B","2")],[("A","3"),("B","4")]]
-
--}
-
 zipHeader' :: forall a b . Vector a -> [Vector b] -> [Vector (a, b)]
 zipHeader' names rows = map (vectorZip names) rows
-
-{- |
-
-=== Example
-
->>> :set -XOverloadedLists
->>> zipHeaderWith (<>) [["A","B"],["1","2"],["3","4"]]
-[["A1","B2"],["A3","B4"]]
-
--}
 
 zipHeaderWith :: forall a b . (a -> a -> b) -> [Vector a] -> [Vector b]
 zipHeaderWith _ [] = []
 zipHeaderWith f (names : rows) = zipHeaderWith' f names rows
-
-{- |
-
-=== Example
-
->>> :set -XOverloadedLists
->>> zipHeaderWith' (<>) ["A","B"] [["1","2"],["3","4"]]
-[["A1","B2"],["A3","B4"]]
-
--}
 
 zipHeaderWith' :: forall a b c . (a -> b -> c)
     -> Vector a -> [Vector b] -> [Vector c]
