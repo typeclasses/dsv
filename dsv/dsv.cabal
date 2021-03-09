@@ -126,6 +126,8 @@ test-suite hedgehog
     , DSV.Tests.FileFoldCsv
     , DSV.Tests.FileStrictCsvRead
     , DSV.Tests.FileStrictCsvZipView
+    , DSV.Tests.Header
+    , DSV.Tests.NumberViews
 
   build-depends:
       dsv
@@ -134,6 +136,7 @@ test-suite hedgehog
     , containers ^>= 0.6
     , foldl ^>= 1.4
     , hedgehog ^>= 1.0
+    , pipes ^>= 4.3.10
     , safe-exceptions ^>= 0.1
     , text ^>= 1.2
     , vector ^>= 0.12

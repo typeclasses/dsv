@@ -9,6 +9,8 @@ import DSV.TestPrelude
 import qualified DSV.Tests.FileFoldCsv
 import qualified DSV.Tests.FileStrictCsvRead
 import qualified DSV.Tests.FileStrictCsvZipView
+import qualified DSV.Tests.Header
+import qualified DSV.Tests.NumberViews
 
 import Control.Monad (when)
 
@@ -25,6 +27,8 @@ tests =
             [ DSV.Tests.FileFoldCsv.group
             , DSV.Tests.FileStrictCsvRead.group
             , DSV.Tests.FileStrictCsvZipView.group
+            , DSV.Tests.Header.group
+            , DSV.Tests.NumberViews.group
             ]
       })
 
