@@ -8,7 +8,7 @@ synopsis: DSV (delimiter-separated values)
 description:
     Utilities for working with DSV (delimiter-separated values) files.
 
-tested-with: GHC==8.6.5, GHC==8.8.4, GHC==8.10.2
+tested-with: GHC==8.6.5, GHC==8.8.4, GHC==8.10.2, GHC==9.0.1
 
 extra-source-files: changelog.md
 data-files:
@@ -103,7 +103,7 @@ library
       , pipes ^>= 4.3.10
       , pipes-bytestring ^>= 2.1
       , pipes-safe ^>= 2.3
-      , template-haskell ^>= 2.14 || ^>= 2.15 || ^>= 2.16
+      , template-haskell ^>= 2.14 || ^>= 2.15 || ^>= 2.16 || ^>= 2.17
       , text ^>= 1.2
       , validation ^>= 1.1
       , vector ^>= 0.12
