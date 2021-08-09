@@ -8,8 +8,6 @@ synopsis: DSV (delimiter-separated values)
 description:
     Utilities for working with DSV (delimiter-separated values) files.
 
-tested-with: GHC==8.6.5, GHC==8.8.4, GHC==8.10.2, GHC==9.0.1
-
 extra-source-files: changelog.md
 data-files:
     test-data/tweets.csv
