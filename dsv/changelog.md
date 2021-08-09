@@ -13,3 +13,7 @@ Support `bytestring-0.11`
 
 Remove the `doctest` test suite; moved everything into the
 `hedgehog` suite.
+
+## v1.0.0.2 - August 9, 2021
+
+Rename the test executable to support case-insensitive file systems
