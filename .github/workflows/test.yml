@@ -39,6 +39,6 @@ jobs:
           ghc-version: ${{ matrix.ghc }}
 
       - name: Test
-        run: runhaskell --ghc-arg='-package process' ./.github/workflows/test.hs
+        run: runghc --ghc-arg='-package process' ./.github/workflows/test.hs
         env:
           ghc: ${{ matrix.ghc }}
