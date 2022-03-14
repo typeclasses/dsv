@@ -1,0 +1,6 @@
+packages: dsv
+
+constraints:
+    base == 4.12.*
+  , bytestring == 0.10.*
+  , template-haskell == 2.14.*
