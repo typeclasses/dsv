@@ -106,34 +106,34 @@ library
       , vector ^>= 0.12
 
 test-suite test-dsv
-  type: exitcode-stdio-1.0
-  default-language: Haskell2010
-  hs-source-dirs: test
-  main-is: test-with-hedgehog.hs
+    type: exitcode-stdio-1.0
+    default-language: Haskell2010
+    hs-source-dirs: test
+    main-is: test-with-hedgehog.hs
 
-  ghc-options:
-      -Wall
-      -fno-warn-missing-signatures
-      -threaded
+    ghc-options:
+        -Wall
+        -fno-warn-missing-signatures
+        -threaded
 
-  other-modules:
-      Paths_dsv
-    , DSV.TestPrelude
-    , DSV.TestData.Tweets
-    , DSV.Tests.FileFoldCsv
-    , DSV.Tests.FileStrictCsvRead
-    , DSV.Tests.FileStrictCsvZipView
-    , DSV.Tests.Header
-    , DSV.Tests.NumberViews
+    other-modules:
+        Paths_dsv
+      , DSV.TestPrelude
+      , DSV.TestData.Tweets
+      , DSV.Tests.FileFoldCsv
+      , DSV.Tests.FileStrictCsvRead
+      , DSV.Tests.FileStrictCsvZipView
+      , DSV.Tests.Header
+      , DSV.Tests.NumberViews
 
-  build-depends:
-      dsv
-    , base ^>= 4.12 || ^>= 4.13 || ^>= 4.14 || ^>= 4.15
-    , bytestring ^>= 0.10 || ^>= 0.11
-    , containers ^>= 0.6
-    , foldl ^>= 1.4
-    , hedgehog ^>= 1.0
-    , pipes ^>= 4.3.10
-    , safe-exceptions ^>= 0.1
-    , text ^>= 1.2
-    , vector ^>= 0.12
+    build-depends:
+        dsv
+      , base ^>= 4.12 || ^>= 4.13 || ^>= 4.14 || ^>= 4.15
+      , bytestring ^>= 0.10 || ^>= 0.11
+      , containers ^>= 0.6
+      , foldl ^>= 1.4
+      , hedgehog ^>= 1.0
+      , pipes ^>= 4.3.10
+      , safe-exceptions ^>= 0.1
+      , text ^>= 1.2
+      , vector ^>= 0.12
