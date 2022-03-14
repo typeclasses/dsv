@@ -8,7 +8,6 @@ synopsis: DSV (delimiter-separated values)
 description:
     Utilities for working with DSV (delimiter-separated values) files.
 
-extra-source-files: changelog.md
 data-files:
     test-data/tweets.csv
   , test-data/tweets-with-id-error.csv
