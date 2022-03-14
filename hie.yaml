@@ -1,0 +1,6 @@
+cradle:
+  cabal:
+    - path: "./dsv/library"
+      component: "lib:dsv"
+    - path: "./dsv/test"
+      component: "test:test-dsv"
